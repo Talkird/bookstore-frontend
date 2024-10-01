@@ -1,7 +1,10 @@
 function App() {
   return (
     <>
-      <h1 className="p-5 text-4xl">Hola Mundo</h1>
+      <div className="flex gap-3 p-5">
+        <h1 className="text-4xl">Sabemos de react?</h1>
+        <input className="h-10 w-10" type="checkbox" />
+      </div>
     </>
   );
 }
