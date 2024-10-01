@@ -1,10 +1,15 @@
+import Button from "./components/ui/Button";
+import { Github } from "lucide-react";
+
 function App() {
   return (
     <>
-      <div className="flex gap-3 p-5">
-        <h1 className="text-4xl">Sabemos de react?</h1>
-        <input className="h-10 w-10" type="checkbox" />
-      </div>
+      <p className="border border-black">test</p>
+      <Button> Click me</Button>
+      <Button className="flex flex-row gap-2">
+        <Github className="h-6 w-6" />
+        Click me
+      </Button>
     </>
   );
 }
