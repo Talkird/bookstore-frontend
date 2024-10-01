@@ -1,9 +1,11 @@
 import Button from "./components/ui/Button";
+import Navbar from "./components/navbar/Navbar";
 import { Github } from "lucide-react";
 
 function App() {
   return (
     <>
+      <Navbar />
       <p className="border border-black">test</p>
       <Button> Click me</Button>
       <Button className="flex flex-row gap-2">
