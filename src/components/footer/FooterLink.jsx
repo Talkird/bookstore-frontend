@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { cn } from "../../utils/classNames";
 
-function FooterLink({ children, to }) {
+function FooterLink({ children, to, className }) {
   return (
-    <Link className="transition hover:text-gray-500" to={to}>
+    <Link
+      className={cn(
+        "text-lg font-medium text-white/80 transition hover:opacity-60",
+        className,
+      )}
+      to={to}
+    >
       {children}
     </Link>
   );
@@ -12,6 +19,7 @@ function FooterLink({ children, to }) {
 FooterLink.propTypes = {
   children: PropTypes.node,
   to: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default FooterLink;

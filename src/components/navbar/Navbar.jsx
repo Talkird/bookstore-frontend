@@ -18,7 +18,7 @@ function Navbar() {
       <div className="flex gap-3 bg-gray-100 p-3">
         <NavItem to="/">Home</NavItem>
         <NavItem to="/catalog">Catalogo</NavItem>
-        <NavItem to="/contact">Contact</NavItem>
+        <NavItem to="/contact">Contacto</NavItem>
       </div>
     </nav>
   );

@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "../../utils/classNames";
 import PropTypes from "prop-types";
 
-const buttonVariants = cva("rounded-md items-center", {
+const buttonVariants = cva("rounded-md items-center font-medium", {
   variants: {
     variant: {
       default: "bg-primary text-white hover:opacity-80 transition",
