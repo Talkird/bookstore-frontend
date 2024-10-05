@@ -1,18 +1,27 @@
-import Button from "./components/ui/Button";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Contact from "./pages/Contact";
+import Account from "./pages/Account";
+import Cart from "./pages/Cart";
+import Catalog from "./pages/Catalog";
+import Purchase from "./pages/Purchase";
 import Navbar from "./components/navbar/Navbar";
-import { Github } from "lucide-react";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
-    <>
+    <Router>
       <Navbar />
-      <p className="border border-black">test</p>
-      <Button> Click me</Button>
-      <Button className="flex flex-row gap-2">
-        <Github className="h-6 w-6" />
-        Click me
-      </Button>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/purchase" element={<Purchase />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
