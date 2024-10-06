@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { cn } from "../../utils/classNames";
 
-function FooterLink({ children, to, className }) {
+function NavbarLink({ children, to, className }) {
   return (
     <Link
       className={cn(
-        "flex items-center gap-3 text-lg font-medium text-white/80 transition hover:opacity-60",
+        "text-xl font-medium transition hover:text-primary/80",
         className,
       )}
       to={to}
@@ -16,10 +16,10 @@ function FooterLink({ children, to, className }) {
   );
 }
 
-FooterLink.propTypes = {
+NavbarLink.propTypes = {
   children: PropTypes.node,
-  to: PropTypes.string,
   className: PropTypes.string,
+  to: PropTypes.string,
 };
 
-export default FooterLink;
+export default NavbarLink;

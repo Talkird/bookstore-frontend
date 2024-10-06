@@ -1,10 +1,21 @@
 import FooterLink from "./FooterLink";
 import FooterTitle from "./FooterTitle";
-import { Compass, Contact, Share2, Scale } from "lucide-react";
+import FooterHyperlink from "./FooterHyperlink";
+import {
+  Compass,
+  Contact,
+  Share2,
+  Scale,
+  Linkedin,
+  Github,
+  Facebook,
+  Twitter,
+  Instagram,
+} from "lucide-react";
 
 function Footer() {
   return (
-    <footer className="flex justify-evenly bg-primary py-6 text-gray-900">
+    <footer className="flex justify-evenly bg-primary py-8 text-gray-900">
       <div className="flex flex-col">
         <FooterTitle>
           Navegación
@@ -20,9 +31,16 @@ function Footer() {
           Redes Sociales
           <Share2 size={16} />
         </FooterTitle>
-        <FooterLink to="/">Facebook</FooterLink>
-        <FooterLink to="/">Twitter</FooterLink>
-        <FooterLink to="/">Instagram</FooterLink>
+
+        <FooterHyperlink>
+          Facebook <Facebook size={16} />
+        </FooterHyperlink>
+        <FooterHyperlink>
+          Twitter <Twitter size={16} />
+        </FooterHyperlink>
+        <FooterHyperlink>
+          Instagram <Instagram size={16} />
+        </FooterHyperlink>
       </div>
 
       <div className="flex flex-col">
@@ -30,8 +48,26 @@ function Footer() {
           Contacto
           <Contact size={16} />
         </FooterTitle>
-        <FooterLink to="/">Email</FooterLink>
-        <FooterLink to="/">Teléfono</FooterLink>
+        <FooterHyperlink href="https://www.linkedin.com/in/losauro-juan-6a2745299/">
+          Juan Andrés Losauro
+          <Linkedin size={16} />
+        </FooterHyperlink>
+        <FooterHyperlink href="https://www.linkedin.com/in/santiago-mociulsky-7a4b50267/">
+          Santiago Mociulsky
+          <Linkedin size={16} />
+        </FooterHyperlink>
+        <FooterHyperlink href="https://www.linkedin.com/in/federico-muntaabski-93b262204/">
+          Federico Muntaabski
+          <Linkedin size={16} />
+        </FooterHyperlink>
+        <FooterHyperlink href="https://github.com/Martina2612">
+          Martina Pariso dos Santos
+          <Github size={16} />
+        </FooterHyperlink>
+        <FooterHyperlink href="https://github.com/TavishX">
+          Tomás Peña
+          <Github size={16} />
+        </FooterHyperlink>
       </div>
 
       <div className="flex flex-col">
