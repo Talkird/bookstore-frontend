@@ -5,7 +5,7 @@ import { formatPeso } from "../../utils/format";
 
 function Product({ image, title, price }) {
   return (
-    <div className="rounded-md border-2 border-primary/60 bg-primary/10 p-3 shadow">
+    <div className="rounded-md border-2 border-primary/60 bg-primary/10 p-3 shadow-sm shadow-primary">
       <img className="hover:opacity-90 hover:cursor-pointer transition w-64 rounded-md" src={image} alt={title} />
       <div className="py-2">
         <h2 className="hover:opacity-60 hover:cursor-pointer transition text-xl font-medium">{title}</h2>
