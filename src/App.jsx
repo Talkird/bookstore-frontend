@@ -7,6 +7,7 @@ import Catalog from "./pages/Catalog";
 import Purchase from "./pages/Purchase";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
+import QA from "./pages/QA";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/purchase" element={<Purchase />} />
+        <Route path="/qa" element={<QA />} />
       </Routes>
       <Footer />
     </Router>
