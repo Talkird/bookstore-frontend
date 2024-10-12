@@ -23,6 +23,7 @@ function Navbar() {
           <NavbarLink to="/">Home</NavbarLink>
           <NavbarLink to="/catalog">Catalogo</NavbarLink>
           <NavbarLink to="/contact">Contacto</NavbarLink>
+          <NavbarLink to="/qa">Preguntas Frecuentes</NavbarLink>
         </div>
         <div className="flex items-center gap-6">
           <NavbarLink to="/cart">

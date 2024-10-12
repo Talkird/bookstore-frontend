@@ -24,6 +24,7 @@ function Footer() {
         <FooterLink to="/">Home</FooterLink>
         <FooterLink to="/catalog">Catalogo</FooterLink>
         <FooterLink to="/contact">Contacto</FooterLink>
+        <FooterLink to="/qa">Preguntas Frecuentes</FooterLink>
       </div>
 
       <div className="flex flex-col">
