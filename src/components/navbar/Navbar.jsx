@@ -21,9 +21,9 @@ function Navbar() {
       <div className="flex items-center justify-between gap-8 bg-gray-100 p-4">
         <div className="ml-6 flex gap-8">
           <NavbarLink to="/">Home</NavbarLink>
-          <NavbarLink to="/catalog">Catalogo</NavbarLink>
+          <NavbarLink to="/catalog">Catálogo</NavbarLink>
           <NavbarLink to="/contact">Contacto</NavbarLink>
-          <NavbarLink to="/qa">Preguntas Frecuentes</NavbarLink>
+          <NavbarLink to="/faq">Preguntas Frecuentes</NavbarLink>
         </div>
         <div className="flex items-center gap-6">
           <NavbarLink to="/cart">
