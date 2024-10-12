@@ -1,5 +1,6 @@
 import React from 'react';
 import ContactInfo from '../components/contact/ContactInfo';
+import Testimonials from '../components/contact/Testimonial';
 
 function Contact() {
   return (
@@ -19,9 +20,11 @@ function Contact() {
           <ContactInfo title="Email" info="ecommerce@gmail.com" />
           
 
-          <ContactInfo title="Dirección" info="Lima 757" />
+          <ContactInfo title="Dirección" info="Lima 757
+          " />
         </div>
-
+        
+        <Testimonials />
       </div>
     </>
   );
