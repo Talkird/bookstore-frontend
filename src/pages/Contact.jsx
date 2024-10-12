@@ -4,32 +4,22 @@ import ContactInfo from '../components/contact/ContactInfo';
 function Contact() {
   return (
     <>
-      {/* Main Container */}
       <div className="min-h-screen mx-auto p-4 justify-center items-center flex flex-col">
-        {/* Title */}
-        <h1 className="text-4xl font-bold text-center mb-4">Contact</h1>
+        <h1 className="text-4xl font-bold text-center mb-4">Contacto</h1>
 
-        {/* Working Hours */}
         <p className="text-center text-lg font-semibold mb-6">
-          WORKING HOURS: Monday to Saturday from 9 AM to 1 PM and 4 PM to 8 PM
+          HORARIO DE ATENCIÓN: Lunes a Sábados de 9 a 13 y de 16 a 20 hs.
         </p>
 
-        {/* Contact Information Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center my-8">
-          {/* WhatsApp */}
-          <ContactInfo title="WhatsApp" info="+91 1234567890" />
+          <ContactInfo title="WhatsApp" info="+91 48762167" />
 
-          {/* Phone */}
-          <ContactInfo title="Phone" info="+91 1234567890" />
+          <ContactInfo title="Telefono" info="+54 43257941" />
 
-          {/* Email */}
-          <ContactInfo title="Email" info="@example.com" />
+          <ContactInfo title="Email" info="ecommerce@gmail.com" />
           
 
-          {/* Address */}
-          <ContactInfo
-            title="Address"
-            info="123, Example Street, City, State, Country - 123456" />
+          <ContactInfo title="Dirección" info="Lima 757" />
         </div>
 
       </div>
