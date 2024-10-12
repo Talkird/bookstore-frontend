@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../components/ui/Button";
+import image from "../assets/image.webp";
 import { useParams, useNavigate } from "react-router-dom";
 
 const ProductDetail = () => {
@@ -11,8 +12,7 @@ const ProductDetail = () => {
     title: "La Casa Neville 2: No Quieras Nada Vil",
     author: "Marcela G. Radice",
     price: 8000,
-    imageUrl:
-      "https://www.libreriadonquijote.com.ar/uploads/productos/2023/06/20230606161802-neville-2.jpg",
+    imageUrl: image,
     description:
       "La historia continúa en esta apasionante saga de La Casa Neville. Sigue a los personajes en una trama de misterio, poder y traición. No podrás dejar de leerlo.",
     moreDetails:
@@ -21,17 +21,16 @@ const ProductDetail = () => {
 
   return (
     <div className="container mx-auto my-10 rounded-lg bg-white p-6 shadow-lg">
-      <div className="mb-6">
+      <div className="mb-6 flex justify-end">
         <Button variant="outline" size="default" onClick={() => navigate(-1)}>
           Volver a la lista
         </Button>
       </div>
 
-      <div className="flex flex-col items-center md:flex-row">
-        {/* Imagen del producto */}
+      <div className="flex flex-row items-center">
         <div className="mb-6 w-full md:mb-0 md:w-1/2">
           <img
-            className="h-auto w-full rounded-lg object-cover shadow-md"
+            className="h-auto rounded-lg object-cover shadow-md"
             src={product.imageUrl}
             alt={product.title}
           />
