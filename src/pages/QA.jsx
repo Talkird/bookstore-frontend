@@ -3,16 +3,16 @@ import QuestionCard from '../components/Q&A/QuestionCard';
 
 const questions = [
   {
-    question: '¿Cual es el costo de envio?',
-    answer: 'El costo de envio es de $250 para compras menores a $2000 y gratis para compras mayores a $2000.',
+    question: '¿Cual es el costo de envío?',
+    answer: 'El costo es de $250 para compras menores a $2000 y gratis para compras mayores a $2000.',
   },
   {
-    question: '¿Como se realizan los envios?',
-    answer: 'Los envios se realizan a traves de empresas de correo privadas.',
+    question: '¿Como se realizan los envíos?',
+    answer: 'Los envíos se realizan a traves de empresas de correo privadas.',
   },
   {
     question: '¿Dónde puedo recibir mi pedido?',
-    answer: 'Realizamos envios a todo el país.',
+    answer: 'Realizamos envíos a todo el país.',
   },
   {
     question: '¿Cuál es el plazo para realizar un cambio de libro?',
