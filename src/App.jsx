@@ -8,6 +8,7 @@ import Purchase from "./pages/Purchase";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import ProductDetail from "./pages/ProductDetail";
+import QA from "./pages/QA";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/purchase" element={<Purchase />} />
         <Route path="/catalog/product" element={<ProductDetail />} />
+        <Route path="/qa" element={<QA />} />
       </Routes>
       <Footer />
     </Router>
