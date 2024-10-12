@@ -22,7 +22,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         className="rounded-l-lg"
         disabled={currentPage === 1}
       >
-        Previous
+        Anterior
       </Button>
       <span className="p-2 border">{currentPage}</span>
       <Button
@@ -31,7 +31,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         className="rounded-r-lg"
         disabled={currentPage === totalPages}
       >
-        Next
+        Siguiente
       </Button>
     </div>
   );
