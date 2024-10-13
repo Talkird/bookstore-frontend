@@ -2,10 +2,15 @@ import PropTypes from "prop-types";
 import Button from "../ui/Button";
 import { Trash2 } from "lucide-react";
 import { formatPeso } from "../../utils/format";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function CartItem({ image, title, price, initialQuantity = 1, onRemove }) {
+function CartItem({ image, title, price, initialQuantity = 1, onRemove, onQuantityChange }) {
   const [quantity, setQuantity] = useState(initialQuantity);
+
+  // Update the parent component when the quantity changes
+  useEffect(() => {
+    onQuantityChange(quantity);
+  }, [quantity, onQuantityChange]);
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -41,9 +46,7 @@ function CartItem({ image, title, price, initialQuantity = 1, onRemove }) {
       </div>
 
       <div className="flex flex-col items-end pr-4">
-        <p
-          className="text-lg font-semibold"
-        >
+        <p className="text-lg font-semibold">
           {formatPeso(price * quantity)}
         </p>
         <Button className="mt-2 flex items-center gap-2" onClick={onRemove}>
@@ -61,6 +64,7 @@ CartItem.propTypes = {
   price: PropTypes.number,
   initialQuantity: PropTypes.number,
   onRemove: PropTypes.func,
+  onQuantityChange: PropTypes.func,
 };
 
 export default CartItem;

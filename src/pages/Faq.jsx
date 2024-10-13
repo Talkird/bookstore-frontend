@@ -1,5 +1,5 @@
 import React from 'react';
-import QuestionCard from '../components/Q&A/QuestionCard';
+import QuestionCard from '../components/faq/QuestionCard';
 
 const questions = [
   {
