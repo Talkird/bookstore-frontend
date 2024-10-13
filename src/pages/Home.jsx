@@ -2,7 +2,7 @@ import PurchasePopup from "../components/purchase/PurchasePopup";
 
 function Home() {
   return (
-      <PurchasePopup cartItems={cartItems} onCheckout={handleCheckout} />
+    <div className="p-12 text-5xl text-white">
       Home Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi amet
       impedit tempora incidunt, inventore ipsam ratione, nemo laborum,
       consectetur doloremque ullam. Consequuntur in id nostrum fuga quia error
