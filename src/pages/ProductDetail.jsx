@@ -50,7 +50,7 @@ const ProductDetail = () => {
           <p className="mb-6 text-gray-500">{product.moreDetails}</p>
 
           <Button variant="default" size="default">
-            Comprar
+            Añadir al carrito
           </Button>
         </div>
       </div>
