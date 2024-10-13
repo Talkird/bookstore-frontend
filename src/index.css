@@ -1,12 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+.font-sacramento {
+  font-family: 'Sacramento', cursive;
+}
+
+.slick-dots {
+  bottom: 10px; /* Ajusta la distancia desde la parte inferior */
+}
+
+.slick-dots li {
+  margin: 0 5px; /* Espaciado entre los puntos */
+}
+
+.slick-dots button {
+  width: 25px; /* Ancho del botón del punto */
+  height: 25px; /* Alto del botón del punto */
+  border-radius: 70%; /* Hacer los puntos redondos */
+  background: white; /* Color del punto */
+  opacity: 0.5; /* Opacidad del punto */
+}
+
+.slick-dots button:hover {
+  opacity: 1; /* Opacidad del punto al pasar el mouse */
+}
+
+.banner-container {
+  max-width: 1200px; /* Ancho máximo del banner */
+  margin: 0 auto; /* Centrar el contenedor */
+  position: relative; /* Posicionamiento relativo para los elementos internos */
+}
+
+.banner-image {
+  width: 100%; /* Hacer que la imagen ocupe el 100% del contenedor */
+  height: auto; /* Ajustar la altura automáticamente */
+  object-fit: cover; /* Mantener la proporción de aspecto de la imagen */
+}
+
+/* Estilo adicional para hacer el banner más rectangular */
+.slider-container {
+  height: 300px; /* Ajustar altura para un banner más largo */
+}
+
