@@ -1,32 +1,7 @@
 import PurchasePopup from "../components/purchase/PurchasePopup";
 
 function Home() {
-  const cartItems = [
-    {
-      id: 1,
-      title: "La Casa Neville 2: No Quieras Nada Vil",
-      author: "Marcela G. Radice",
-      price: 8000,
-      quantity: 1,
-      imageUrl:
-        "https://www.libreriadonquijote.com.ar/uploads/productos/2023/06/20230606161802-neville-2.jpg",
-    },
-    {
-      id: 2,
-      title: "Otro Libro Ejemplo",
-      author: "Autor Ejemplo",
-      price: 5000,
-      quantity: 2,
-      imageUrl: "https://via.placeholder.com/150",
-    },
-  ];
-
-  const handleCheckout = (orderDetails) => {
-    console.log("Compra confirmada:", orderDetails);
-    // Aquí puedes agregar la lógica para procesar la compra (enviar a un API, etc.)
-  };
   return (
-    <div className="p-12 text-5xl text-white">
       <PurchasePopup cartItems={cartItems} onCheckout={handleCheckout} />
       Home Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi amet
       impedit tempora incidunt, inventore ipsam ratione, nemo laborum,
