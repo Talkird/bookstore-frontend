@@ -5,23 +5,26 @@ import Button from "../ui/Button"; // Asegúrate de que el componente Button est
 const PurchasePopup = ({ cartItems, onCheckout }) => {
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
-    0,
+    0
   );
 
   return (
     <Popup
-      trigger={<Button>Ver Carrito</Button>}
+      trigger={
+        <Button className="rounded bg-blue-600 p-2 text-white">
+          Ver Carrito
+        </Button>
+      }
       modal
-      contentStyle={{ width: "90%", maxWidth: "400px" }} // Ajusta el tamaño del popup
+      contentStyle={{ width: "95%", maxWidth: "600px" }} // Ajusta el tamaño del popup
     >
       {(close) => (
-        <div className="rounded-lg bg-white p-4 shadow-lg">
+        <div className="rounded-lg bg-white p-6 shadow-lg">
           <h1 className="mb-4 text-2xl font-bold text-gray-800">
             Carrito de Compras
           </h1>
 
-          <div className="mb-4 max-h-48 space-y-4 overflow-y-auto">
-            {" "}
+          <div className="max-h-72 overflow-y-auto mb-4 space-y-4"> {/* Contenedor deslizante más grande */}
             {cartItems.length === 0 ? (
               <p className="text-gray-600">Tu carrito está vacío.</p>
             ) : (
@@ -34,7 +37,7 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
                     <img
                       src={item.imageUrl}
                       alt={item.title}
-                      className="mr-2 h-12 w-12 rounded-lg object-cover" // Tamaño de la imagen ajustado
+                      className="mr-2 h-16 w-16 rounded-lg object-cover" // Tamaño de la imagen ajustado
                     />
                     <div>
                       <h2 className="text-lg font-semibold text-gray-800">
@@ -52,9 +55,7 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
           </div>
 
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-gray-800">
-              Resumen de Compra
-            </h2>
+            <h2 className="text-lg font-bold text-gray-800">Resumen de Compra</h2>
             <p className="text-lg font-semibold text-gray-800">
               Total: ${totalPrice.toLocaleString()}
             </p>
@@ -64,8 +65,6 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
             Completa tu compra
           </h2>
           <form
-            div
-            className="mb-4 max-h-48 space-y-4 overflow-y-auto"
             onSubmit={(e) => {
               e.preventDefault();
               const name = e.target.name.value;
@@ -74,6 +73,7 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               onCheckout({ name, email, address, cartItems });
               close(); // Cierra el popup después de enviar el formulario
             }}
+            className="space-y-2"
           >
             <div>
               <label htmlFor="name" className="block text-gray-700">
@@ -111,7 +111,12 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               />
             </div>
 
-            <Button type="submit">Confirmar Compra</Button>
+            <button
+              type="submit"
+              className="mt-4 w-full rounded bg-blue-600 py-2 font-bold text-white transition duration-300 hover:bg-blue-700"
+            >
+              Confirmar Compra
+            </button>
           </form>
         </div>
       )}
