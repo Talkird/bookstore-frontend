@@ -6,7 +6,7 @@ function Contact() {
   return (
     <>
       <div className="min-h-screen mx-auto p-4 justify-center items-center flex flex-col">
-        <h1 className="text-4xl font-bold text-center mb-4">Contacto</h1>
+        <h1 className="text-5xl font-extrabold text-center mb-12 text-gray-800">Contacto</h1>
 
         <p className="text-center text-lg font-semibold mb-6">
           HORARIO DE ATENCIÓN: Lunes a Sábados de 9 a 13 y de 16 a 20 hs.
@@ -25,6 +25,8 @@ function Contact() {
         </div>
         
         <Testimonials />
+        
+      
       </div>
     </>
   );

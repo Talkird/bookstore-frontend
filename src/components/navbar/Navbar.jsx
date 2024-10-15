@@ -7,6 +7,14 @@ import { ShoppingCart } from "lucide-react";
 function Navbar() {
   const navigate = useNavigate();
 
+  const handleLoginClick = () => {
+    navigate("/login");
+  }
+
+  const handleRegisterClick = () => {
+    navigate("/register");
+  }
+
   return (
     <nav className="flex flex-col shadow-md">
       <div className="flex items-center justify-between p-8">
@@ -14,8 +22,8 @@ function Navbar() {
           <h1 className="text-4xl font-medium">Libreria Capitán del Espacio</h1>
         </div>
         <div className="flex gap-6 text-xl">
-          <Button variant="outline">Iniciar Sesión</Button>
-          <Button>Registrarse</Button>
+          <Button onClick={handleLoginClick} variant="outline">Iniciar Sesión</Button>
+          <Button onClick={handleRegisterClick}>Registrarse</Button>
         </div>
       </div>
       <div className="flex items-center justify-between gap-8 bg-gray-100 p-4">

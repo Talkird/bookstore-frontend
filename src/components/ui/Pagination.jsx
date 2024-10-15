@@ -1,5 +1,6 @@
 import React from 'react';
-import Button from './Button';
+import PropTypes from 'prop-types';
+import Button from '../ui/Button';
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const handlePrevious = () => {
@@ -14,8 +15,20 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
     }
   };
 
+  const getPageNumbers = () => {
+    const pages = [];
+    const startPage = Math.max(1, currentPage - 2);
+    const endPage = Math.min(totalPages, currentPage + 2);
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  };
+
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-center mt-4 space-x-2">
       <Button
         onClick={handlePrevious}
         variant="outline"
@@ -24,7 +37,16 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       >
         Anterior
       </Button>
-      <span className="p-2 border">{currentPage}</span>
+      {getPageNumbers().map((page) => (
+        <Button
+          key={page}
+          onClick={() => onPageChange(page)}
+          variant={currentPage === page ? 'solid' : 'outline'}
+          className="px-4"
+        >
+          {page}
+        </Button>
+      ))}
       <Button
         onClick={handleNext}
         variant="outline"
@@ -36,5 +58,11 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
     </div>
   );
 }
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+};
 
 export default Pagination;
