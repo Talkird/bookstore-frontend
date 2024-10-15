@@ -9,6 +9,8 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProductDetail from "./pages/ProductDetail";
+import Faq from "./pages/Faq";
 
 function App() {
   return (
@@ -23,6 +25,9 @@ function App() {
         <Route path="/purchase" element={<Purchase />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/catalog/product" element={<ProductDetail />} />
+        <Route path="/faq" element={<Faq />} />
+
       </Routes>
       <Footer />
     </Router>
