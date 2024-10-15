@@ -19,12 +19,9 @@
     "react-dom": "^18.3.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.2",
-<<<<<<< HEAD
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
-=======
     "reactjs-popup": "^2.0.6",
->>>>>>> 057186933d1bbd7d8b9ec5c6f20e5abb7bbc0dc0
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
