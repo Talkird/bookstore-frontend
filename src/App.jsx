@@ -23,6 +23,7 @@ function App() {
         <Route path="/purchase" element={<Purchase />} />
         <Route path="/catalog/product" element={<ProductDetail />} />
         <Route path="/faq" element={<Faq />} />
+
       </Routes>
       <Footer />
     </Router>
