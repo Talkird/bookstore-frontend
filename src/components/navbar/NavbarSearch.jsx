@@ -6,7 +6,7 @@ function NavbarSearch({ className }) {
   return (
     <div
       className={cn(
-        "mx-4 flex flex-row items-center justify-between rounded-lg border border-primary/50 bg-white p-2",
+        "mx-6 flex flex-row items-center justify-between rounded-lg border border-primary/50 bg-white p-2",
         className,
       )}
     >
@@ -16,9 +16,9 @@ function NavbarSearch({ className }) {
       />
       <input
         type="text"
-        placeholder="Buscar..."
-        className="min-w-96 bg-transparent p-2 text-xl font-medium text-primary placeholder-primary/60 outline-none"
-      ></input>
+        placeholder="Ingresar título, autor, ISBN o categoría"
+        className="w-[50rem] bg-transparent p-2 text-xl font-medium text-black placeholder-primary/60 outline-none"
+      />
     </div>
   );
 }

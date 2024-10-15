@@ -1,4 +1,3 @@
-import React from 'react';
 import QuestionCard from '../components/faq/QuestionCard';
 import Accordion from '../components/ui/Accordion';
 

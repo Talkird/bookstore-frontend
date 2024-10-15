@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "../components/ui/Button";
 import image from "../assets/image.webp";
 import { useParams, useNavigate } from "react-router-dom";

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Product from "../components/product/Product";
 import image from '../assets/image.webp';
 import Pagination from "../components/ui/Pagination"; 

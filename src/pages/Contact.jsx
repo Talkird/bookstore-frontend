@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ContactInfo from '../components/contact/ContactInfo';
 import Testimonials from '../components/contact/Testimonial';
 
