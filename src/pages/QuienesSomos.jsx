@@ -9,7 +9,7 @@ function QuienesSomos() {
           <Link to="/" className="hover:text-primary">Home</Link> - <span className="text-gray-400">Quienes Somos</span>
         </nav>
       </div>
-        <div className="bg-burdeos-600 text-burdeos-100 text-center py-8 mb-8 rounded-lg shadow-lg">
+        <div className="bg-primary-600 text-primary-100 text-center py-8 mb-8 rounded-lg shadow-lg">
           <h1 className="text-5xl font-bold">Quiénes Somos</h1>
         </div>
         <div className="text-lg leading-relaxed text-primary leading-relaxed">

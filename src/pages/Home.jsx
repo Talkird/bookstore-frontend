@@ -1,4 +1,4 @@
-import React from 'react';
+
 import RecommendedBooks from '../components/recommendedbook/RecommendedBooks';
 import MostReadScienceFiction from '../components/recommendedbook/MostReadScienceFiction';
 import Categories from '../components/categories/categories';

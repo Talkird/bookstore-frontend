@@ -1,5 +1,5 @@
-import React from 'react';
 import QuestionCard from '../components/faq/QuestionCard';
+import Accordion from '../components/ui/Accordion';
 
 const questions = [
   {
@@ -22,11 +22,13 @@ const questions = [
 
 function Faq() {
   return (
-    <div className="max-w-6xl mx-auto p-8 rounded-lg shadow-lg m-8">
+    <div className="max-w-6xl mx-auto p-8 rounded-lg shadow-lg m-8 bg-white">
       <h1 className="text-4xl font-bold text-center mb-8 text-primary">Preguntas Frecuentes</h1>
       <div className="mt-6 space-y-4">
         {questions.map((q, index) => (
-          <QuestionCard key={index} question={q.question} answer={q.answer} />
+          <Accordion key={index} title={q.question}>
+            <QuestionCard question={q.question} answer={q.answer} />
+          </Accordion>
         ))}
       </div>
     </div>

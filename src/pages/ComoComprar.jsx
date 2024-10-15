@@ -12,7 +12,7 @@ function ComoComprar() {
         </nav>
       </div>
       <div className="max-w-4xl mx-auto py-3 px-2">
-        <div className="bg-burdeos-600 text-burdeos-100 text-center py-8 mb-8 rounded-lg shadow-lg">
+        <div className="bg-primary-600 text-primary-100 text-center py-8 mb-8 rounded-lg shadow-lg">
           <h1 className="text-5xl font-bold">Cómo Comprar</h1>
         </div>
       </div>
