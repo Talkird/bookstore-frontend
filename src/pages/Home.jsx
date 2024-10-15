@@ -1,4 +1,4 @@
-import PurchasePopup from "../components/purchase/PurchasePopup";
+
 
 function Home() {
   return (
