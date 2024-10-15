@@ -12,7 +12,7 @@ function NavbarSearch({ className }) {
     >
       <Search
         className="bg-transparent px-2 text-primary transition hover:cursor-pointer hover:opacity-60"
-        size={36}
+        size={60}
       />
       <input
         type="text"
