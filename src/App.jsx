@@ -7,6 +7,8 @@ import Catalog from "./pages/Catalog";
 import Purchase from "./pages/Purchase";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import ProductDetail from "./pages/ProductDetail";
 import Faq from "./pages/Faq";
 
@@ -21,6 +23,8 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/purchase" element={<Purchase />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/catalog/product" element={<ProductDetail />} />
         <Route path="/faq" element={<Faq />} />
 
