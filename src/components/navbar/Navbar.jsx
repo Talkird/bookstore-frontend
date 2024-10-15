@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
-import { ShoppingCart } from "lucide-react";
-import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png"; // Importa la imagen
+import { ShoppingCart,Settings } from "lucide-react";
+import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png"; 
+
 
 function Navbar() {
   const navigate = useNavigate();
@@ -25,9 +26,14 @@ function Navbar() {
           <h1 className="text-5xl font-poppins text">La pluma encantada</h1>
         </div>
         <div className="flex gap-6 text-xl">
-
-          <Button variant="outline" className="bg-white text-primary">Iniciar Sesión</Button>
-          <Button>Registrarse</Button>
+          <NavbarLink to="/cart"><ShoppingCart size={40} strokeWidth={1.25} /></NavbarLink>
+          <NavbarLink to="/account"><Settings size={40} strokeWidth={1.25} /></NavbarLink>
+          <NavbarLink to="/login" className="bg-white text-primary">
+            <Button variant="outline" className="bg-white text-primary">Iniciar Sesión</Button>
+          </NavbarLink>
+          <NavbarLink to="/register">
+            <Button onClick={handleRegisterClick}>Registrarse</Button>
+          </NavbarLink>
         </div>
       </div>
 
