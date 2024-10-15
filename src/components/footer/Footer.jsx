@@ -22,8 +22,9 @@ function Footer() {
           <Compass size={16} />
         </FooterTitle>
         <FooterLink to="/">Home</FooterLink>
-        <FooterLink to="/catalog">Catalogo</FooterLink>
+        <FooterLink to="/catalog">Catálogo</FooterLink>
         <FooterLink to="/contact">Contacto</FooterLink>
+        <FooterLink to="/faq">Preguntas Frecuentes</FooterLink>
       </div>
 
       <div className="flex flex-col">

@@ -6,7 +6,7 @@ const buttonVariants = cva("rounded-md items-center font-medium", {
   variants: {
     variant: {
       default: "bg-primary text-white hover:opacity-80 transition",
-      outline: "bg-transparent border border-primary text-primary",
+      outline: "bg-transparent border border-primary text-primary hover:bg-primary hover:text-white transition",
     },
     size: {
       default: "px-4 py-2",

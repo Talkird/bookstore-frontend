@@ -19,6 +19,19 @@ function Navbar() {
         <div className="flex gap-6 text-xl">
           <Button variant="outline" className="bg-white text-primary">Iniciar Sesión</Button>
           <Button>Registrarse</Button>
+<<<<<<< HEAD
+=======
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-8 bg-gray-100 p-4">
+        <div className="ml-6 flex gap-8">
+          <NavbarLink to="/">Home</NavbarLink>
+          <NavbarLink to="/catalog">Catálogo</NavbarLink>
+          <NavbarLink to="/contact">Contacto</NavbarLink>
+          <NavbarLink to="/faq">Preguntas Frecuentes</NavbarLink>
+        </div>
+        <div className="flex items-center gap-6">
+>>>>>>> 057186933d1bbd7d8b9ec5c6f20e5abb7bbc0dc0
           <NavbarLink to="/cart">
             <ShoppingCart size={28} />
           </NavbarLink>
