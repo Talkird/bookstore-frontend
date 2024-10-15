@@ -1,11 +1,18 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useState } from "react-router-dom";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart,Settings } from "lucide-react";
+import Button from "../ui/Button";
 
 function Navbar() {
   const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toogleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
 
   return (
     <nav className="flex flex-col shadow-md">
@@ -14,6 +21,7 @@ function Navbar() {
           <h1 className="text-4xl font-medium">Libreria Capitán del Espacio</h1>
         </div>
         <div className="flex gap-6 text-xl">
+        <NavbarLink to="/account"><Settings size={40} strokeWidth={1.25} /></NavbarLink>
           <Button variant="outline">Iniciar Sesión</Button>
           <Button>Registrarse</Button>
         </div>
