@@ -80,40 +80,36 @@ function Footer() {
         <FooterLink to="/">Política de Privacidad</FooterLink>
       </div>
 
-      {/* Sección de Medios de Pago */}
       <div className="flex flex-col items-center">
         <FooterTitle>Medios de Pago</FooterTitle>
-        <div className="flex justify-center items-center gap-4 mt-4">
-          {/* Aquí agregas las imágenes de los medios de pago */}
+        <div className="mt-4 flex items-center justify-center gap-4">
           <img
             src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/visa@2x.png"
             alt="Visa"
-            className="w-12 h-8"
+            className="h-8 w-12"
           />
           <img
             src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/mastercard@2x.png"
             alt="MasterCard"
-            className="w-12 h-8"
+            className="h-8 w-12"
           />
           <img
             src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/amex@2x.png"
             alt="Amex"
-            className="w-12 h-8"
+            className="h-8 w-12"
           />
           <img
             src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/mercadopago@2x.png"
             alt="MercadoPago"
-            className="w-12 h-8"
+            className="h-8 w-12"
           />
           <img
             src="https://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/payment/new_logos_payment/ar/tarjeta-naranja@2x.png"
             alt="Naranja"
-            className="w-12 h-8"
+            className="h-8 w-12"
           />
         </div>
       </div>
-
-
     </footer>
   );
 }

@@ -1,5 +1,5 @@
 import Button from "../components/ui/Button";
-import BackButton from "../components/backButton/backButton";
+import BackButton from "../components/ui/BackButton";
 import image from "../assets/image.webp";
 import { useParams, useNavigate } from "react-router-dom";
 

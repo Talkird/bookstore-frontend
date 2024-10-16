@@ -1,12 +1,13 @@
 import { cva } from "class-variance-authority";
-import { cn } from "../../utils/classNames";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 
 const buttonVariants = cva("rounded-md items-center font-medium", {
   variants: {
     variant: {
       default: "bg-primary text-white hover:opacity-80 transition",
-      outline: "bg-transparent border border-primary text-primary hover:bg-primary hover:text-white transition",
+      outline:
+        "bg-transparent border border-primary text-primary hover:bg-primary hover:text-white transition",
     },
     size: {
       default: "px-4 py-2",
@@ -22,7 +23,7 @@ const buttonVariants = cva("rounded-md items-center font-medium", {
 function Button({ children, className, variant, size, ...rest }) {
   return (
     <button
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={classNames(buttonVariants({ variant, size }), className)}
       {...rest}
     >
       {children}
