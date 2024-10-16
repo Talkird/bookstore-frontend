@@ -44,13 +44,13 @@ const ProductAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
             </div>
           </div>
           <div className="mt-4 flex justify-between">
-            <button
+            <Button
               onClick={openEditModal}
               className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
             >
               Editar
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               onClick={() => {
                 if (
@@ -65,14 +65,14 @@ const ProductAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
               className="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
             >
               Eliminar
-            </button>
+            </Button>
           </div>
-          <button
+          <Button
             onClick={onClose}
             className="absolute right-2 top-2 text-4xl text-gray-400 hover:text-gray-600" // Tamaño de la cruz
           >
             ×
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -88,7 +88,7 @@ const ProductAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
                 <label htmlFor="price" className="mb-1 block text-gray-700">
                   Precio:
                 </label>
-                <input
+                <Input
                   type="text"
                   id="price"
                   defaultValue={product.price}
@@ -101,7 +101,7 @@ const ProductAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
                 <label htmlFor="stock" className="mb-1 block text-gray-700">
                   Stock:
                 </label>
-                <input
+                <Input
                   type="text"
                   id="stock"
                   defaultValue={product.stock}
@@ -111,27 +111,27 @@ const ProductAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
               </div>
 
               <div className="mt-4 flex justify-between">
-                <button
+                <Button
                   type="submit"
                   className="rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600"
                 >
                   Guardar
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
                   onClick={closeEditModal}
                   className="rounded-md bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
                 >
                   Cancelar
-                </button>
+                </Button>
               </div>
             </form>
-            <button
+            <Button
               onClick={closeEditModal}
               className="absolute right-2 top-2 text-4xl text-gray-400 hover:text-gray-600" // Tamaño de la cruz
             >
               ×
-            </button>
+            </Button>
           </div>
         </div>
       )}
