@@ -1,11 +1,14 @@
-
+import BackButton from "../components/backButton/backButton";
 import ContactInfo from '../components/contact/ContactInfo';
 import Testimonials from '../components/contact/Testimonial';
 
 function Contact() {
   return (
-    <>
-      <div className="min-h-screen mx-auto p-4 justify-center items-center flex flex-col">
+    <div>
+      <div className="flex justify-start mt-10 ml-20">
+          <BackButton/> 
+        </div>
+      <div className=" mx-auto p-8 items-center flex flex-col mb-20">
         <h1 className="text-5xl font-extrabold text-center mb-12 text-gray-800">Contacto</h1>
 
         <p className="text-center text-lg font-semibold mb-6">
@@ -24,11 +27,11 @@ function Contact() {
           " />
         </div>
         
-        <Testimonials />
+        <Testimonials className="mb-8" />
         
       
       </div>
-    </>
+      </div>
   );
 }
 

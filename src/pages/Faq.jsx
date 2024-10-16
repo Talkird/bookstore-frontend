@@ -1,5 +1,7 @@
 import QuestionCard from '../components/faq/QuestionCard';
 import Accordion from '../components/ui/Accordion';
+import BackButton from "../components/backButton/backButton";
+
 
 const questions = [
   {
@@ -23,6 +25,9 @@ const questions = [
 function Faq() {
   return (
     <div className="max-w-6xl mx-auto p-8 rounded-lg shadow-lg m-8 bg-white">
+      <div className="flex justify-start">
+          <BackButton /> 
+        </div>
       <h1 className="text-4xl font-bold text-center mb-8 text-primary">Preguntas Frecuentes</h1>
       <div className="mt-6 space-y-4">
         {questions.map((q, index) => (
