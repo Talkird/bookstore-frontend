@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import BackButton from "../components/backButton/backButton";
 
 function ComoComprar() {
   return (
@@ -6,6 +7,9 @@ function ComoComprar() {
       {/* Encabezado */}
       
       <div className="flex justify-between items-center mb-6">
+      <div>
+          <BackButton /> 
+        </div>
         <nav className="text-gray-500">
           {/* Enlace a Inicio */}
           <Link to="/" className="hover:text-primary">Home</Link> - <span className="text-gray-400">Cómo Comprar</span>
