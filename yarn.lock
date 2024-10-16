@@ -790,7 +790,7 @@ binary-extensions@^2.0.0:
   version "0.0.0"
   dependencies:
     "@fontsource/montserrat" "^5.1.0"
-    bookstore-frontend "file:../../../AppData/Local/Yarn/Cache/v6/npm-bookstore-frontend-0.0.0-492aabb2-fbd3-4fca-ab3f-1f7e7dac8f95-1729108825100/node_modules/bookstore-frontend"
+    bookstore-frontend "file:../../../AppData/Local/Yarn/Cache/v6/npm-bookstore-frontend-0.0.0-0a32b75a-ba38-426f-8da5-04e73d830a66-1729109718554/node_modules/bookstore-frontend"
     class-variance-authority "^0.7.0"
     clsx "^2.1.1"
     leaflet "^1.9.4"
