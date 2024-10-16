@@ -1,82 +1,75 @@
-import { useState } from 'react';
+import { useState } from "react";
+import PropTypes from "prop-types";
 import Button from "../ui/Button";
 
 function Filter({ onFilterChange }) {
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-  const [publisher, setPublisher] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState([]); // Estado para las categorías seleccionadas
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const handleFilterChange = () => {
-    onFilterChange({ minPrice, maxPrice, publisher, selectedCategories }); // Enviar las categorías seleccionadas
+    onFilterChange({ minPrice, maxPrice, publisher, selectedCategories });
   };
 
   const categories = [
-    'NOVELA',
-    'ROMANTICO',
-    'TERROR',
-    'CIENCIA FICCION',
-    'FANTASIA',
-    'AVENTURAS',
-    'SUSPENSO',
-    'POESIA',
-    'INFANTIL',
-    'AUTOAYUDA',
-    'DEPORTE',
-    'ARTE',
-    'MUSICA',
-    'COCINA',
+    "NOVELA",
+    "ROMANTICO",
+    "TERROR",
+    "CIENCIA FICCION",
+    "FANTASIA",
+    "AVENTURAS",
+    "SUSPENSO",
+    "POESIA",
+    "INFANTIL",
+    "AUTOAYUDA",
+    "DEPORTE",
+    "ARTE",
+    "MUSICA",
+    "COCINA",
   ];
 
+  // Si la categoría ya está seleccionada, la quitamos, de lo contrario la agregamos
   const handleCategoryChange = (category) => {
-    // Si la categoría ya está seleccionada, la quitamos, de lo contrario la agregamos
-    setSelectedCategories(prevCategories => 
-      prevCategories.includes(category) 
-        ? prevCategories.filter(c => c !== category) 
-        : [...prevCategories, category]
+    setSelectedCategories((prevCategories) =>
+      prevCategories.includes(category)
+        ? prevCategories.filter((c) => c !== category)
+        : [...prevCategories, category],
     );
   };
 
   return (
-    <div className="p-4 border rounded-lg bg-white shadow-md">
-      <h2 className="text-lg font-bold mb-4">Filtrar por precios</h2>
-      <div className="flex items-center space-x-2 mb-2">
+    <div className="rounded-lg border bg-white p-4 shadow-md">
+      <h2 className="mb-4 text-lg font-bold">Filtrar por precios</h2>
+      <div className="mb-2 flex items-center space-x-2">
         <input
-          type="number"
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
           placeholder="Mín"
-          className="border p-2 rounded-lg text-center w-24"
+          className="w-24 rounded-lg border p-3 text-center"
         />
         <span>-</span>
         <input
-          type="number"
           value={maxPrice}
           onChange={(e) => setMaxPrice(e.target.value)}
           placeholder="Máx"
-          className="border p-2 rounded-lg text-center w-24"
+          className="w-24 rounded-lg border p-3 text-center"
         />
-        <Button onClick={handleFilterChange}>
-          IR
-        </Button>
       </div>
-      <p className="text-sm text-gray-500 mb-4">
-        *Min. $995.00 - Max. $588086.00
-      </p>
 
-      <h2 className="text-lg font-bold mb-2">Filtrar por Editorial</h2>
+      <h2 className="mb-2 mt-2 text-lg font-bold">Filtrar por Editorial</h2>
       <select
         value={publisher}
         onChange={(e) => setPublisher(e.target.value)}
-        className="border p-2 rounded-lg w-full mb-4"
+        className="mb-4 w-full rounded-lg border p-2"
       >
         <option value="">Todas</option>
         <option value="Editorial A">Editorial A</option>
         <option value="Editorial B">Editorial B</option>
       </select>
 
-      <h2 className="text-lg font-bold mb-2">Filtrar por Categoría</h2>
-      <div className="grid grid-cols-2 gap-2 mb-4">
+      <h2 className="mb-2 text-lg font-bold">Filtrar por Categoría</h2>
+      <div className="mb-4 grid grid-cols-2 gap-2">
         {categories.map((category) => (
           <label key={category} className="flex items-center">
             <input
@@ -91,11 +84,12 @@ function Filter({ onFilterChange }) {
         ))}
       </div>
 
-      <Button onClick={handleFilterChange}>
-        Aplicar filtros
-      </Button>
+      <Button onClick={handleFilterChange}>Aplicar filtros</Button>
     </div>
   );
 }
+Filter.propTypes = {
+  onFilterChange: PropTypes.func.isRequired,
+};
 
 export default Filter;

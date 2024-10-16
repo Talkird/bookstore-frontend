@@ -1,10 +1,10 @@
-
-
 function SpecialOfferBanner() {
   return (
-    <div className="my-12 p-8 bg-gray-100 text-center rounded-lg">
+    <div className="my-12 rounded-lg bg-gray-100 p-8 text-center">
       <h2 className="text-2xl font-semibold">¡Oferta especial!</h2>
-      <p className="mt-4 text-lg">Descuento ingresando el cupón <strong>OCTUBRE24</strong></p>
+      <p className="mt-4 text-lg">
+        Descuento ingresando el cupón <strong>OCTUBRE24</strong>
+      </p>
     </div>
   );
 }

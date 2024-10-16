@@ -1,27 +1,19 @@
-
-import Slider from "react-slick"; // Importar react-slick
-import "slick-carousel/slick/slick.css"; 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import PropTypes from "prop-types";
 
-// Componente para el banner de imágenes
-function ImageBanner() {
+function ImageBanner({ images }) {
   const settings = {
-    dots: true, // Mostrar puntos de navegación
-    infinite: true, // Permitir desplazamiento infinito
-    speed: 500, // Velocidad de transición
-    slidesToShow: 1, // Mostrar una imagen a la vez
-    slidesToScroll: 1, // Desplazar una imagen a la vez
-    autoplay: true, // Hacer que las imágenes cambien automáticamente
-    autoplaySpeed: 3000, // Tiempo en milisegundos entre cambios de imagen
-    arrows: true, // Mostrar flechas de navegación
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: true,
   };
-
-  const images = [
-    "https://acdn.mitiendanube.com/stores/001/315/129/themes/cubo/2-slide-1716819413094-6733356213-b7a5d39530e4190623e5356f6d196b9f1716819414-1024-1024.webp?264042642",
-    "https://market2.livriz.com/storage/section/1/escape%20de%20viena.png",
-    "https://market2.livriz.com/storage/section/1/Blackwater.jpg",
-    "https://planetadelibrosar0.cdnstatics.com/usuaris/web_banners/fotos/4/original/3329_1_PDL_1140x272.png"
-  ];
 
   return (
     <div className="banner-container flex justify-center">
@@ -31,7 +23,7 @@ function ImageBanner() {
             <img
               src={image}
               alt={`Banner ${index}`}
-              className="banner-image object-cover w-full h-60" // Cambia h-60 para ajustar la altura
+              className="banner-image h-60 w-full object-cover" // Cambia h-60 para ajustar la altura
             />
           </div>
         ))}
@@ -39,5 +31,9 @@ function ImageBanner() {
     </div>
   );
 }
+
+ImageBanner.propTypes = {
+  images: PropTypes.array.isRequired,
+};
 
 export default ImageBanner;

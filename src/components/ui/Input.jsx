@@ -1,5 +1,5 @@
-import { cn } from "../../utils/classNames";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 
 function Input({ className, placeholder, ...rest }) {
   return (
@@ -7,9 +7,9 @@ function Input({ className, placeholder, ...rest }) {
       type="text"
       placeholder={placeholder}
       {...rest}
-      className={cn(
-        "w-full rounded-lg bg-gray-50 p-3 border border-gray-300 text-base text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm transition-all",
-        className
+      className={classNames(
+        "w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-base text-gray-700 placeholder-gray-400 shadow-sm transition-all focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary",
+        className,
       )}
     />
   );

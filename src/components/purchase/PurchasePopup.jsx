@@ -1,22 +1,19 @@
-import React from "react";
 import Popup from "reactjs-popup";
-import Button from "../ui/Button"; // Asegúrate de que el componente Button esté importado correctamente
+import Button from "../ui/Button";
+import Input from "../ui/Input";
+import propTypes from "prop-types";
 
 const PurchasePopup = ({ cartItems, onCheckout }) => {
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
-    0
+    0,
   );
 
   return (
     <Popup
-      trigger={
-        <Button className="rounded bg-blue-600 p-2 text-white">
-          Ver Carrito
-        </Button>
-      }
+      trigger={<Button className="rounded text-white">Ver Carrito</Button>}
       modal
-      contentStyle={{ width: "95%", maxWidth: "600px" }} // Ajusta el tamaño del popup
+      contentStyle={{ width: "95%", maxWidth: "600px" }}
     >
       {(close) => (
         <div className="rounded-lg bg-white p-6 shadow-lg">
@@ -24,7 +21,9 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
             Carrito de Compras
           </h1>
 
-          <div className="max-h-72 overflow-y-auto mb-4 space-y-4"> {/* Contenedor deslizante más grande */}
+          <div className="mb-4 max-h-72 space-y-4 overflow-y-auto">
+            {" "}
+            {/* Contenedor deslizante más grande */}
             {cartItems.length === 0 ? (
               <p className="text-gray-600">Tu carrito está vacío.</p>
             ) : (
@@ -55,7 +54,9 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
           </div>
 
           <div className="mb-4">
-            <h2 className="text-lg font-bold text-gray-800">Resumen de Compra</h2>
+            <h2 className="text-lg font-bold text-gray-800">
+              Resumen de Compra
+            </h2>
             <p className="text-lg font-semibold text-gray-800">
               Total: ${totalPrice.toLocaleString()}
             </p>
@@ -71,7 +72,7 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               const email = e.target.email.value;
               const address = e.target.address.value;
               onCheckout({ name, email, address, cartItems });
-              close(); // Cierra el popup después de enviar el formulario
+              close();
             }}
             className="space-y-2"
           >
@@ -79,49 +80,36 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               <label htmlFor="name" className="block text-gray-700">
                 Nombre:
               </label>
-              <input
-                type="text"
-                id="name"
-                required
-                className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:ring focus:ring-blue-500"
-              />
+              <Input type="text" id="name" required />
             </div>
 
             <div>
               <label htmlFor="email" className="block text-gray-700">
                 Correo Electrónico:
               </label>
-              <input
-                type="email"
-                id="email"
-                required
-                className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:ring focus:ring-blue-500"
-              />
+              <Input type="email" id="email" required />
             </div>
 
             <div>
               <label htmlFor="address" className="block text-gray-700">
                 Dirección de Envío:
               </label>
-              <input
-                type="text"
-                id="address"
-                required
-                className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:ring focus:ring-blue-500"
-              />
+              <Input type="text" id="address" required />
             </div>
 
-            <button
-              type="submit"
-              className="mt-4 w-full rounded bg-blue-600 py-2 font-bold text-white transition duration-300 hover:bg-blue-700"
-            >
+            <Button type="submit" className="mt-4">
               Confirmar Compra
-            </button>
+            </Button>
           </form>
         </div>
       )}
     </Popup>
   );
+};
+
+PurchasePopup.propTypes = {
+  cartItems: propTypes.array.isRequired,
+  onCheckout: propTypes.func.isRequired,
 };
 
 export default PurchasePopup;

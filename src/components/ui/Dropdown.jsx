@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import propTypes from "prop-types";
 
 const Dropdown = ({ categories }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,7 @@ const Dropdown = ({ categories }) => {
       <div>
         <button
           onClick={toggleDropdown}
-          className="inline-flex justify-between w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+          className="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
         >
           Categorías
           <svg
@@ -32,7 +33,7 @@ const Dropdown = ({ categories }) => {
       </div>
 
       {isOpen && (
-        <div className="absolute right-0 z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="absolute right-0 z-10 mt-2 w-56 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
           <div className="py-1" role="none">
             {categories.map((category) => (
               <a
@@ -48,6 +49,10 @@ const Dropdown = ({ categories }) => {
       )}
     </div>
   );
+};
+
+Dropdown.propTypes = {
+  categories: propTypes.arrayOf(propTypes.string).isRequired,
 };
 
 export default Dropdown;
