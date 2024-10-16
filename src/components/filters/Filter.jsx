@@ -39,7 +39,7 @@ function Filter({ onFilterChange }) {
 
   return (
     <div className="p-4 border rounded-lg bg-white shadow-md">
-      <h2 className="font-bold mb-4">Filtrar por precios</h2>
+      <h2 className="text-lg font-bold mb-4">Filtrar por precios</h2>
       <div className="flex items-center space-x-2 mb-2">
         <input
           type="number"
@@ -64,7 +64,7 @@ function Filter({ onFilterChange }) {
         *Min. $995.00 - Max. $588086.00
       </p>
 
-      <h2 className="font-bold mb-2">Filtrar por Editorial</h2>
+      <h2 className="text-lg font-bold mb-2">Filtrar por Editorial</h2>
       <select
         value={publisher}
         onChange={(e) => setPublisher(e.target.value)}
@@ -75,7 +75,7 @@ function Filter({ onFilterChange }) {
         <option value="Editorial B">Editorial B</option>
       </select>
 
-      <h2 className="font-bold mb-2">Filtrar por Categoría</h2>
+      <h2 className="text-lg font-bold mb-2">Filtrar por Categoría</h2>
       <div className="grid grid-cols-2 gap-2 mb-4">
         {categories.map((category) => (
           <label key={category} className="flex items-center">
