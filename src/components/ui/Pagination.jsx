@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Button from '../ui/Button';
+import PropTypes from "prop-types";
+import Button from "../ui/Button";
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const handlePrevious = () => {
@@ -28,7 +27,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
   };
 
   return (
-    <div className="flex justify-center mt-4 space-x-2">
+    <div className="mt-4 flex justify-center space-x-2">
       <Button
         onClick={handlePrevious}
         variant="outline"
@@ -41,7 +40,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         <Button
           key={page}
           onClick={() => onPageChange(page)}
-          variant={currentPage === page ? 'solid' : 'outline'}
+          variant={currentPage === page ? "solid" : "outline"}
           className="px-4"
         >
           {page}

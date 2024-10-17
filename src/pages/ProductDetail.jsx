@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import Button from "../components/ui/Button";
-import BackButton from "../components/backButton/backButton";
+import BackButton from "../components/ui/BackButton";
 import ShippingPopup from "../components/shippingPopup/ShippingPopup";
-import image from "../assets/image.webp";
+import CouponInput from "../components/coupon/CouponInput";
+import PaymentPopup from "../components/payment/PaymentPopup";
 import { useParams, useNavigate } from "react-router-dom";
-import { Plus, Minus } from "lucide-react"; // Asegúrate de tener estos íconos importados
+import { Plus, Minus } from "lucide-react"; 
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
 
-  const [quantity, setQuantity] = useState(1); // Estado para manejar la cantidad seleccionada
-  const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false); // Estado para el pop-up
+  const [quantity, setQuantity] = useState(1);
+  const [discount, setDiscount] = useState(0); // Estado para el descuento
+  const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
+  const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false); // Estado para el popup de pago
 
   const product = {
     id: 2,
@@ -19,8 +22,7 @@ const ProductDetail = () => {
     author: "Magali Tajes",
     price: 29299,
     imageUrl: "https://data.livriz.com/media/mediaspace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/193f2d34-d463-476d-862c-319ddf255ea6/9789500770545.jpg",
-    description:
-      "La vida es un viaje que tiene muchos viajes adentro. Algunos nos conectan con nuestro corazón, otros nos cambian el rumbo. También están los que nos parten al medio. No hay viajes equivocados. Todos esconden un destino. En Espíritu Animal, volamos hacia adentro. ¡Prepárate para la aventura! Las turbulencias en este camino son inevitables, pero no pierdas la calma. El universo nos cuida, y las estrellas están de nuestro lado. Déjate guiar por lo invisible. Permite que el tiempo se detenga. Quizás, habitando lo desconocido, puedas al fin conocerte. ¡Despegamos!",
+    description: "La vida es un viaje que tiene muchos viajes adentro. Algunos nos conectan con nuestro corazón, otros nos cambian el rumbo. También están los que nos parten al medio. No hay viajes equivocados. Todos esconden un destino. En Espíritu Animal, volamos hacia adentro. ¡Prepárate para la aventura! Las turbulencias en este camino son inevitables, pero no pierdas la calma. El universo nos cuida, y las estrellas están de nuestro lado. Déjate guiar por lo invisible. Permite que el tiempo se detenga. Quizás, habitando lo desconocido, puedas al fin conocerte. ¡Despegamos!",
     isbn: "9789873683870",
     category: "No ficción",
     availability: 20,
@@ -30,8 +32,22 @@ const ProductDetail = () => {
     pages: "344"
   };
 
+  const applyDiscount = (coupon) => {
+    const validCoupons = {
+      "DESCUENTO10": 10,
+      "DESCUENTO20": 20
+    };
+
+    if (validCoupons[coupon]) {
+      setDiscount(validCoupons[coupon]);
+      return true; 
+    } else {
+      return false; 
+    }
+  };
+
   const handleQuantityChange = (e) => {
-    const value = Math.max(1, Math.min(e.target.value, product.availability)); // Limita la cantidad a 1 y la disponibilidad
+    const value = Math.max(1, Math.min(e.target.value, product.availability));
     setQuantity(value);
   };
 
@@ -48,7 +64,6 @@ const ProductDetail = () => {
   };
 
   const addToCart = () => {
-    // Lógica para añadir el producto al carrito con la cantidad seleccionada
     console.log(`Añadido ${quantity} unidades de ${product.title} al carrito.`);
   };
 
@@ -60,15 +75,24 @@ const ProductDetail = () => {
     setIsShippingPopupOpen(false);
   };
 
+  const openPaymentPopup = () => {
+    setIsPaymentPopupOpen(true);
+  };
+
+  const closePaymentPopup = () => {
+    setIsPaymentPopupOpen(false);
+  };
+
+  // Calcular el precio final con el descuento
+  const finalPrice = product.price - (product.price * (discount / 100));
+
   return (
-    <div className="container mx-auto my-10 rounded-lg bg-white p-6 shadow-lg">
-      <div>
+    <div className="container mx-auto my-10 rounded-lg bg-white p-8 shadow-lg">
+      <div className="mb-5">
         <BackButton />
       </div>
 
-      {/* Sección principal con la imagen y detalles del producto */}
       <div className="flex flex-col md:flex-row items-start">
-        {/* Imagen del producto */}
         <div className="mb-6 w-full md:w-1/3 h-full">
           <img
             className="h-full rounded-lg object-cover shadow-md"
@@ -77,17 +101,20 @@ const ProductDetail = () => {
           />
         </div>
 
-        {/* Detalles del producto */}
         <div className="w-full md:w-2/3 md:pl-8">
           <h2 className="mb-2 text-3xl font-bold text-primary">{product.title}</h2>
           <p className="text-xl text-gray-600 mb-4">{product.author}</p>
-          <p className="mb-4 text-2xl font-semibold text-red-600">
-            ${product.price.toLocaleString()}
+
+          {/* Precio final con el descuento aplicado */}
+          <p className={`mb-4 text-2xl font-semibold ${discount ? "text-green-600" : "text-red-600"}`}>
+            ${finalPrice.toLocaleString()}
           </p>
+          {discount > 0 && (
+            <p className="text-sm text-gray-500">Descuento aplicado: {discount}%</p>
+          )}
 
           <p className="mb-2 text-green-600">Stock: {product.availability}</p>
 
-          {/* Selección de cantidad y botón de añadir al carrito */}
           <div className="flex items-center mb-4">
             <button className="quantity-button" onClick={decreaseQuantity}>
               <Minus size={16} />
@@ -108,18 +135,26 @@ const ProductDetail = () => {
             </Button>
           </div>
 
-          {/* Botón para abrir el popup de envío */}
-          <Button onClick={openShippingPopup} className="mt-4">
+          <CouponInput applyDiscount={applyDiscount} />
+
+          <Button onClick={openShippingPopup} variant="outline" className="mt-4 mb-4 mr-5">
             Ver opciones de envío
           </Button>
+
+          <Button onClick={openPaymentPopup} variant="outline" className="mt-4 ml-10">
+            Ver medios de pago
+          </Button>
+
 
           <div className="mt-6">
             <p className="text-sm text-gray-500">
               *Precios válidos solo para compras online.
             </p>
           </div>
+
           <h3 className="mt-8 mb-4 text-xl font-bold text-gray-800">Descripción</h3>
           <p className="mb-4 text-gray-600 text-justify">{product.description}</p>
+
           <h3 className="mb-4 text-xl font-bold text-gray-800">Especificaciones</h3>
           <table className="w-full text-left text-gray-600">
             <tbody>
@@ -145,8 +180,9 @@ const ProductDetail = () => {
           </table>
         </div>
       </div>
+      
+      <PaymentPopup isOpen={isPaymentPopupOpen} onClose={closePaymentPopup} />
 
-      {/* Pop-up de opciones de envío */}
       <ShippingPopup isOpen={isShippingPopupOpen} onClose={closeShippingPopup} />
     </div>
   );

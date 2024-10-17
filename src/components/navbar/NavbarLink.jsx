@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { cn } from "../../utils/classNames";
+import classNames from "classnames";
 
 function NavbarLink({ children, to, className }) {
   return (
     <Link
-      className={cn(
+      className={classNames(
         "text-xl font-medium transition hover:text-primary/80",
         className,
       )}

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import BackButton from "../components/backButton/backButton";
+import BackButton from "../components/ui/BackButton";
 
 function ComoComprar() {
   return (

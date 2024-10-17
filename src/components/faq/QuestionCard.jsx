@@ -1,10 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 function QuestionCard({ question, answer }) {
   return (
-    <div className="p-4 border rounded-lg shadow-md bg-white">
-      <h3 className="text-3xl font-semibold mb-2">{question}</h3>
+    <div className="rounded-lg border bg-white p-4 shadow-md">
+      <h3 className="mb-2 text-3xl font-semibold">{question}</h3>
       <p className="text-gray-700">{answer}</p>
     </div>
   );

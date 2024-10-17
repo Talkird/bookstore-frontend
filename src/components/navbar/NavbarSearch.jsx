@@ -1,11 +1,11 @@
 import { Search } from "lucide-react";
-import { cn } from "../../utils/classNames";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 
 function NavbarSearch({ className }) {
   return (
     <div
-      className={cn(
+      className={classNames(
         "mx-6 flex flex-row items-center justify-between rounded-lg border border-primary/50 bg-white p-2",
         className,
       )}

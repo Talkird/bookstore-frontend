@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { cn } from "../../utils/classNames";
+import classNames from "classnames";
 
 function FooterLink({ children, to, className }) {
   return (
     <Link
-      className={cn(
+      className={classNames(
         "flex items-center gap-3 text-lg font-medium text-white/80 transition hover:opacity-60",
         className,
       )}
