@@ -11,7 +11,7 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
 
   return (
     <Popup
-      trigger={<Button className="rounded text-white">Ver Carrito</Button>}
+      trigger={<Button className="rounded text-white">Comprar</Button>}
       modal
       contentStyle={{ width: "95%", maxWidth: "600px" }}
     >
