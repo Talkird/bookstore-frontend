@@ -2,19 +2,16 @@ import React, { useState } from "react";
 import Button from "../components/ui/Button";
 import BackButton from "../components/ui/BackButton";
 import ShippingPopup from "../components/shippingPopup/ShippingPopup";
-import CouponInput from "../components/coupon/CouponInput";
 import PaymentPopup from "../components/payment/PaymentPopup";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Plus, Minus, Star } from "lucide-react";
 import Input from "../components/ui/Input";
 
 const ProductDetail = () => {
   const { productId } = useParams();
-  const navigate = useNavigate();
-
   const [quantity, setQuantity] = useState(1);
   const [discount, setDiscount] = useState(0);
-  const [rating, setRating] = useState(0); // Estado para la calificación
+  const [rating, setRating] = useState(0);
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
 
@@ -88,7 +85,6 @@ const ProductDetail = () => {
 
   const handleRating = (star) => {
     setRating(star);
-    // Aquí podrías enviar la calificación al servidor usando fetch/axios
     console.log(
       `Rating enviado: ${star} estrellas para el producto ${product.title}`,
     );
@@ -102,7 +98,7 @@ const ProductDetail = () => {
           key={i}
           size={40}
           onClick={() => handleRating(i)}
-          className={`cursor-pointer ${i <= rating ? "text-yellow-500" : "text-gray-400"}`} // Pintar las estrellas
+          className={`cursor-pointer ${i <= rating ? "text-yellow-500" : "text-gray-400"}`}
         />,
       );
     }
@@ -115,29 +111,28 @@ const ProductDetail = () => {
         <BackButton />
       </div>
 
+      <div className="mb-10 flex flex-col">
+        <h2 className="text-5xl font-bold text-primary">{product.title}</h2>
+        <div className="mt-2 flex items-center">
+          <p className="mr-2 text-3xl font-semibold">
+            {product.userRating.toFixed(1)}
+          </p>
+          <Star className="text-yellow-500" size={30} />
+        </div>
+      </div>
+
       <div className="flex flex-row items-start">
         <div className="mb-6 h-full w-full md:w-1/3">
           <img
-            className="h-full rounded-lg object-cover shadow-md"
+            className="h-160 w-128 rounded-lg object-cover shadow-md"
             src={product.imageUrl}
             alt={product.title}
           />
         </div>
 
         <div className="flex w-auto flex-col pl-8">
-          <h2 className="mb-5 text-5xl font-bold text-primary">
-            {product.title}
-          </h2>
-
-          <div className="mb-10 flex items-center">
-            <p className="mr-2 text-3xl font-semibold">
-              {product.userRating.toFixed(1)}
-            </p>
-            <Star className="text-yellow-500" size={30} />
-          </div>
-
           <p
-            className={`mb-12 text-5xl font-semibold ${discount ? "text-green-600" : "text-green-600"}`}
+            className={`mb-12 text-7xl font-semibold ${discount ? "text-green-600" : "text-primary"}`}
           >
             ${finalPrice.toLocaleString()}
           </p>
@@ -161,7 +156,7 @@ const ProductDetail = () => {
               max={product.availability}
               value={quantity}
               onChange={handleQuantityChange}
-              className="mx-4 w-4/12 px-4 py-2 text-center"
+              className="mx-4 w-3/12 px-4 py-2 text-center"
             />
             <Button className="quantity-button" onClick={increaseQuantity}>
               <Plus size={16} />
@@ -172,7 +167,7 @@ const ProductDetail = () => {
           </div>
 
           <div className="mb-8 mt-6">
-            <h3 className="text-3xl font-bold mb-1">Calificar producto</h3>
+            <h3 className="mb-1 text-3xl font-bold">Calificar producto</h3>
             <div className="mt-4 flex items-center">{renderStars()}</div>
           </div>
 
@@ -197,30 +192,29 @@ const ProductDetail = () => {
         <div className="ml-20 mt-4 w-full max-w-sm md:mt-0 md:w-1/3 md:pl-8">
           <h3 className="mb-2 mt-4 text-2xl font-bold text-gray-800">
             Descripción
-          </h3>{" "}
+          </h3>
           <p className="mb-2 text-justify text-lg text-gray-600">
-            {" "}
             {product.description}
           </p>
           <h3 className="mb-2 text-2xl font-bold text-gray-800">
             Especificaciones
-          </h3>{" "}
+          </h3>
           <table className="w-full text-left text-gray-600">
             <tbody>
               <tr>
                 <td className="py-1 text-lg font-semibold">
                   Autor: {product.author}
-                </td>{" "}
+                </td>
               </tr>
               <tr>
                 <td className="py-1 text-lg font-semibold">
-                  Genero: {product.genre}
-                </td>{" "}
+                  Género: {product.genre}
+                </td>
               </tr>
               <tr>
                 <td className="py-1 text-lg font-semibold">
                   Año de publicación: {product.year}
-                </td>{" "}
+                </td>
               </tr>
             </tbody>
           </table>
