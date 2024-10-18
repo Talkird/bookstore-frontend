@@ -1,53 +1,100 @@
+import axios from 'axios';
+import { getToken } from '../utils/getToken';
+
 const base_url = "http://localhost:8080/carts";
 
+
 export const getCart = async (userId) => {
-    const response = await fetch(`${base_url}/${userId}`);
-    return response.json();
-}
+  try {
+    const token = getToken();
+    const response = await axios.get(`${base_url}/carts/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error getting cart:", error);
+    throw error;
+  }
+};
 
 export const clearCart = async (userId) => {
-    const response = await fetch(`${base_url}/${userId}`, {
-        method: "DELETE"
+  try {
+    const token = getToken();
+    const response = await axios.delete(`${base_url}/carts/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     });
-    return response.json();
-}
+    return response.data;
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+    throw error;
+  }
+};
 
 export const addCartItem = async (userId, cartItemRequest) => {
-    const response = await fetch(`${base_url}/${userId}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(cartItemRequest)
+  try {
+    const token = getToken();
+    const response = await axios.post(`${base_url}/carts/${userId}`, cartItemRequest, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
     });
-    return response.json();
-}
+    return response.data;
+  } catch (error) {
+    console.error("Error adding cart item:", error);
+    throw error;
+  }
+};
 
 export const updateCartItem = async (userId, cartItemId, cartItemRequest) => {
-    const response = await fetch(`${base_url}/${userId}/${cartItemId}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(cartItemRequest)
+  try {
+    const token = getToken();
+    const response = await axios.put(`${base_url}/carts/${userId}/${cartItemId}`, cartItemRequest, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
     });
-    return response.json();
-}
+    return response.data;
+  } catch (error) {
+    console.error("Error updating cart item:", error);
+    throw error;
+  }
+};
 
 export const deleteCartItem = async (userId, cartItemId) => {
-    const response = await fetch(`${base_url}/${userId}/item/${cartItemId}`, {
-        method: "DELETE"
+  try {
+    const token = getToken();
+    const response = await axios.delete(`${base_url}/carts/${userId}/item/${cartItemId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     });
-    return response.json();
-}
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting cart item:", error);
+    throw error;
+  }
+};
 
 export const checkoutCart = async (userId, orderRequest) => {
-    const response = await fetch(`${base_url}/checkout/${userId}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(orderRequest)
+  try {
+    const token = getToken();
+    const response = await axios.post(`${base_url}/carts/checkout/${userId}`, orderRequest, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
     });
-    return response.json();
-}
+    return response.data;
+
+  } catch (error) {
+    console.error("Error checking out cart:", error);
+    throw error;
+  }
+};

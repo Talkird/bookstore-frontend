@@ -19,65 +19,132 @@ export const addBook = async (book) => {
   }
 };
 
-
 export const getBooks = async () => {
-    const response = await fetch(`${base_url}/all`);
-    return response.json();
-}
-export const getBook = async (id) => {
-    const response = await fetch(`${base_url}/get/${id}`);
-    return response.json();
+    try {
+        const response = await axios.get(`${base_url}/all`);
+        return response.data;
+    } catch (error) {
+
+        console.error("Error getting books:", error);
+        throw error;
+    }
 }
 
-export const updateBook = async (id, book) => {  // Added id parameter to match endpoint
-    const response = await fetch(`${base_url}/edit/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(book)
-    });
-    return response.json();
+export const getBook = async (id) => {
+    try {
+        const response = await axios.get(`${base_url}/get/${id}`);
+        return response.data;
+
+    } catch (error) {
+        console.error("Error getting book:", error);
+        throw error;
+    }
 }
+
+
+export const updateBook = async (id, book) => {  
+  try {
+      const token = getToken();
+        const response = await axios.put(`${base_url}/edit/${id}`, book, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        return response.data; 
+
+    } catch (error) {
+        console.error("Error updating book:", error);
+        throw error;
+    }
+};
+
 
 export const deleteBook = async (id) => {
-    const response = await fetch(`${base_url}/delete/${id}`, {
-        method: "DELETE"
-    });
-    return response.json();
+  try {
+      const token = getToken();
+        const response = await axios.delete(`${base_url}/delete/${id}`, {
+            Authorization: `Bearer ${token}`,
+        });
+        return response.data;
+
+    } catch (error) {
+        console.error("Error deleting book:", error);
+        throw error;
+    }
 }
 
 export const getBooksByGenre = async (genre) => {
-    const response = await fetch(`${base_url}/genre/${genre}`);
-    return response.json();
-}
+  try {
+    const response = await axios.get(`${base_url}/genre/${genre}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting books by genre:", error);
+    throw error;
+  }
+};
 
 export const getBooksByPriceRange = async (minPrice, maxPrice) => {
-    const response = await fetch(`${base_url}/price-range?minPrice=${minPrice}&maxPrice=${maxPrice}`);
-    return response.json();
-}
+  try {
+    const response = await axios.get(`${base_url}/price-range`, {
+      params: {
+        minPrice,
+        maxPrice,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error getting books by price range:", error);
+    throw error;
+  }
+};
 
 export const getBooksByTitle = async (title) => {
-    const response = await fetch(`${base_url}/title/${title}`);
-    return response.json();
-}
+  try {
+    const response = await axios.get(`${base_url}/title/${title}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting books by title:", error);
+    throw error;
+  }
+};
 
 export const getBooksByAuthor = async (author) => {
-    const response = await fetch(`${base_url}/author/${author}`);
-    return response.json();
-}
+  try {
+    const response = await axios.get(`${base_url}/author/${author}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting books by author:", error);
+    throw error;
+  }
+};
 
 export const getAvailableBooks = async () => {
-    const response = await fetch(`${base_url}/available`);
-    return response.json();
-}
+  try {
+    const response = await axios.get(`${base_url}/available`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting available books:", error);
+    throw error;
+  }
+};
 
 export const getBooksOrderedByPriceAsc = async () => {
-    const response = await fetch(`${base_url}/ordered-by-price-asc`);
-    return response.json();
-}
+  try {
+    const response = await axios.get(`${base_url}/ordered-by-price-asc`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting books ordered by price (asc):", error);
+    throw error;
+  }
+};
 
 export const getBooksOrderedByPriceDesc = async () => {
-    const response = await fetch(`${base_url}/ordered-by-price-desc`);
-    return response.json();
-}
+  try {
+    const response = await axios.get(`${base_url}/ordered-by-price-desc`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting books ordered by price (desc):", error);
+    throw error;
+  }
+};

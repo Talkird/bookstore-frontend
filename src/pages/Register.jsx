@@ -10,12 +10,7 @@ function Register() {
   const [name, setName] = useState("");
 
   const handleRegister = async () => {
-    try {
       const response = await register(name, email, password);
-      console.log("User registered successfully:", response);
-    } catch (error) {
-      console.error("Error registering user:", error);
-    }
   };
 
   return (

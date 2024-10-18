@@ -9,17 +9,16 @@ export const login = async (email, password) => {
             email,
             password
         });
-        const { token } = response.data;
-        setToken(token);
-        return response.data;
-
+        const { access_token } = response.data;
+        setToken(access_token); 
+        return { access_token }; 
     } catch (error) {
         console.error("Error logging in:", error);
         throw error;
     }
 }
 
-export const register = async (name, email, password, role="USER") => {
+export const register = async (name, email, password, role = "USER") => {
     try {
         const response = await axios.post(`${base_url}/register`, {
             name,
@@ -27,13 +26,13 @@ export const register = async (name, email, password, role="USER") => {
             password,
             role
         });
-        const { token } = response.data; 
-        setToken(token); 
-        return response.data;
-
+        const { access_token } = response.data; 
+        setToken(access_token); 
+        return { access_token };
     } catch (error) {
         console.error("Error registering:", error);
-        throw error;
+        throw error; 
     }
-}
+};
+
 

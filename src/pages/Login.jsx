@@ -3,20 +3,17 @@ import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../api/user";
+import { setToken, getToken } from "../utils/token";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    try {
-      console.log("Logging in with:", { email, password });
-      const response = await login(email, password);
-      console.log("User logged in successfully:", response);
-    } catch (error) {
-      console.error("Error logging user in:", error);
-    }
-  };
+        const response = await login(email, password);
+        console.log(getToken());
+    };
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
