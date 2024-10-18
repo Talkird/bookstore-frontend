@@ -5,7 +5,8 @@ import ShippingPopup from "../components/shippingPopup/ShippingPopup";
 import CouponInput from "../components/coupon/CouponInput";
 import PaymentPopup from "../components/payment/PaymentPopup";
 import { useParams, useNavigate } from "react-router-dom";
-import { Plus, Minus, Star } from "lucide-react"; // Importamos el icono de estrella
+import { Plus, Minus, Star } from "lucide-react";
+import Input from "../components/ui/Input";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -124,65 +125,72 @@ const ProductDetail = () => {
         </div>
 
         <div className="flex w-auto flex-col pl-8">
-          <h2 className="mb-3 text-5xl font-bold text-primary">
+          <h2 className="mb-5 text-5xl font-bold text-primary">
             {product.title}
           </h2>
-          <div className="mb-8 flex items-center">
+
+          <div className="mb-10 flex items-center">
             <p className="mr-2 text-3xl font-semibold">
               {product.userRating.toFixed(1)}
             </p>
             <Star className="text-yellow-500" size={30} />
           </div>
+
           <p
-            className={`mb-4 text-2xl font-semibold ${discount ? "text-green-600" : "text-red-600"}`}
+            className={`mb-12 text-5xl font-semibold ${discount ? "text-green-600" : "text-primary"}`}
           >
             ${finalPrice.toLocaleString()}
           </p>
+
           {discount > 0 && (
-            <p className="text-sm text-gray-500">
+            <p className="mb-4 text-sm text-gray-500">
               Descuento aplicado: {discount}%
             </p>
           )}
-          <p className="mb-2 text-green-600">Stock: {product.availability}</p>
-          <div className="mb-4 flex items-center">
+
+          <p className="mb-4 text-xl text-green-600">
+            Stock: {product.availability}
+          </p>
+
+          <div className="mb-6 flex items-center">
             <Button className="quantity-button" onClick={decreaseQuantity}>
               <Minus size={16} />
             </Button>
-            <input
-              type="number"
+            <Input
               min="1"
               max={product.availability}
               value={quantity}
               onChange={handleQuantityChange}
-              className="mx-2 h-10 w-20 border border-secondary text-center"
+              className="mx-4 w-10 px-4 py-2 text-center"
             />
             <Button className="quantity-button" onClick={increaseQuantity}>
               <Plus size={16} />
             </Button>
-            <Button onClick={addToCart} className="ml-2">
+            <Button onClick={addToCart} className="ml-4">
               Agregar al carrito
             </Button>
           </div>
-          <CouponInput applyDiscount={applyDiscount} className="mb" />{" "}
-          <div className="mb-4 mt-8 flex">
+
+          <div className="mt-8">
+            <h3 className="text-3xl font-bold">Calificar producto</h3>
+            <div className="mt-4 flex items-center">{renderStars()}</div>
+          </div>
+
+          <div className="mt-10 flex">
             <Button
               onClick={openShippingPopup}
               variant="outline"
-              className="mr-2"
+              className="mr-4"
             >
               Ver opciones de envío
             </Button>
             <Button
               onClick={openPaymentPopup}
               variant="outline"
-              className="ml-2"
+              className="ml-4"
             >
               Ver medios de pago
             </Button>
-          </div>
-          <div className="mt-6">
-            <h3 className="text-3xl font-bold">Calificar producto</h3>
-            <div className="mt-2 flex items-center">{renderStars()}</div>
           </div>
         </div>
 
