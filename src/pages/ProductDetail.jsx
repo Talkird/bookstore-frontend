@@ -26,13 +26,10 @@ const ProductDetail = () => {
       "https://data.livriz.com/media/mediaspace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/193f2d34-d463-476d-862c-319ddf255ea6/9789500770545.jpg",
     description: "La vida es un viaje que tiene muchos viajes adentro...",
     isbn: "9789873683870",
-    category: "No ficción",
+    genre: "Novela",
     availability: 20,
-    weight: "500g",
-    publisher: "Sudamericana",
-    publishDate: "01/11/2022",
-    pages: "344",
-    userRating: 4.5, // Calificación promedio del producto
+    year: "2022",
+    userRating: 4.5,
   };
 
   const applyDiscount = (coupon) => {
@@ -96,14 +93,13 @@ const ProductDetail = () => {
     );
   };
 
-  // Renderizar las estrellas seleccionables
   const renderStars = () => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
         <Star
           key={i}
-          size={24}
+          size={40}
           onClick={() => handleRating(i)}
           className={`cursor-pointer ${i <= rating ? "text-yellow-500" : "text-gray-400"}`} // Pintar las estrellas
         />,
@@ -128,12 +124,11 @@ const ProductDetail = () => {
         </div>
 
         <div className="flex w-auto flex-col pl-8">
-          <h2 className="mb-2 text-3xl font-bold text-primary">
+          <h2 className="mb-3 text-5xl font-bold text-primary">
             {product.title}
           </h2>
-          <p className="mb-2 text-xl text-gray-600">{product.author}</p>
-          <div className="mb-6 flex items-center">
-            <p className="mr-2 text-2xl font-semibold">
+          <div className="mb-8 flex items-center">
+            <p className="mr-2 text-3xl font-semibold">
               {product.userRating.toFixed(1)}
             </p>
             <Star className="text-yellow-500" size={30} />
@@ -150,9 +145,9 @@ const ProductDetail = () => {
           )}
           <p className="mb-2 text-green-600">Stock: {product.availability}</p>
           <div className="mb-4 flex items-center">
-            <button className="quantity-button" onClick={decreaseQuantity}>
+            <Button className="quantity-button" onClick={decreaseQuantity}>
               <Minus size={16} />
-            </button>
+            </Button>
             <input
               type="number"
               min="1"
@@ -161,15 +156,14 @@ const ProductDetail = () => {
               onChange={handleQuantityChange}
               className="mx-2 h-10 w-20 border border-secondary text-center"
             />
-            <button className="quantity-button" onClick={increaseQuantity}>
+            <Button className="quantity-button" onClick={increaseQuantity}>
               <Plus size={16} />
-            </button>
+            </Button>
             <Button onClick={addToCart} className="ml-2">
               Agregar al carrito
             </Button>
           </div>
           <CouponInput applyDiscount={applyDiscount} className="mb" />{" "}
-          {/* Mover cupon aquí */}
           <div className="mb-4 mt-8 flex">
             <Button
               onClick={openShippingPopup}
@@ -186,17 +180,9 @@ const ProductDetail = () => {
               Ver medios de pago
             </Button>
           </div>
-          {/* Componente para seleccionar rating con estrellas */}
           <div className="mt-6">
-            <h3 className="text-xl font-bold">Calificar producto</h3>
-            <div className="mt-2 flex items-center">
-              {renderStars()} {/* Renderizamos las estrellas */}
-            </div>
-          </div>
-          <div className="mt-6">
-            <p className="text-sm text-gray-500">
-              *Precios válidos solo para compras online.
-            </p>
+            <h3 className="text-3xl font-bold">Calificar producto</h3>
+            <div className="mt-2 flex items-center">{renderStars()}</div>
           </div>
         </div>
 
@@ -204,53 +190,29 @@ const ProductDetail = () => {
           <h3 className="mb-2 mt-4 text-2xl font-bold text-gray-800">
             Descripción
           </h3>{" "}
-
           <p className="mb-2 text-justify text-lg text-gray-600">
             {" "}
-
             {product.description}
           </p>
           <h3 className="mb-2 text-2xl font-bold text-gray-800">
             Especificaciones
           </h3>{" "}
-          {/* Aumentado a text-2xl */}
           <table className="w-full text-left text-gray-600">
             <tbody>
               <tr>
                 <td className="py-1 text-lg font-semibold">
-                  ISBN: {product.isbn}
+                  Autor: {product.author}
                 </td>{" "}
-                {/* Aumentado a text-lg */}
               </tr>
               <tr>
                 <td className="py-1 text-lg font-semibold">
-                  Categoría: {product.category}
+                  Genero: {product.genre}
                 </td>{" "}
-                {/* Aumentado a text-lg */}
               </tr>
               <tr>
                 <td className="py-1 text-lg font-semibold">
-                  Peso: {product.weight}
+                  Año de publicación: {product.year}
                 </td>{" "}
-                {/* Aumentado a text-lg */}
-              </tr>
-              <tr>
-                <td className="py-1 text-lg font-semibold">
-                  Editorial: {product.publisher}
-                </td>{" "}
-                {/* Aumentado a text-lg */}
-              </tr>
-              <tr>
-                <td className="py-1 text-lg font-semibold">
-                  Fecha de publicación: {product.publishDate}
-                </td>{" "}
-                {/* Aumentado a text-lg */}
-              </tr>
-              <tr>
-                <td className="py-1 text-lg font-semibold">
-                  Páginas: {product.pages}
-                </td>{" "}
-                {/* Aumentado a text-lg */}
               </tr>
             </tbody>
           </table>

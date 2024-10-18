@@ -51,7 +51,7 @@ function Cart() {
   ]);
 
   const handleRemove = (id) => {
-    setCartItems((prevItems) => prevItems.filter(item => item.id !== id));
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
     console.log(`Item with id ${id} removed from cart`);
   };
 
@@ -62,22 +62,23 @@ function Cart() {
   const updateQuantity = (id, newQuantity) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+        item.id === id ? { ...item, quantity: newQuantity } : item,
+      ),
     );
   };
 
-  const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
 
   return (
     <div className="p-4">
       <Button className="mb-4" onClick={handleCheckout}>
-        Comprar Carrito
+        COMPRAR
       </Button>
-      <p className="text-lg font-semibold">
-        Total: {formatPeso(total)}
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+      <p className="text-lg font-semibold">Total: {formatPeso(total)}</p>
+      <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {cartItems.map((item) => (
           <CartItem
             key={item.id}
@@ -86,7 +87,9 @@ function Cart() {
             price={item.price}
             initialQuantity={item.quantity}
             onRemove={() => handleRemove(item.id)}
-            onQuantityChange={(newQuantity) => updateQuantity(item.id, newQuantity)}
+            onQuantityChange={(newQuantity) =>
+              updateQuantity(item.id, newQuantity)
+            }
           />
         ))}
       </div>
