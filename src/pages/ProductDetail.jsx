@@ -137,7 +137,7 @@ const ProductDetail = () => {
           </div>
 
           <p
-            className={`mb-12 text-5xl font-semibold ${discount ? "text-green-600" : "text-primary"}`}
+            className={`mb-12 text-5xl font-semibold ${discount ? "text-green-600" : "text-green-600"}`}
           >
             ${finalPrice.toLocaleString()}
           </p>
@@ -148,7 +148,7 @@ const ProductDetail = () => {
             </p>
           )}
 
-          <p className="mb-4 text-xl text-green-600">
+          <p className="mb-4 text-xl text-primary">
             Stock: {product.availability}
           </p>
 
@@ -161,7 +161,7 @@ const ProductDetail = () => {
               max={product.availability}
               value={quantity}
               onChange={handleQuantityChange}
-              className="mx-4 w-10 px-4 py-2 text-center"
+              className="mx-4 w-4/12 px-4 py-2 text-center"
             />
             <Button className="quantity-button" onClick={increaseQuantity}>
               <Plus size={16} />
@@ -171,8 +171,8 @@ const ProductDetail = () => {
             </Button>
           </div>
 
-          <div className="mt-8">
-            <h3 className="text-3xl font-bold">Calificar producto</h3>
+          <div className="mb-8 mt-6">
+            <h3 className="text-3xl font-bold mb-1">Calificar producto</h3>
             <div className="mt-4 flex items-center">{renderStars()}</div>
           </div>
 
