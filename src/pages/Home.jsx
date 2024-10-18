@@ -4,8 +4,32 @@ import Button from "../components/ui/Button";
 import ImageBanner from "../components/banners/ImageBanner";
 import BookSlider from "../components/bookslider/BookSlider";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Home() {
+  const [books, setBooks] = useState([]);
+
+  const getBooks = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/books/all`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching books:", error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    getBooks().then((data) => {
+      setBooks(data);
+      console.log(data);
+    });
+  }, []);
+
   const navigate = useNavigate();
 
   const imagesSlider = [
