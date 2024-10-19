@@ -1,7 +1,7 @@
 import Popup from "reactjs-popup";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import CouponInput from "../coupon/CouponInput"; 
+import CouponInput from "../coupon/CouponInput";
 import propTypes from "prop-types";
 import React, { useState } from "react";
 import { X } from "lucide-react";
@@ -14,10 +14,12 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
 
   const [finalPrice, setFinalPrice] = useState(totalPrice);
   const [discountApplied, setDiscountApplied] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const applyDiscount = (coupon) => {
     const validCoupons = ["DESCUENTO10", "PROMO20"];
-    const discount = coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 : 0;
+    const discount =
+      coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 : 0;
 
     if (discount > 0) {
       setFinalPrice(totalPrice * (1 - discount / 100));
@@ -31,15 +33,18 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
     <Popup
       trigger={<Button className="rounded text-white">Comprar</Button>}
       modal
-      contentStyle={{ padding: '0', borderRadius: '0.5rem', overflow: 'hidden' }}
+      contentStyle={{
+        padding: "0",
+        borderRadius: "0.5rem",
+        overflow: "hidden",
+      }}
     >
       {(close) => (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white w-full max-w-lg h-auto sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-lg p-6 shadow-lg relative overflow-y-auto">
-            {/* Botón de cierre */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="relative h-auto w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
             <button
               onClick={close}
-              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+              className="absolute right-4 top-4 text-gray-600 hover:text-gray-800"
             >
               <X size={24} />
             </button>
@@ -48,7 +53,7 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               Carrito de Compras
             </h1>
 
-            <div className="mb-4 max-h-72 space-y-4 overflow-y-auto">
+            <div className="mb-4 max-h-48 space-y-4 overflow-y-auto">
               {cartItems.length === 0 ? (
                 <p className="text-gray-600">Tu carrito está vacío.</p>
               ) : (
@@ -67,7 +72,9 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
                         <h2 className="text-lg font-semibold text-gray-800">
                           {item.title}
                         </h2>
-                        <p className="text-gray-600">Cantidad: {item.quantity}</p>
+                        <p className="text-gray-600">
+                          Cantidad: {item.quantity}
+                        </p>
                         <p className="text-gray-600">
                           ${(item.price * item.quantity).toLocaleString()}
                         </p>
@@ -79,7 +86,9 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
             </div>
 
             <div className="mb-4">
-              <h2 className="text-lg font-bold text-gray-800 mb-5">Resumen de Compra</h2>
+              <h2 className="mb-5 text-lg font-bold text-gray-800">
+                Resumen de Compra
+              </h2>
               <p className="text-lg font-semibold text-gray-800">
                 Total Original: ${totalPrice.toLocaleString()}
               </p>
@@ -90,22 +99,30 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               )}
             </div>
 
-            {/* Agregar el input de cupón */}
             <CouponInput applyDiscount={applyDiscount} />
 
             <h2 className="mb-2 mt-6 text-lg font-bold text-gray-800">
               Completa tu compra
             </h2>
+
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 const name = e.target.name.value;
                 const email = e.target.email.value;
+                const phone = e.target.phone.value;
                 const address = e.target.address.value;
-                onCheckout({ name, email, address, cartItems });
+                onCheckout({
+                  name,
+                  email,
+                  phone,
+                  address,
+                  cartItems,
+                  paymentMethod,
+                });
                 close();
               }}
-              className="space-y-2"
+              className="grid grid-cols-1 gap-4 md:grid-cols-2"
             >
               <div>
                 <label htmlFor="name" className="block text-gray-700">
@@ -122,13 +139,38 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               </div>
 
               <div>
+                <label htmlFor="phone" className="block text-gray-700">
+                  Teléfono:
+                </label>
+                <Input type="tel" id="phone" required />
+              </div>
+
+              <div>
                 <label htmlFor="address" className="block text-gray-700">
                   Dirección de Envío:
                 </label>
                 <Input type="text" id="address" required />
               </div>
 
-              <Button type="submit" className="mt-4">
+              <div className="col-span-2">
+                <label htmlFor="paymentMethod" className="block text-gray-700">
+                  Método de Pago:
+                </label>
+                <select
+                  id="paymentMethod"
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  required
+                  className="w-full rounded border-gray-300 p-2"
+                >
+                  <option value="">Seleccione un método</option>
+                  <option value="creditCard">Tarjeta de Crédito</option>
+                  <option value="debitCard">Tarjeta de Débito</option>
+                  <option value="mp">Mercado Pago</option>
+                </select>
+              </div>
+
+              <Button type="submit" className="col-span-2 mt-4">
                 Confirmar Compra
               </Button>
             </form>
