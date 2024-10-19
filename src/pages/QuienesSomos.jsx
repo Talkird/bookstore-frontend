@@ -19,7 +19,7 @@ function QuienesSomos() {
       <div className="bg-primary-600 text-primary-100 mb-8 rounded-lg py-8 text-center shadow-lg">
         <h1 className="text-5xl font-bold">Quiénes Somos</h1>
       </div>
-      <div className="text-lg leading-relaxed text-primary">
+      <div className="text-lg leading-relaxed">
         <p className="mb-6 text-justify">
           Somos Martina, Tomás, Juan, Santiago y Federico, un equipo de
           estudiantes apasionados por los libros y la tecnología. Nuestra misión
