@@ -49,22 +49,8 @@ function Navbar() {
         <div className="ml-6 flex gap-8 text-lg">
           <NavbarLink to="/">Home</NavbarLink>
 
-          {/* Menú de Categorías con Dropdown que se despliega con hover */}
           <div className="group relative">
             <NavbarLink to="/catalog">Catálogo</NavbarLink>
-            <div className="absolute left-0 mt-2 hidden w-48 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 group-hover:block">
-              <ul>
-                {categories.map((category) => (
-                  <li
-                    key={category.name}
-                    className="cursor-pointer px-4 py-2 hover:bg-gray-200"
-                    onClick={() => handleCategoryClick(category.route)}
-                  >
-                    {category.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
 
           <NavbarLink to="/como-comprar">Cómo comprar</NavbarLink>
