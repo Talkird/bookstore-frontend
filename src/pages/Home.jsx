@@ -5,29 +5,23 @@ import ImageBanner from "../components/banners/ImageBanner";
 import BookSlider from "../components/bookslider/BookSlider";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { getBooks } from "../api/book";
 
 function Home() {
   const [books, setBooks] = useState([]);
 
-  const getBooks = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/books/all`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching books:", error);
-      return [];
-    }
-  };
-
   useEffect(() => {
-    getBooks().then((data) => {
-      setBooks(data);
-      console.log(data);
-    });
+    const fetchBooks = async () => {
+      try {
+        const data = await getBooks();
+        setBooks(data);
+        console.log(books);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
   }, []);
 
   const navigate = useNavigate();
@@ -122,6 +116,16 @@ function Home() {
   return (
     <div className="p-8">
       <ImageBanner images={imagesSlider} />
+
+      {books.map((book) => {
+        return (
+          <div key={book.id}>
+            <h2>{book.title}</h2>
+            <p>{book.author}</p>
+            <img src={book.image} alt={book.title} />
+          </div>
+        );
+      })}
 
       <div className="flex justify-center">
         <Button
