@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { getToken } from '../utils/getToken';
+import { getToken } from '../utils/token';
 
-const base_url = "http://localhost:8080/carts";
+const base_url = "http://localhost:8080";
 
 
 export const getCart = async (userId) => {
@@ -44,7 +44,9 @@ export const addCartItem = async (userId, cartItemRequest) => {
         "Content-Type": "application/json"
       }
     });
+    console.log(response.data);
     return response.data;
+
   } catch (error) {
     console.error("Error adding cart item:", error);
     throw error;

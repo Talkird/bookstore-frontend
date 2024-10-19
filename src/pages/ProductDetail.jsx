@@ -7,6 +7,9 @@ import { useParams } from "react-router-dom";
 import { Plus, Minus, Star } from "lucide-react";
 import Input from "../components/ui/Input";
 
+import { getUserId, getToken } from "../utils/token";
+import { addCartItem } from "../api/cart";
+
 const ProductDetail = () => {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
@@ -15,6 +18,25 @@ const ProductDetail = () => {
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
   
+
+  const addToCart = () => {
+    console.log("User tried adding to cart.");
+
+    const token = getToken();
+    const userId = getUserId();
+
+    if (!token || !userId) {
+      console.error("User is not authenticated.");
+      return;
+    }
+
+    //TODO use params
+
+    addCartItem(userId, {
+      bookId: productId, 
+      quantity: quantity,
+    })
+  }
 
   const product = {
     id: 2,
@@ -49,9 +71,6 @@ const ProductDetail = () => {
     }
   };
 
-  const addToCart = () => {
-    console.log(`Añadido ${quantity} unidades de ${product.title} al carrito.`);
-  };
 
   const openShippingPopup = () => {
     setIsShippingPopupOpen(true);
@@ -86,7 +105,7 @@ const ProductDetail = () => {
           key={i}
           size={40}
           onClick={() => handleRating(i)}
-          className={`cursor-pointer ${i <= rating ? "text-yellow-500" : "text-gray-400"}`}
+          className={`cursor-pointer ${i <= rating ? "text-yellow-500 " : "text-gray-400"}`}
         />,
       );
     }

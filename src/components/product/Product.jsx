@@ -4,12 +4,32 @@ import { ShoppingCart } from "lucide-react";
 import { formatPeso } from "../../utils/format";
 import { useNavigate } from "react-router-dom";
 
-function Product({ image, title, author, price }) {
+import { getUserId, getToken } from "../../utils/token";
+import { addCartItem } from "../../api/cart";
+
+function Product({ id, image, title, author, price }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/catalog/product");
   };
+
+  const handleAddToCart = () => {
+    console.log("User tried adding to cart.");
+
+    const token = getToken();
+    const userId = getUserId();
+
+    if (!token || !userId) {
+      console.error("User is not authenticated.");
+      return;
+    }
+
+    addCartItem(userId, {
+      bookId: id,
+      quantity: 1,
+    })
+  }
 
   return (
     <div className="rounded-md border-2 border-primary/60 bg-primary/10 p-3 shadow">
@@ -33,7 +53,7 @@ function Product({ image, title, author, price }) {
       </div>
 
       <div className="flex justify-center">
-      <Button className="mt-2 flex items-center gap-4 py-2 px-4 text-lg ">
+      <Button onClick={handleAddToCart} className="mt-2 flex items-center gap-4 py-2 px-4 text-lg ">
           <ShoppingCart className="w-6 h-6" />
           Añadir
         </Button>

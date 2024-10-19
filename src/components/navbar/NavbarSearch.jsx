@@ -1,24 +1,29 @@
 import { Search } from "lucide-react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
 
 function NavbarSearch({ className }) {
   return (
     <div
       className={classNames(
-        "mx-6 flex flex-row items-center justify-between rounded-lg border border-primary/50 bg-white p-2",
+        "mx-6 flex flex-row items-center justify-between rounded-lg bg-transparent p-2 gap-3",
         className,
       )}
     >
-      <Search
-        className="bg-transparent px-2 text-primary transition hover:cursor-pointer hover:opacity-60"
-        size={60}
-      />
-      <input
+      <Input
         type="text"
-        placeholder="Ingresar título, autor, ISBN o categoría"
-        className="w-[50rem] bg-transparent p-2 text-xl font-medium text-black placeholder-primary/60 outline-none"
+        placeholder="Ingrese título del libro"
       />
+      <Button
+        className="flex p-8 gap-2 items-center"
+        >
+        <Search size={24} />
+        Buscar
+        </Button>
+      
+        
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setToken } from "../utils/token";
+import { setToken, setUserId } from "../utils/token";
 
 const base_url = "http://localhost:8080/api/v1/auth";
 
@@ -9,14 +9,20 @@ export const login = async (email, password) => {
             email,
             password
         });
-        const { access_token } = response.data;
-        setToken(access_token); 
-        return { access_token }; 
+
+        const { access_token, user_id } = response.data;
+
+        setToken(access_token);
+        setUserId(user_id);
+        
+        return { access_token, user_id }; 
+
     } catch (error) {
         console.error("Error logging in:", error);
         throw error;
     }
-}
+};
+
 
 export const register = async (name, email, password, role = "USER") => {
     try {
@@ -26,13 +32,16 @@ export const register = async (name, email, password, role = "USER") => {
             password,
             role
         });
-        const { access_token } = response.data; 
-        setToken(access_token); 
-        return { access_token };
+        console.log(response.data);
+        
+        const { access_token, user_id } = response.data; 
+
+        setToken(access_token);        
+        setUserId(user_id); 
+        
+        return { access_token, user_id };
     } catch (error) {
         console.error("Error registering:", error);
         throw error; 
     }
 };
-
-

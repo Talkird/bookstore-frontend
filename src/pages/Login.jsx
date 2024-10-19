@@ -11,7 +11,7 @@ function Login() {
 
   const handleLogin = async () => {
     const response = await login(email, password);
-    console.log(getToken());
+    console.log(response);
   };
 
   return (

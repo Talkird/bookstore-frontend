@@ -6,6 +6,8 @@ import Filter from "../components/filters/Filter";
 import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
 
+
+
 const books = [
   {
     image,
@@ -187,6 +189,7 @@ function Catalog() {
           {selectedBooks.map((book, index) => (
             <Product
               key={index}
+              id={index}
               image={book.image}
               title={book.title}
               author={book.author}
