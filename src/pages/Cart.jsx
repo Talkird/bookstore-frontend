@@ -1,8 +1,9 @@
 import { useState } from "react";
 import CartItem from "../components/cart/CartItem";
 import image from "../assets/image.webp";
-import Button from "../components/ui/Button";
 import { formatPeso } from "../utils/format";
+import BackButton from "../components/ui/BackButton";
+import PurchasePopup from "../components/purchase/PurchasePopup";
 
 function Cart() {
   const [cartItems, setCartItems] = useState([
@@ -51,33 +52,38 @@ function Cart() {
   ]);
 
   const handleRemove = (id) => {
-    setCartItems((prevItems) => prevItems.filter(item => item.id !== id));
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
     console.log(`Item with id ${id} removed from cart`);
   };
 
   const handleCheckout = () => {
-    console.log("Proceeding to checkout");
-  };
-
+    console.log("Checkout completed");
+    setCartItems([]);
+  }
+  
   const updateQuantity = (id, newQuantity) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+        item.id === id ? { ...item, quantity: newQuantity } : item,
+      ),
     );
   };
 
-  const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
 
   return (
     <div className="p-4">
-      <Button className="mb-4" onClick={handleCheckout}>
-        Comprar Carrito
-      </Button>
-      <p className="text-lg font-semibold">
-        Total: {formatPeso(total)}
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+      <div className="flex justify-between items-start">
+        <BackButton className="mb-4"/>
+        <div className="flex flex-col mr-4 p-4 outline outline-primary/40 rounded-md items-center">
+          <PurchasePopup cartItems={cartItems} onCheckout={handleCheckout}/>
+          <p className="mt-4 text-lg font-semibold">Total: {formatPeso(total)}</p>
+        </div>
+      </div>
+      <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {cartItems.map((item) => (
           <CartItem
             key={item.id}
@@ -86,7 +92,9 @@ function Cart() {
             price={item.price}
             initialQuantity={item.quantity}
             onRemove={() => handleRemove(item.id)}
-            onQuantityChange={(newQuantity) => updateQuantity(item.id, newQuantity)}
+            onQuantityChange={(newQuantity) =>
+              updateQuantity(item.id, newQuantity)
+            }
           />
         ))}
       </div>

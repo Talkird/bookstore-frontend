@@ -23,7 +23,7 @@ function ComoComprar() {
 
       {/* Contenido del cuerpo */}
       <div className="bg-white p-3 shadow-md rounded-md">
-        <ol className="list-decimal list-inside text-lg text-primary leading-relaxed">
+        <ol className="list-decimal list-inside text-lg leading-relaxed">
           <li className="mb-6">
             Si ya tenés un usuario creado ingresá en "Iniciar Sesión." Si todavía no te registraste, hacé clic en "Crear cuenta" 
             y completá tus datos. Recibirás un mail de confirmación y ya estarás listo para empezar a comprar.

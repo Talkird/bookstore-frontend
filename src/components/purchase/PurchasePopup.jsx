@@ -1,7 +1,10 @@
 import Popup from "reactjs-popup";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import CouponInput from "../coupon/CouponInput"; 
 import propTypes from "prop-types";
+import React, { useState } from "react";
+import { X } from "lucide-react";
 
 const PurchasePopup = ({ cartItems, onCheckout }) => {
   const totalPrice = cartItems.reduce(
@@ -9,98 +12,127 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
     0,
   );
 
+  const [finalPrice, setFinalPrice] = useState(totalPrice);
+  const [discountApplied, setDiscountApplied] = useState(false);
+
+  const applyDiscount = (coupon) => {
+    const validCoupons = ["DESCUENTO10", "PROMO20"];
+    const discount = coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 : 0;
+
+    if (discount > 0) {
+      setFinalPrice(totalPrice * (1 - discount / 100));
+      setDiscountApplied(true);
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Popup
-      trigger={<Button className="rounded text-white">Ver Carrito</Button>}
+      trigger={<Button className="rounded text-white">Comprar</Button>}
       modal
-      contentStyle={{ width: "95%", maxWidth: "600px" }}
+      contentStyle={{ padding: '0', borderRadius: '0.5rem', overflow: 'hidden' }}
     >
       {(close) => (
-        <div className="rounded-lg bg-white p-6 shadow-lg">
-          <h1 className="mb-4 text-2xl font-bold text-gray-800">
-            Carrito de Compras
-          </h1>
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white w-full max-w-lg h-auto sm:max-w-md md:max-w-xl lg:max-w-2xl rounded-lg p-6 shadow-lg relative overflow-y-auto">
+            {/* Botón de cierre */}
+            <button
+              onClick={close}
+              className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
+            >
+              <X size={24} />
+            </button>
 
-          <div className="mb-4 max-h-72 space-y-4 overflow-y-auto">
-            {" "}
-            {/* Contenedor deslizante más grande */}
-            {cartItems.length === 0 ? (
-              <p className="text-gray-600">Tu carrito está vacío.</p>
-            ) : (
-              cartItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between border-b p-2"
-                >
-                  <div className="flex items-center">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title}
-                      className="mr-2 h-16 w-16 rounded-lg object-cover" // Tamaño de la imagen ajustado
-                    />
-                    <div>
-                      <h2 className="text-lg font-semibold text-gray-800">
-                        {item.title}
-                      </h2>
-                      <p className="text-gray-600">Cantidad: {item.quantity}</p>
-                      <p className="text-gray-600">
-                        ${(item.price * item.quantity).toLocaleString()}
-                      </p>
+            <h1 className="mb-4 text-2xl font-bold text-gray-800">
+              Carrito de Compras
+            </h1>
+
+            <div className="mb-4 max-h-72 space-y-4 overflow-y-auto">
+              {cartItems.length === 0 ? (
+                <p className="text-gray-600">Tu carrito está vacío.</p>
+              ) : (
+                cartItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between border-b p-2"
+                  >
+                    <div className="flex items-center">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="mr-2 h-16 w-16 rounded-lg object-cover"
+                      />
+                      <div>
+                        <h2 className="text-lg font-semibold text-gray-800">
+                          {item.title}
+                        </h2>
+                        <p className="text-gray-600">Cantidad: {item.quantity}</p>
+                        <p className="text-gray-600">
+                          ${(item.price * item.quantity).toLocaleString()}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            )}
-          </div>
+                ))
+              )}
+            </div>
 
-          <div className="mb-4">
-            <h2 className="text-lg font-bold text-gray-800">
-              Resumen de Compra
+            <div className="mb-4">
+              <h2 className="text-lg font-bold text-gray-800 mb-5">Resumen de Compra</h2>
+              <p className="text-lg font-semibold text-gray-800">
+                Total Original: ${totalPrice.toLocaleString()}
+              </p>
+              {discountApplied && (
+                <p className="text-lg font-semibold text-green-600">
+                  Total con Descuento: ${finalPrice.toLocaleString()}
+                </p>
+              )}
+            </div>
+
+            {/* Agregar el input de cupón */}
+            <CouponInput applyDiscount={applyDiscount} />
+
+            <h2 className="mb-2 mt-6 text-lg font-bold text-gray-800">
+              Completa tu compra
             </h2>
-            <p className="text-lg font-semibold text-gray-800">
-              Total: ${totalPrice.toLocaleString()}
-            </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const name = e.target.name.value;
+                const email = e.target.email.value;
+                const address = e.target.address.value;
+                onCheckout({ name, email, address, cartItems });
+                close();
+              }}
+              className="space-y-2"
+            >
+              <div>
+                <label htmlFor="name" className="block text-gray-700">
+                  Nombre:
+                </label>
+                <Input type="text" id="name" required />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-gray-700">
+                  Correo Electrónico:
+                </label>
+                <Input type="email" id="email" required />
+              </div>
+
+              <div>
+                <label htmlFor="address" className="block text-gray-700">
+                  Dirección de Envío:
+                </label>
+                <Input type="text" id="address" required />
+              </div>
+
+              <Button type="submit" className="mt-4">
+                Confirmar Compra
+              </Button>
+            </form>
           </div>
-
-          <h2 className="mb-2 text-lg font-bold text-gray-800">
-            Completa tu compra
-          </h2>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const name = e.target.name.value;
-              const email = e.target.email.value;
-              const address = e.target.address.value;
-              onCheckout({ name, email, address, cartItems });
-              close();
-            }}
-            className="space-y-2"
-          >
-            <div>
-              <label htmlFor="name" className="block text-gray-700">
-                Nombre:
-              </label>
-              <Input type="text" id="name" required />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-gray-700">
-                Correo Electrónico:
-              </label>
-              <Input type="email" id="email" required />
-            </div>
-
-            <div>
-              <label htmlFor="address" className="block text-gray-700">
-                Dirección de Envío:
-              </label>
-              <Input type="text" id="address" required />
-            </div>
-
-            <Button type="submit" className="mt-4">
-              Confirmar Compra
-            </Button>
-          </form>
         </div>
       )}
     </Popup>

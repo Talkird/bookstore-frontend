@@ -57,7 +57,7 @@ function Login() {
 
           <div className="text-center">
             <Link to="/register" className="text-primary hover:underline">
-              Olvidé mi contraseña
+              ¿No tenés cuenta? Registrate
             </Link>
           </div>
         </div>

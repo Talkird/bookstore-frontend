@@ -21,7 +21,6 @@ const PaymentPopup = ({ isOpen, onClose }) => {
             <li>Depósito o transferencia en nuestra cuenta bancaria</li>
             <li>Tarjetas de créditos: Visa, Mastercard y American Express</li>
             <li>MercadoPago</li>
-            <li>Mobbex</li>
             <li>RapiPago o Pago Fácil</li>
           </ul>
         </div>
