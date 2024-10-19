@@ -15,7 +15,7 @@ function Product({ image, title, author, price }) {
     <div className="rounded-md border-2 border-primary/60 bg-primary/10 p-3 shadow">
       <img
         onClick={handleClick}
-        className="w-64 h-auto mx-auto rounded-md rounded-md transition hover:cursor-pointer hover:opacity-90"
+        className="w-64 h-auto mx-auto rounded-md transition hover:cursor-pointer hover:opacity-90"
         src={image}
         alt={title}
       />
