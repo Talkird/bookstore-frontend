@@ -9,7 +9,7 @@ const CouponInput = ({ applyDiscount }) => {
       setError("Por favor ingresa un cupón.");
     } else {
       // Valida y aplica el cupón
-      const isValid = applyDiscount(coupon); 
+      const isValid = applyDiscount(coupon);
       if (!isValid) {
         setError("Cupón inválido o expirado.");
       } else {
@@ -27,7 +27,7 @@ const CouponInput = ({ applyDiscount }) => {
           placeholder="Ingresa tu cupón"
           value={coupon}
           onChange={(e) => setCoupon(e.target.value)}
-          className="border p-2 rounded-md "
+          className="border p-2 rounded-md"
         />
         <button
           onClick={handleApplyCoupon}
