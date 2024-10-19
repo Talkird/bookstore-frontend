@@ -73,9 +73,11 @@ function Login() {
           </div>
 
           <div className="flex flex-col gap-4">
+            <Link to="/">
             <Button type="submit" className="w-full">
               Iniciar Sesión
             </Button>
+            </Link>
 
             <div className="text-center">
               <Link to="/register" className="text-primary hover:underline">

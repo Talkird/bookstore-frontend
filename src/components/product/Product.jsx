@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart,Settings } from "lucide-react";
 import { formatPeso } from "../../utils/format";
 import { useNavigate } from "react-router-dom";
+import ProductAdminPopup from "../administrador/ProductAdminPopup";
 
 function Product({ image, title, author, price }) {
   const navigate = useNavigate();
@@ -32,11 +33,18 @@ function Product({ image, title, author, price }) {
         formatPeso(price)}</p>
       </div>
 
-      <div className="flex justify-center">
-      <Button className="mt-2 flex items-center gap-4 py-2 px-4 text-lg ">
-          <ShoppingCart className="w-6 h-6" />
+      <div className="flex justify-left space-x-4">
+        <Button className="mt-2 flex items-center gap-2 py-1 px-2 text-md ">
+          <ShoppingCart className="w-5 h-5  " />
           Añadir
         </Button>
+        <Button className="mt-2 flex items-right gap-2 py-1 px-2 text-md ">
+          <Settings size={27} strokeWidth={1.25} />
+          Editar
+        </Button>
+
+          
+
       </div>
     </div>
   );

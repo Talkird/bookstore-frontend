@@ -34,6 +34,7 @@ function Register() {
     
     const response = await register(name, email, password);
 
+
   };
 
   return (
@@ -89,10 +90,13 @@ function Register() {
           </div>
 
           <div className="flex flex-col gap-4">
+            <Link to="/">
+            
             <Button type="submit" className="w-full">
-              Registrarse
-                            
+              Registrarse     
             </Button>
+
+            </Link>
 
             <div className="text-center">
               <Link to="/login" className="text-primary hover:underline">
