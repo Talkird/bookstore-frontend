@@ -1,8 +1,20 @@
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { login } from "../api/user";
+import { setToken, getToken } from "../utils/token";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+        const response = await login(email, password);
+        console.log(getToken());
+    };
+
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
       <div className="flex w-full max-w-md flex-col gap-8 rounded-xl bg-white p-8 shadow-lg">
@@ -17,20 +29,36 @@ function Login() {
 
         <div className="space-y-2">
           <p className="text-lg text-gray-700">Email</p>
-          <Input placeholder="Ingrese su correo electrónico" type="email" />
+          <Input
+            variable={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            placeholder="Ingrese su correo electrónico"
+            type="email"
+          />
         </div>
 
         <div className="space-y-2">
           <p className="text-lg text-gray-700">Contraseña</p>
-          <Input placeholder="Ingrese su contraseña" type="password" />
+          <Input
+            variable={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            placeholder="Ingrese su contraseña"
+            type="password"
+          />
         </div>
 
         <div className="flex flex-col gap-4">
-          <Button className="w-full">Iniciar Sesión</Button>
+          <Button onClick={handleLogin} className="w-full">
+            Iniciar Sesión
+          </Button>
 
           <div className="text-center">
             <Link to="/register" className="text-primary hover:underline">
-              ¿No tenes cuenta? Registrate
+              Olvidé mi contraseña
             </Link>
           </div>
         </div>
