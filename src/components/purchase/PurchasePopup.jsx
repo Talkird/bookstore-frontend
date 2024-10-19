@@ -105,7 +105,6 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
               Completa tu compra
             </h2>
 
-            {/* Formulario ajustado en una cuadrícula */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
