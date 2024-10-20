@@ -28,9 +28,14 @@ function CartItem({ id, bookId, image, title, price, initialQuantity = 1 }) {
     updateCartItem(userId, id, { id, bookId, quantity });
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const userId = getUserId();
-    deleteCartItem(userId, id);
+    try {
+      await deleteCartItem(userId, id);
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to delete the cart item", error);
+    }
   };
 
   return (
