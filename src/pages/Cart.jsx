@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import CartItem from "../components/cart/CartItem";
-import image from "../assets/image.webp";
 import { formatPeso } from "../utils/format";
 import BackButton from "../components/ui/BackButton";
 import PurchasePopup from "../components/purchase/PurchasePopup";
@@ -22,7 +21,7 @@ function Cart() {
 
   useEffect(() => {
     updateTotal();
-  }, [cartItems]); // Update total whenever cartItems change
+  }, [cartItems]);
 
   const updateTotal = () => {
     const newTotal = cartItems.reduce(

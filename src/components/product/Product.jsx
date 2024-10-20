@@ -11,7 +11,7 @@ function Product({ id, image, title, author, price }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/catalog/product");
+    navigate(`/catalog/product/${encodeURIComponent(title)}`);
   };
 
   const handleAddToCart = () => {

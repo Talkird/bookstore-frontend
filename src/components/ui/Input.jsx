@@ -8,7 +8,7 @@ function Input({ className, placeholder, ...rest }) {
       placeholder={placeholder}
       {...rest}
       className={classNames(
-        "w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-base text-gray-700 placeholder-gray-400 shadow-sm transition-all focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary",
+        "rounded-lg border border-gray-300 bg-gray-50 p-3 text-base text-gray-700 placeholder-gray-400 shadow-sm transition-all focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary",
         className,
       )}
     />
