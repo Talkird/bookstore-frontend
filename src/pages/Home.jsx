@@ -1,4 +1,4 @@
-import Categories from "../components/categories/Categories";
+import Categories from "../components/categories/categories";
 import SpecialOfferBanner from "../components/banners/SpecialOfferBanner";
 import Button from "../components/ui/Button";
 import ImageBanner from "../components/banners/ImageBanner";
@@ -6,7 +6,7 @@ import BookSlider from "../components/bookslider/BookSlider";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getBooks } from "../api/book";
-import toast from "react-hot-toast";
+//import toast from "react-hot-toast";
 
 function Home() {
   const [books, setBooks] = useState([]);
