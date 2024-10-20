@@ -28,18 +28,18 @@ function Product({ id, image, title, author, price }) {
     addCartItem(userId, {
       bookId: id,
       quantity: 1,
-    })
-  }
+    });
+  };
 
   return (
-    <div className="rounded-md border-2 border-primary/60 bg-primary/10 p-3 shadow flex flex-col">
+    <div className="flex flex-col rounded-md border-2 border-primary/60 bg-primary/10 p-3 shadow">
       <img
         onClick={handleClick}
-        className="w-64 h-auto mx-auto rounded-md transition hover:cursor-pointer hover:opacity-90"
+        className="mx-auto h-auto w-64 rounded-md transition hover:cursor-pointer hover:opacity-90"
         src={image}
         alt={title}
       />
-      <div className="flex flex-col flex-1 justify-between py-2">
+      <div className="flex flex-1 flex-col justify-between py-2">
         <div>
           <h2 className="text-xl font-semibold transition hover:cursor-pointer hover:opacity-60">
             {title}
@@ -48,11 +48,15 @@ function Product({ id, image, title, author, price }) {
           <p className="text-lg font-semibold">{formatPeso(price)}</p>
         </div>
 
-      <div className="flex justify-center">
-      <Button onClick={handleAddToCart} className="mt-2 flex items-center gap-4 py-2 px-4 text-lg ">
-          <ShoppingCart className="w-6 h-6" />
-          Añadir
-        </Button>
+        <div className="flex justify-center">
+          <Button
+            onClick={handleAddToCart}
+            className="mt-2 flex items-center gap-4 px-4 py-2 text-lg"
+          >
+            <ShoppingCart className="h-6 w-6" />
+            Añadir
+          </Button>
+        </div>
       </div>
     </div>
   );

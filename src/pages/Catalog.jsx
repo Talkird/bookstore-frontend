@@ -203,7 +203,7 @@ function Catalog() {
           {selectedBooks.map((book, index) => (
             <Product
               key={index}
-              id={index}
+              id={index + 1}
               image={book.image}
               title={book.title}
               author={book.author}

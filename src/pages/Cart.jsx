@@ -1,100 +1,64 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CartItem from "../components/cart/CartItem";
 import image from "../assets/image.webp";
 import { formatPeso } from "../utils/format";
 import BackButton from "../components/ui/BackButton";
 import PurchasePopup from "../components/purchase/PurchasePopup";
+import { getCart } from "../api/cart";
+import { getUserId } from "../utils/token";
 
 function Cart() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      image: image,
-      title: "La Casa Neville",
-      price: 20000,
-      quantity: 1,
-    },
-    {
-      id: 2,
-      image: image,
-      title: "El Castillo Encantado",
-      price: 15000,
-      quantity: 2,
-    },
-    {
-      id: 3,
-      image: image,
-      title: "El Bosque Mágico",
-      price: 10000,
-      quantity: 3,
-    },
-    {
-      id: 4,
-      image: image,
-      title: "La Montaña Mística",
-      price: 25000,
-      quantity: 1,
-    },
-    {
-      id: 5,
-      image: image,
-      title: "La Isla Perdida",
-      price: 18000,
-      quantity: 2,
-    },
-    {
-      id: 6,
-      image: image,
-      title: "El Mar de los Sueños",
-      price: 22000,
-      quantity: 1,
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [total, setTotal] = useState(0);
 
-  const handleRemove = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-    console.log(`Item with id ${id} removed from cart`);
+  useEffect(() => {
+    const userId = getUserId();
+    getCart(userId)
+      .then((fetchedCartItems) => {
+        setCartItems(fetchedCartItems);
+      })
+      .catch((error) => console.error("Error getting cart:", error));
+  }, []); // Depend only on userId to avoid infinite loop
+
+  useEffect(() => {
+    updateTotal();
+  }, [cartItems]); // Update total whenever cartItems change
+
+  const updateTotal = () => {
+    const newTotal = cartItems.reduce(
+      (acc, item) => acc + item.book.price * item.quantity,
+      0,
+    );
+    setTotal(newTotal);
   };
 
   const handleCheckout = () => {
     console.log("Checkout completed");
-    setCartItems([]);
-  }
-  
-  const updateQuantity = (id, newQuantity) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item,
-      ),
-    );
+    setCartItems([]); // Clear the cart on checkout
+    setTotal(0); // Reset the total
   };
-
-  const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-start">
-        <BackButton className="mb-4"/>
-        <div className="flex flex-col mr-4 p-4 outline outline-primary/40 rounded-md items-center">
-          <PurchasePopup cartItems={cartItems} onCheckout={handleCheckout}/>
-          <p className="mt-4 text-lg font-semibold">Total: {formatPeso(total)}</p>
+      <div className="flex items-start justify-between">
+        <BackButton className="mb-4" />
+        <div className="mr-4 flex flex-col items-center rounded-md p-4 outline outline-primary/40">
+          <PurchasePopup cartItems={cartItems} onCheckout={handleCheckout} />
+          <p className="mt-4 text-lg font-semibold">
+            Total: {formatPeso(total)}
+          </p>
         </div>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {cartItems.map((item) => (
           <CartItem
+            id={item.id}
+            bookId={item.book.id}
             key={item.id}
             image={item.image}
-            title={item.title}
-            price={item.price}
+            title={item.book.title}
+            price={item.book.price}
             initialQuantity={item.quantity}
-            onRemove={() => handleRemove(item.id)}
-            onQuantityChange={(newQuantity) =>
-              updateQuantity(item.id, newQuantity)
-            }
           />
         ))}
       </div>
