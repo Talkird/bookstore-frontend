@@ -1,4 +1,4 @@
-import Categories from "../components/categories/Categories";
+import Categories from "../components/categories/categories";
 import SpecialOfferBanner from "../components/banners/SpecialOfferBanner";
 import Button from "../components/ui/Button";
 import ImageBanner from "../components/banners/ImageBanner";
