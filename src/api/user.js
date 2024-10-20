@@ -1,21 +1,23 @@
 import axios from "axios";
-import { setToken, setUserId } from "../utils/token";
+import { setToken, setUserId, setEmail, setRole } from "../utils/token";
 
 const base_url = "http://localhost:8080/api/v1/auth";
 
-export const login = async (email, password) => {
+export const login = async (userEmail, password) => {
     try {
         const response = await axios.post(`${base_url}/authenticate`, {
-            email,
+            email: userEmail,
             password
         });
 
-        const { access_token, user_id } = response.data;
+        const { access_token, user_id, email, role } = response.data;
 
         setToken(access_token);
         setUserId(user_id);
+        setEmail(email);
+        setRole(role);
         
-        return { access_token, user_id }; 
+        return { access_token, user_id, email, role}; 
 
     } catch (error) {
         console.error("Error logging in:", error);
@@ -24,22 +26,24 @@ export const login = async (email, password) => {
 };
 
 
-export const register = async (name, email, password, role = "USER") => {
+export const register = async (name, userEmail, password, userRole = "USER") => {
     try {
         const response = await axios.post(`${base_url}/register`, {
             name,
-            email,
+            email: userEmail,
             password,
-            role
+            role: userRole
         });
         console.log(response.data);
         
-        const { access_token, user_id } = response.data; 
+        const { access_token, user_id, email, role } = response.data; 
 
         setToken(access_token);        
         setUserId(user_id); 
+        setEmail(email);
+        setRole(role);
         
-        return { access_token, user_id };
+        return { access_token, user_id, email, role };
     } catch (error) {
         console.error("Error registering:", error);
         throw error; 
