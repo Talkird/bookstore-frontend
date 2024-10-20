@@ -8,7 +8,7 @@ function Product({ image, title, author, price }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/catalog/product");
+    navigate(`/catalog/product/${encodeURIComponent(title)}`);
   };
 
   return (

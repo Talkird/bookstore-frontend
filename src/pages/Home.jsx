@@ -32,12 +32,7 @@ function Home() {
 
   const navigate = useNavigate();
 
-  const imagesSlider = [
-    "https://acdn.mitiendanube.com/stores/001/315/129/themes/cubo/2-slide-1716819413094-6733356213-b7a5d39530e4190623e5356f6d196b9f1716819414-1024-1024.webp?264042642",
-    "https://market2.livriz.com/storage/section/1/escape%20de%20viena.png",
-    "https://market2.livriz.com/storage/section/1/Blackwater.jpg",
-    "https://planetadelibrosar0.cdnstatics.com/usuaris/web_banners/fotos/4/original/3329_1_PDL_1140x272.png",
-  ];
+  
 
   const recommendedScifi = [
     {
@@ -135,7 +130,7 @@ function Home() {
 
   return (
     <div className="p-8">
-      <ImageBanner images={imagesSlider} />
+      <ImageBanner />
 
       <div className="flex justify-center">
         <Button

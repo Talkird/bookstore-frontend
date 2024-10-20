@@ -6,32 +6,18 @@ import PaymentPopup from "../components/payment/PaymentPopup";
 import { useParams } from "react-router-dom";
 import { Plus, Minus, Star } from "lucide-react";
 import Input from "../components/ui/Input";
+import { books } from "../pages/Catalog";
 
 const ProductDetail = () => {
-  const { productId } = useParams();
+  const { title } = useParams();
+  const product = books.find((book) => book.title === decodeURIComponent(title))
+
   const [quantity, setQuantity] = useState(1);
   const [discount, setDiscount] = useState(0);
   const [rating, setRating] = useState(0);
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
   
-
-  const product = {
-    id: 2,
-    title: "Espíritu Animal",
-    author: "Magalí Tajes",
-    price: 29299,
-    imageUrl: "https://data.livriz.com/media/mediaspace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/193f2d34-d463-476d-862c-319ddf255ea6/9789500770545.jpg",
-    description: "La vida es un viaje que tiene muchos viajes adentro. Algunos nos conectan con nuestro corazón, otros nos cambian el rumbo. También están los que nos parten al medio. No hay viajes equivocados. Todos esconden un destino. En Espíritu Animal, volamos hacia adentro. ¡Prepárate para la aventura! Las turbulencias en este camino son inevitables, pero no pierdas la calma. El universo nos cuida, y las estrellas están de nuestro lado. Déjate guiar por lo invisible. Permite que el tiempo se detenga. Quizás, habitando lo desconocido, puedas al fin conocerte. ¡Despegamos!",
-    isbn: "9789873683870",
-    genre: "Novela",
-    availability: 20,
-    weight: "500g",
-    publisher: "Sudamericana",
-    pages: "344",
-    userRating: 4.5, // Calificación promedio del producto
-  };
-
   const handleQuantityChange = (e) => {
     const value = Math.max(1, Math.min(e.target.value, product.availability));
     setQuantity(value);
@@ -101,18 +87,19 @@ const ProductDetail = () => {
 
       <div className="flex flex-col md:flex-row gap-10">
         {/* Imagen del producto */}
-        <div className="md:w-1/3">
+        <div className="md:w-2/3">
           <img
-            className="rounded-lg object-cover shadow-md"
-            src={product.imageUrl}
-            alt={product.title}
+             style={{ width: '90%', height: 'auto' }} // Ajusta según tus necesidades
+             className="rounded-lg object-cover shadow-md"
+             src={product.image}
+             alt={product.title}
           />
         </div>
 
         {/* Detalles del producto */}
-        <div className="md:w-2/3">
+        <div className="md:w-2/3 mr-10">
           {/* Título y calificación */}
-          <h2 className="text-5xl font-bold text-primary mb-4" style={{ fontSize: "4rem" }}>{product.title}</h2>          
+          <h2 className="text-5xl font-bold text-primary mb-4 mt-4" style={{ fontSize: "4rem" }}>{product.title}</h2>          
           <h3 className="text-5x text-lg text-gray-500 mb-10" style={{ fontSize: "2rem" }}>{product.author}</h3>
           <div className="flex items-center mb-6">
             <p className="text-2xl font-semibold mr-2">{product.userRating.toFixed(1)}</p>
@@ -140,7 +127,7 @@ const ProductDetail = () => {
             <Button onClick={increaseQuantity}>
               <Plus size={16} />
             </Button>
-            <Button onClick={addToCart} className="ml-4">
+            <Button onClick={addToCart} className="ml-4 w-50 h-18 text-lg text-center">
               Agregar al carrito
             </Button>
           </div>
