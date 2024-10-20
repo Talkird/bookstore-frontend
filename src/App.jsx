@@ -14,17 +14,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductDetail from "./pages/ProductDetail";
 import Faq from "./pages/Faq";
-import Toaster from "react-hot-toast";
+
 
 
 
 function App() {
   return (
     <Router>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />    
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

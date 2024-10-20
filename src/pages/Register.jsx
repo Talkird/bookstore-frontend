@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { register } from "../api/user";
 
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,11 +34,6 @@ function Register() {
     }
     
     const response = await register(name, email, password);
-    if (response) {
-      toast.success("Usuario creado exitosamente");
-    }
-
-
   };
 
   return (
