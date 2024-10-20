@@ -38,8 +38,8 @@ function Register() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <div className="flex w-full max-w-md flex-col gap-8 rounded-xl bg-white p-8 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="flex w-full max-w-md flex-col gap-8 rounded-xl bg-white p-8 shadow-2xl">
         <div className="flex flex-col gap-3">
           <h2 className="text-center text-3xl font-bold text-gray-800">
             Crear cuenta
@@ -64,6 +64,7 @@ function Register() {
               placeholder="Ingrese su nombre"
               type="text"
               required
+              className="w-full rounded-md border border-gray-300 p-2"
             />
           </div>
 
@@ -75,6 +76,7 @@ function Register() {
               placeholder="Ingrese su correo electrónico"
               type="email"
               required
+              className="w-full rounded-md border border-gray-300 p-2"
             />
           </div>
 
@@ -86,20 +88,17 @@ function Register() {
               placeholder="Ingrese su contraseña"
               type="password"
               required
+              className="w-full rounded-md border border-gray-300 p-2"
             />
           </div>
 
-          <div className="flex flex-col gap-4">
-            <Link to="/">
-            
-            <Button type="submit" className="w-full">
+          <div className="flex flex-col gap-4 mt-4">
+            <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
               Registrarse     
             </Button>
 
-            </Link>
-
             <div className="text-center">
-              <Link to="/login" className="text-primary hover:underline">
+              <Link to="/login" className="text-blue-500 hover:underline">
                 Ya tengo una cuenta
               </Link>
             </div>

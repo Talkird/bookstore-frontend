@@ -69,7 +69,7 @@ function Testimonials() {
       <div className="relative mx-auto flex w-full max-w-3xl items-center">
         <Button
           onClick={prevTestimonial}
-          className="mr-8 rounded-full bg-gray-500 bg-opacity-75 p-2 text-white hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+          className="mr-8 rounded-full bg-gray-500 p-2"
           variant="outline"
           size="sm"
         >
@@ -89,7 +89,7 @@ function Testimonials() {
         </div>
         <Button
           onClick={nextTestimonial}
-          className="ml-8 rounded-full bg-gray-500 bg-opacity-75 p-2 text-white hover:bg-opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+          className="ml-8 rounded-full bg-gray-500 p-2"
           variant="outline"
           size="sm"
         >
