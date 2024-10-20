@@ -17,7 +17,7 @@ function Cart() {
         setCartItems(fetchedCartItems);
       })
       .catch((error) => console.error("Error getting cart:", error));
-  }, []); // Depend only on userId to avoid infinite loop
+  }, []);
 
   useEffect(() => {
     updateTotal();
@@ -31,18 +31,12 @@ function Cart() {
     setTotal(newTotal);
   };
 
-  const handleCheckout = () => {
-    console.log("Checkout completed");
-    setCartItems([]); // Clear the cart on checkout
-    setTotal(0); // Reset the total
-  };
-
   return (
     <div className="p-4">
       <div className="flex items-start justify-between">
         <BackButton className="mb-4" />
         <div className="mr-4 flex flex-col items-center rounded-md p-4 outline outline-primary/40">
-          <PurchasePopup cartItems={cartItems} onCheckout={handleCheckout} />
+          <PurchasePopup cartItems={cartItems} />
           <p className="mt-4 text-lg font-semibold">
             Total: {formatPeso(total)}
           </p>
