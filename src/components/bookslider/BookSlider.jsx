@@ -14,11 +14,14 @@ function BookSlider({ title, books }) {
     nextArrow: <SliderArrow arrowDirection="right" />,
     prevArrow: <SliderArrow arrowDirection="left" />,
     adaptiveHeight: true,
+    customPaging: (i) => (
+      <div className="w-3 h-3 bg-blue-300 rounded-full hover:bg-blue-700"></div>
+    ),
   };
 
   return (
-    <div className="mt-6 overflow-hidden rounded border-2 border-secondary p-6 pt-3">
-      <h2 className="mb-1 text-center text-2xl font-medium">{title}</h2>
+    <div className="mt-6 overflow-hidden rounded border-2 border-secondary p-8 pt-3">
+      <h2 className="mb-2 text-center text-2xl font-medium">{title}</h2>
       <Slider {...settings}>
         {books.map((book, index) => (
           <div key={index} className="p-4 text-center">
@@ -31,7 +34,7 @@ function BookSlider({ title, books }) {
               {book.title}
             </h3>
             <p className="text-sm text-gray-500">{book.author}</p>
-            <p className="text-sm font-bold text-primary">{book.price}</p>
+            <p className="text-sm font-bold text-primary mb-6">{book.price}</p>
           </div>
         ))}
       </Slider>

@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Product from "../components/product/Product";
-import image from "../assets/image.webp";
 import Pagination from "../components/ui/Pagination";
 import Filter from "../components/filters/Filter";
 import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
+import { useLocation } from "react-router-dom"; // Para obtener los parámetros de la URL
 
 const books = [
   {
-    image,
+    image:"https://data.livriz.com/media/mediaspace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/b77b4b89-900a-4cdc-a9da-049129fb633d/9789878453507_a42918b3-fcc2-449a-bb30-11b5607d56bf.jpg",
     title: "La Casa Neville",
     author: "Florencia Bonelli",
     price: 20000,
@@ -107,6 +107,10 @@ const books = [
   },
 ];
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function Catalog() {
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -117,6 +121,8 @@ function Catalog() {
   });
   const [sortOrder, setSortOrder] = useState(null); // Nuevo estado para el orden
   const booksPerPage = 20;
+  const query = useQuery();
+  const searchTerm = query.get("search") || ""; // Obtener el término de búsqueda desde la URL
 
   // Maneja el cambio de filtros
   const handleFilterChange = (newFilters) => {
@@ -140,7 +146,10 @@ function Catalog() {
     const meetsCategory =
       filters.selectedCategories.length === 0 ||
       filters.selectedCategories.includes(book.category); // Filtra por múltiples categorías
-    return meetsPrice && meetsPublisher && meetsCategory;
+    const meetsSearch =
+      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchTerm.toLowerCase()); // Filtra por título o autor
+    return meetsPrice && meetsPublisher && meetsCategory && meetsSearch;
   });
 
   // Ordenar los libros
@@ -187,6 +196,7 @@ function Catalog() {
           {selectedBooks.map((book, index) => (
             <Product
               key={index}
+              id={index}
               image={book.image}
               title={book.title}
               author={book.author}
@@ -208,4 +218,5 @@ function Catalog() {
     </div>
   );
 }
+
 export default Catalog;
