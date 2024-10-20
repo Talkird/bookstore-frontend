@@ -24,10 +24,6 @@ const ProductDetail = () => {
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
 
   useEffect(() => {
-    handleQuantityChange();
-  }, [quantity]);
-
-  useEffect(() => {
     getBooks()
       .then((books) => {
         setBooks(books);
@@ -56,7 +52,7 @@ const ProductDetail = () => {
     }
 
     addCartItem(userId, {
-      bookId: id,
+      bookId: product.id,
       quantity: quantity,
     });
   };
