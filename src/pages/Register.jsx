@@ -10,7 +10,8 @@ function Register() {
   const [name, setName] = useState("");
 
   const handleRegister = async () => {
-      const response = await register(name, email, password);
+    const response = await register(name, email, password);
+    console.log(response);
   };
 
   return (

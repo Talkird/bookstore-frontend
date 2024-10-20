@@ -26,22 +26,23 @@ function NavbarSearch({ className }) {
   return (
     <div
       className={classNames(
-        "mx-6 flex flex-row items-center justify-between rounded-lg bg-transparent p-2 gap-3",
+        "mx-6 flex flex-row items-center justify-between gap-3 rounded-lg bg-transparent p-2",
         className,
       )}
     >
       <Input
         type="text"
-        placeholder="Ingrese título del libro"
+        placeholder="Ingrese título o autor del libro"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)} // Actualiza el estado con el valor del input
         onKeyDown={handleKeyDown} // Ejecuta la función al presionar una tecla
+        style={{ width: "54rem",  fontSize: "1.25rem"}}
       />
       <Button
-        className="flex p-8 gap-2 items-center"
+        className="flex items-center gap-2 p-8"
         onClick={handleSearch} // Ejecuta la función de búsqueda al hacer clic
       >
-        <Search size={24} />
+        <Search size={20} />
         Buscar
       </Button>
     </div>
