@@ -63,6 +63,7 @@ function Product({ id, image, title, author, price }) {
 }
 
 Product.propTypes = {
+  id: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   author: PropTypes.string,

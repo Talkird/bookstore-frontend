@@ -76,9 +76,9 @@ function CartItem({ id, bookId, image, title, price, initialQuantity = 1 }) {
 }
 
 CartItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  bookId: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  bookId: PropTypes.number.isRequired,
+  image: PropTypes.string,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   initialQuantity: PropTypes.number,

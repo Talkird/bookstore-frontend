@@ -140,7 +140,7 @@ const ProductDetail = () => {
           <img
             style={{ width: "90%", height: "auto" }}
             className="rounded-lg object-cover shadow-md"
-            src={product.image}
+            src={product.imagePath}
             alt={product.title}
           />
         </div>
