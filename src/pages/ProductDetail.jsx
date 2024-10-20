@@ -24,6 +24,10 @@ const ProductDetail = () => {
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
 
   useEffect(() => {
+    handleQuantityChange();
+  }, [quantity]);
+
+  useEffect(() => {
     getBooks()
       .then((books) => {
         setBooks(books);
@@ -40,7 +44,7 @@ const ProductDetail = () => {
     (book) => book.title === decodeURIComponent(title),
   );
 
-  const addToCart = () => {
+  const handleAddToCart = () => {
     console.log("User tried adding to cart.");
 
     const token = getToken();
@@ -51,12 +55,10 @@ const ProductDetail = () => {
       return;
     }
 
-    if (product) {
-      addCartItem(userId, {
-        bookId: product.id,
-        quantity: quantity,
-      });
-    }
+    addCartItem(userId, {
+      bookId: id,
+      quantity: quantity,
+    });
   };
 
   const handleQuantityChange = (e) => {
@@ -189,7 +191,7 @@ const ProductDetail = () => {
               <Plus size={16} />
             </Button>
             <Button
-              onClick={addToCart}
+              onClick={handleAddToCart}
               className="w-50 h-18 ml-4 text-center text-lg"
             >
               Agregar al carrito
