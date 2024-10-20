@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
-import { ShoppingCart, Settings } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
 
 function Navbar() {
@@ -27,7 +27,13 @@ function Navbar() {
           <img src={plumaLogo} alt="Logo La Pluma Encantada" className="h-12" />
           <h1 className="font-poppins text text-5xl">La pluma encantada</h1>
         </div>
-        <div className="flex gap-6 text-xl">
+        <div className="flex items-center gap-6 text-xl">
+          <NavbarLink to="/cart">
+            <ShoppingCart size={24} strokeWidth={1.5} />
+          </NavbarLink>
+          <NavbarLink to="/account">
+            <User size={24} strokeWidth={1.5} />
+          </NavbarLink>
           <NavbarLink to="/login">
             <Button variant="outline" className="bg-white text-primary">
               Iniciar Sesión
@@ -35,12 +41,6 @@ function Navbar() {
           </NavbarLink>
           <NavbarLink to="/register">
             <Button>Registrarse</Button>
-          </NavbarLink>
-          <NavbarLink to="/cart">
-            <ShoppingCart size={40} strokeWidth={1.25} />
-          </NavbarLink>
-          <NavbarLink to="/account">
-            <Settings size={40} strokeWidth={1.25} />
           </NavbarLink>
         </div>
       </div>

@@ -7,15 +7,14 @@ import Catalog from "./pages/Catalog";
 import Purchase from "./pages/Purchase";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
-import CategoryPage from './pages/CategoryPage'; 
+import CategoryPage from "./pages/CategoryPage";
 import ComoComprar from "./pages/ComoComprar";
 import QuienesSomos from "./pages/QuienesSomos";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductDetail from "./pages/ProductDetail";
 import Faq from "./pages/Faq";
-
-
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -29,13 +28,12 @@ function App() {
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/purchase" element={<Purchase />} />
 
-        <Route path="/books/:category" element={<CategoryPage />} /> 
+        <Route path="/books/:category" element={<CategoryPage />} />
         <Route path="/como-comprar" element={<ComoComprar />} />
         <Route path="/quienes-somos" element={<QuienesSomos />} />
 
         <Route path="/catalog/product/:title" element={<ProductDetail />} />
         <Route path="/faq" element={<Faq />} />
-
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -43,9 +41,9 @@ function App() {
 
         <Route path="/" element={<Catalog />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-
       </Routes>
       <Footer />
+      <Toaster />
     </Router>
   );
 }

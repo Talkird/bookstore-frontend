@@ -3,7 +3,7 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 import CouponInput from "../coupon/CouponInput";
 import propTypes from "prop-types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { X } from "lucide-react";
 import { checkoutCart } from "../../api/cart";
 import { getUserId } from "../../utils/token";
@@ -17,21 +17,23 @@ const PurchasePopup = ({ cartItems }) => {
   const [finalPrice, setFinalPrice] = useState(totalPrice);
   const [discountApplied, setDiscountApplied] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [name , setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
   const handleCheckout = (e) => {
+    e.preventDefault();
     checkoutCart(getUserId(), {
-      name,
-      email,
-      phone,
-      address,
-      paymentMethod,
+      customer_name: name,
+      customer_email: email,
+      customer_phone: phone,
+      shipping_address: address,
+      payment_method: paymentMethod,
+      discount_code: "",
       items: cartItems,
-    })
-  }
+    });
+  };
 
   const applyDiscount = (coupon) => {
     //TODO FETCH DESCUENTOS
@@ -82,7 +84,7 @@ const PurchasePopup = ({ cartItems }) => {
                   >
                     <div className="flex items-center">
                       <img
-                        src={item.imageUrl}
+                        src={item.image}
                         alt={item.title}
                         className="mr-2 h-16 w-16 rounded-lg object-cover"
                       />
@@ -131,28 +133,52 @@ const PurchasePopup = ({ cartItems }) => {
                 <label htmlFor="name" className="block text-gray-700">
                   Nombre:
                 </label>
-                <Input variable={name} onChange={(e) => setName(e.target.value)} type="text" id="name" required />
+                <Input
+                  variable={name}
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  id="name"
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-gray-700">
                   Correo Electrónico:
                 </label>
-                <Input variable={email} onChange={(e) => setEmail(e.target.value)} type="email" id="email" required />
+                <Input
+                  variable={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  id="email"
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="phone" className="block text-gray-700">
                   Teléfono:
                 </label>
-                <Input variable={phone} onChange={(e) => setPhone(e.target.value)} type="tel" id="phone" required />
+                <Input
+                  variable={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  type="tel"
+                  id="phone"
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="address" className="block text-gray-700">
                   Dirección de Envío:
                 </label>
-                <Input variable={address} onChange={(e) => setAddress(e.target.value)} type="text" id="address" required />
+                <Input
+                  variable={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  type="text"
+                  id="address"
+                  required
+                />
               </div>
 
               <div className="col-span-2">
@@ -167,9 +193,9 @@ const PurchasePopup = ({ cartItems }) => {
                   className="w-full rounded border-gray-300 p-2"
                 >
                   <option value="">Seleccione un método</option>
-                  <option value="creditCard">Tarjeta de Crédito</option>
-                  <option value="debitCard">Tarjeta de Débito</option>
-                  <option value="mp">Mercado Pago</option>
+                  <option value="CREDIT_CARD">Tarjeta de Crédito</option>
+                  <option value="DEBIT_CARD">Tarjeta de Débito</option>
+                  <option value="MERCADO_PAGO">Mercado Pago</option>
                 </select>
               </div>
 
@@ -186,7 +212,6 @@ const PurchasePopup = ({ cartItems }) => {
 
 PurchasePopup.propTypes = {
   cartItems: propTypes.array.isRequired,
-  onCheckout: propTypes.func.isRequired,
 };
 
 export default PurchasePopup;
