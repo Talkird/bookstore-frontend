@@ -25,22 +25,22 @@ function Catalog() {
     publisher: null,
     selectedCategories: [],
   });
-  const [sortOrder, setSortOrder] = useState(null); // Nuevo estado para el orden
+  const [sortOrder, setSortOrder] = useState(null); 
   const booksPerPage = 20;
 
-  // Maneja el cambio de filtros
+
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
-    setCurrentPage(1); // Reinicia a la página 1 cuando se aplican nuevos filtros
+    setCurrentPage(1); 
   };
 
-  // Maneja el cambio de ordenamiento
+
   const handleSortChange = (newSortOrder) => {
     setSortOrder(newSortOrder);
-    setCurrentPage(1); // Reinicia a la página 1 cuando se aplica un nuevo orden
+    setCurrentPage(1); 
   };
 
-  // Filtrar los libros
+
   const filteredBooks = books.filter((book) => {
     const meetsPrice =
       (!filters.minPrice || book.price >= filters.minPrice) &&
@@ -53,14 +53,14 @@ function Catalog() {
     return meetsPrice && meetsPublisher && meetsCategory;
   });
 
-  // Ordenar los libros
+
   const sortedBooks = filteredBooks.sort((a, b) => {
     if (sortOrder === "asc") {
       return a.price - b.price;
     } else if (sortOrder === "desc") {
       return b.price - a.price;
     }
-    return 0; // Si no hay orden, no cambiar nada
+    return 0; 
   });
 
   const totalPages = Math.ceil(sortedBooks.length / booksPerPage);
@@ -70,7 +70,7 @@ function Catalog() {
     startIndex + booksPerPage,
   );
 
-  const totalBooks = filteredBooks.length; // Cantidad total de libros filtrados
+  const totalBooks = filteredBooks.length; 
   const showingStart = startIndex + 1;
   const showingEnd = Math.min(startIndex + booksPerPage, totalBooks);
 
