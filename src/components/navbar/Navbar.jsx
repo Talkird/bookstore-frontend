@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
-import { ShoppingCart, Settings } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
 
 function Navbar() {
@@ -40,7 +40,7 @@ function Navbar() {
             <ShoppingCart size={40} strokeWidth={1.25} />
           </NavbarLink>
           <NavbarLink to="/account">
-            <Settings size={40} strokeWidth={1.25} />
+            <User size={40} strokeWidth={1.5} />
           </NavbarLink>
         </div>
       </div>
