@@ -117,6 +117,16 @@ function Home() {
     <div className="p-8">
       <ImageBanner images={imagesSlider} />
 
+      {books.map((book) => {
+        return (
+          <div key={book.id}>
+            <h2>{book.title}</h2>
+            <p>{book.author}</p>
+            <img src={book.image} alt={book.title} />
+          </div>
+        );
+      })}
+
       <div className="flex justify-center">
         <Button
           onClick={handleViewAllProducts}
