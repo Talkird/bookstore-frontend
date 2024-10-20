@@ -26,8 +26,6 @@ function Home() {
 
   const navigate = useNavigate();
 
-  
-
   const recommendedScifi = [
     {
       title: "Dune",

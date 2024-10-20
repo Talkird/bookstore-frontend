@@ -5,7 +5,7 @@ import Filter from "../components/filters/Filter";
 import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
 import { useLocation } from "react-router-dom";
-import { getBooks } from "../api/books";
+import { getBooks } from "../api/book";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);

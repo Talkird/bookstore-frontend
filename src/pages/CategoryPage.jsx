@@ -1,25 +1,36 @@
-import { useParams } from 'react-router-dom';
-import { books } from "../pages/Catalog";
+import { useParams } from "react-router-dom";
 import Product from "../components/product/Product";
+import { useState, useEffect } from "react";
 import BackButton from "../components/ui/BackButton";
+import { getBooks } from "../api/book";
 
 function CategoryPage() {
-  const { category } = useParams(); // Obtener el nombre de la categoría de la URL
+  const { category } = useParams();
 
-  // Filtrar los libros por categoría, asegurándote de que coincida con la categoría de la URL
-  const filteredBooks = books.filter(book => book.category.toLowerCase() === decodeURIComponent(category));
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    getBooks()
+      .then((books) => setBooks(books))
+      .catch((error) => console.error("Error getting books:", error));
+  }, []);
+
+  const filteredBooks = books.filter(
+    (book) => book.category.toLowerCase() === decodeURIComponent(category),
+  );
 
   return (
     <div className="p-8">
-      
       <div className="flex flex-col text-right">
         <div className="mb-4">
           <BackButton />
         </div>
-        <h1 className="text-3xl font-semibold mb-5 text-left">Libros en la categoría: {category}</h1>
+        <h1 className="mb-5 text-left text-3xl font-semibold">
+          Libros en la categoría: {category}
+        </h1>
       </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {filteredBooks.length > 0 ? (
           filteredBooks.map((book, index) => (
             <Product

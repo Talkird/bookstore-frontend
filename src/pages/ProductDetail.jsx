@@ -7,29 +7,38 @@ import { Plus, Minus, Star } from "lucide-react";
 import Input from "../components/ui/Input";
 import { getUserId, getToken } from "../utils/token";
 import { addCartItem } from "../api/cart";
-import { getBooks } from "../api/books";
+import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 
 const ProductDetail = () => {
   const { title } = useParams();
 
   const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    getBooks()
-      .then((books) => setBooks(books))
-      .catch((error) => console.error("Error getting books:", error));
-  }, []);
-
-  const product = books.find(
-    (book) => book.title === decodeURIComponent(title),
-  );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [quantity, setQuantity] = useState(1);
   const [discount, setDiscount] = useState(0);
   const [rating, setRating] = useState(0);
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
+
+  useEffect(() => {
+    getBooks()
+      .then((books) => {
+        setBooks(books);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error getting books:", error);
+        setError("Error fetching product data");
+        setLoading(false);
+      });
+  }, []);
+
+  const product = books.find(
+    (book) => book.title === decodeURIComponent(title),
+  );
 
   const addToCart = () => {
     console.log("User tried adding to cart.");
@@ -42,19 +51,21 @@ const ProductDetail = () => {
       return;
     }
 
-    addCartItem(userId, {
-      bookId: product.id,
-      quantity: quantity,
-    });
+    if (product) {
+      addCartItem(userId, {
+        bookId: product.id,
+        quantity: quantity,
+      });
+    }
   };
 
   const handleQuantityChange = (e) => {
-    const value = Math.max(1, Math.min(e.target.value, product.availability));
+    const value = Math.max(1, Math.min(e.target.value, product?.stock || 1));
     setQuantity(value);
   };
 
   const increaseQuantity = () => {
-    if (quantity < product.availability) {
+    if (product && quantity < product.stock) {
       setQuantity((prevQuantity) => prevQuantity + 1);
     }
   };
@@ -81,12 +92,14 @@ const ProductDetail = () => {
     setIsPaymentPopupOpen(false);
   };
 
-  const finalPrice = product.price - product.price * (discount / 100);
+  const finalPrice = product
+    ? product.price - product.price * (discount / 100)
+    : 0;
 
   const handleRating = (star) => {
     setRating(star);
     console.log(
-      `Rating enviado: ${star} estrellas para el producto ${product.title}`,
+      `Rating enviado: ${star} estrellas para el producto ${product?.title}`,
     );
   };
 
@@ -105,6 +118,18 @@ const ProductDetail = () => {
     return stars;
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
   return (
     <div className="max-w-2x1 container mx-auto my-10 rounded-lg bg-white p-6 shadow-lg">
       <div className="mb-10">
@@ -115,7 +140,7 @@ const ProductDetail = () => {
         {/* Imagen del producto */}
         <div className="md:w-2/3">
           <img
-            style={{ width: "90%", height: "auto" }} // Ajusta según tus necesidades
+            style={{ width: "90%", height: "auto" }}
             className="rounded-lg object-cover shadow-md"
             src={product.image}
             alt={product.title}
@@ -124,7 +149,6 @@ const ProductDetail = () => {
 
         {/* Detalles del producto */}
         <div className="mr-10 md:w-2/3">
-          {/* Título y calificación */}
           <h2
             className="mb-4 mt-4 text-5xl font-bold text-primary"
             style={{ fontSize: "4rem" }}
@@ -139,32 +163,26 @@ const ProductDetail = () => {
           </h3>
           <div className="mb-6 flex items-center">
             <p className="mr-2 text-2xl font-semibold">
-              {product.userRating.toFixed(1)}
+              {product.rating.toFixed(1)}
             </p>
             <Star className="text-yellow-500" size={25} />
           </div>
 
-          {/* Precio y stock */}
-          <p
-            className={`mb-4 text-4xl font-semibold text-green-600 ${discount}`}
-          >
+          <p className="mb-4 text-4xl font-semibold text-green-600">
             ${finalPrice.toLocaleString()}
           </p>
-          <p className="mb-6 text-2xl text-primary">
-            Stock: {product.availability}
-          </p>
+          <p className="mb-6 text-2xl text-primary">Stock: {product.stock}</p>
 
-          {/* Botones de cantidad y agregar al carrito */}
           <div className="mb-6 flex items-center">
             <Button className="quantity-button" onClick={decreaseQuantity}>
               <Minus size={16} />
             </Button>
             <Input
               min="1"
-              max={product.availability}
+              max={product.stock}
               value={quantity}
               onChange={handleQuantityChange}
-              style={{ width: "190px" }} // Ajusta el valor según sea necesario
+              style={{ width: "190px" }}
               className="mx-4 px-4 py-2 text-center"
             />
             <Button onClick={increaseQuantity}>
@@ -178,13 +196,11 @@ const ProductDetail = () => {
             </Button>
           </div>
 
-          {/* Calificación del producto */}
           <div className="mb-6">
             <h3 className="mb-2 text-3xl font-bold">Calificar producto</h3>
             <div className="flex items-center">{renderStars()}</div>
           </div>
 
-          {/* Botones de envío y pago */}
           <div className="flex gap-4">
             <Button
               onClick={openShippingPopup}
@@ -204,7 +220,6 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      {/* Descripción y especificaciones */}
       <div className="mt-10">
         <h3 className="mb-3 text-2xl font-bold">Descripción</h3>
         <p
@@ -229,15 +244,6 @@ const ProductDetail = () => {
             </tr>
             <tr>
               <td className="py-2">Categoría: {product.genre}</td>
-            </tr>
-            <tr>
-              <td className="py-2">Peso: {product.weight}</td>
-            </tr>
-            <tr>
-              <td className="py-2">Editorial: {product.publisher}</td>
-            </tr>
-            <tr>
-              <td className="py-2">Páginas: {product.pages}</td>
             </tr>
           </tbody>
         </table>
