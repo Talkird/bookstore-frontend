@@ -12,12 +12,12 @@ const ProductAddAdminPopup = () => {
     year: "",
     price: "",
     stock: "",
-    genre: "NOVELA", // Valor predeterminado
+    genre: "NOVELA",
     description: "",
     imageFile: null,
   });
 
-  const [selectedImageName, setSelectedImageName] = useState(""); // Para mostrar el nombre del archivo seleccionado
+  const [selectedImageName, setSelectedImageName] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +33,7 @@ const ProductAddAdminPopup = () => {
       ...productData,
       imageFile: file,
     });
-    setSelectedImageName(file ? file.name : ""); // Guardar el nombre del archivo seleccionado
+    setSelectedImageName(file ? file.name : "");
   };
 
   const handleSubmit = (e) => {
@@ -70,7 +70,6 @@ const ProductAddAdminPopup = () => {
       {(close) => (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative h-auto w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
-            {/* Botón de cierre con ícono 'X' */}
             <button
               onClick={close}
               className="absolute right-4 top-4 text-gray-600 hover:text-gray-800"
