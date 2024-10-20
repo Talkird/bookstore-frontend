@@ -68,6 +68,20 @@ function Home() {
       image:
         "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/b5132fcc-ec40-4fc2-ba6a-b33763c3c1c4/9789505472222.jpg",
     },
+    {
+      title: "La Casa de los Suicidios",
+      author: "Donlea, Charlie",
+      price: "$AR 26.900,00",
+      image:
+        "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/d4076703-04b0-4001-9a27-4e58ebe5630d/9789878474465_6aeebede-5cec-449f-b281-cb724f366c95.jpg",
+    },
+    {
+      title: "La Casa de los Suicidios",
+      author: "Donlea, Charlie",
+      price: "$AR 26.900,00",
+      image:
+        "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/d4076703-04b0-4001-9a27-4e58ebe5630d/9789878474465_6aeebede-5cec-449f-b281-cb724f366c95.jpg",
+    },
   ];
 
   const recommendedBooks = [
