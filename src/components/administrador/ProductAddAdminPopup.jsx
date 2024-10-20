@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
+import { X } from "lucide-react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import { X } from "lucide-react";
 
 const ProductAddAdminPopup = () => {
   const [productData, setProductData] = useState({
@@ -12,10 +12,12 @@ const ProductAddAdminPopup = () => {
     year: "",
     price: "",
     stock: "",
-    imagePath: "",
-    genre: "",
+    genre: "NOVELA", // Valor predeterminado
     description: "",
+    imageFile: null,
   });
+
+  const [selectedImageName, setSelectedImageName] = useState(""); // Para mostrar el nombre del archivo seleccionado
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,9 +27,34 @@ const ProductAddAdminPopup = () => {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setProductData({
+      ...productData,
+      imageFile: file,
+    });
+    setSelectedImageName(file ? file.name : ""); // Guardar el nombre del archivo seleccionado
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(productData); // Manejar el envío de datos
+
+    const formData = new FormData();
+    formData.append("title", productData.title);
+    formData.append("author", productData.author);
+    formData.append("isbn", productData.isbn);
+    formData.append("year", productData.year);
+    formData.append("price", productData.price);
+    formData.append("stock", productData.stock);
+    formData.append("genre", productData.genre);
+    formData.append("description", productData.description);
+
+    if (productData.imageFile) {
+      formData.append("imageFile", productData.imageFile);
+    }
+
+    console.log([...formData]); // Para revisar los datos, luego enviarlos al backend
+    // Realiza el envío al backend
   };
 
   return (
@@ -43,7 +70,7 @@ const ProductAddAdminPopup = () => {
       {(close) => (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative h-auto w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
-            {/* Botón para cerrar */}
+            {/* Botón de cierre con ícono 'X' */}
             <button
               onClick={close}
               className="absolute right-4 top-4 text-gray-600 hover:text-gray-800"
@@ -141,32 +168,33 @@ const ProductAddAdminPopup = () => {
                 />
               </div>
 
-              <div>
-                <label htmlFor="imagePath" className="block text-gray-700">
-                  Ruta de Imagen:
-                </label>
-                <Input
-                  type="text"
-                  id="imagePath"
-                  name="imagePath"
-                  value={productData.imagePath}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div>
+              <div className="col-span-2">
                 <label htmlFor="genre" className="block text-gray-700">
                   Género:
                 </label>
-                <Input
-                  type="text"
+                <select
                   id="genre"
                   name="genre"
                   value={productData.genre}
                   onChange={handleChange}
+                  className="w-full rounded border-gray-300 p-2"
                   required
-                />
+                >
+                  <option value="NOVELA">Novela</option>
+                  <option value="ROMANTICO">Romántico</option>
+                  <option value="TERROR">Terror</option>
+                  <option value="CIENCIA_FICCION">Ciencia Ficción</option>
+                  <option value="FANTASIA">Fantasía</option>
+                  <option value="AVENTURAS">Aventuras</option>
+                  <option value="SUSPENSO">Suspenso</option>
+                  <option value="POESIA">Poesía</option>
+                  <option value="INFANTIL">Infantil</option>
+                  <option value="AUTOAYUDA">Autoayuda</option>
+                  <option value="DEPORTE">Deporte</option>
+                  <option value="ARTE">Arte</option>
+                  <option value="MUSICA">Música</option>
+                  <option value="COCINA">Cocina</option>
+                </select>
               </div>
 
               <div className="col-span-2">
@@ -178,9 +206,34 @@ const ProductAddAdminPopup = () => {
                   name="description"
                   value={productData.description}
                   onChange={handleChange}
-                  className="w-full rounded border-gray-300 p-2"
+                  className="w-full rounded border border-gray-300 p-3 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
+              </div>
+
+              <div className="col-span-2 mt-6">
+                <label htmlFor="imageFile" className="block text-gray-700">
+                  Cargar Imagen:
+                </label>
+                <div className="mt-2 flex items-center space-x-4">
+                  <Input
+                    type="file"
+                    id="imageFile"
+                    name="imageFile"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="imageFile"
+                    className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  >
+                    Seleccionar Imagen
+                  </label>
+                  <span className="text-gray-600">
+                    {selectedImageName || "Ningún archivo seleccionado"}
+                  </span>
+                </div>
               </div>
 
               <Button type="submit" className="col-span-2 mt-4">
