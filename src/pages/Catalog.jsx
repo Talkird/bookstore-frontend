@@ -101,7 +101,7 @@ function Catalog() {
             <Product
               key={index}
               id={index + 1}
-              image={book.image}
+              image={book.imagePath}
               title={book.title}
               author={book.author}
               price={book.price}

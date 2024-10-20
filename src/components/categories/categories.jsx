@@ -22,7 +22,7 @@ function Categories() {
     },
     {
       name: "CIENCIA FICCION",
-      route: "/books/ciencia-ficcion",
+      route: "/books/cienciaficcion",
       color:
         "bg-orange-500 border-orange-500 hover:bg-orange-600 focus:ring-orange-400",
     },
