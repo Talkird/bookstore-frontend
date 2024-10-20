@@ -5,39 +5,26 @@ import ImageBanner from "../components/banners/ImageBanner";
 import BookSlider from "../components/bookslider/BookSlider";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { getBooks } from "../api/book";
 
 function Home() {
   const [books, setBooks] = useState([]);
 
-  const getBooks = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/books/all`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching books:", error);
-      return [];
-    }
-  };
-
   useEffect(() => {
-    getBooks().then((data) => {
-      setBooks(data);
-      console.log(data);
-    });
+    const fetchBooks = async () => {
+      try {
+        const data = await getBooks();
+        setBooks(data);
+        console.log(books);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
   }, []);
 
   const navigate = useNavigate();
-
-  const imagesSlider = [
-    "https://acdn.mitiendanube.com/stores/001/315/129/themes/cubo/2-slide-1716819413094-6733356213-b7a5d39530e4190623e5356f6d196b9f1716819414-1024-1024.webp?264042642",
-    "https://market2.livriz.com/storage/section/1/escape%20de%20viena.png",
-    "https://market2.livriz.com/storage/section/1/Blackwater.jpg",
-    "https://planetadelibrosar0.cdnstatics.com/usuaris/web_banners/fotos/4/original/3329_1_PDL_1140x272.png",
-  ];
 
   const recommendedScifi = [
     {
@@ -67,20 +54,6 @@ function Home() {
       price: "$AR 30.800,00",
       image:
         "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/b5132fcc-ec40-4fc2-ba6a-b33763c3c1c4/9789505472222.jpg",
-    },
-    {
-      title: "La Casa de los Suicidios",
-      author: "Donlea, Charlie",
-      price: "$AR 26.900,00",
-      image:
-        "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/d4076703-04b0-4001-9a27-4e58ebe5630d/9789878474465_6aeebede-5cec-449f-b281-cb724f366c95.jpg",
-    },
-    {
-      title: "La Casa de los Suicidios",
-      author: "Donlea, Charlie",
-      price: "$AR 26.900,00",
-      image:
-        "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/d4076703-04b0-4001-9a27-4e58ebe5630d/9789878474465_6aeebede-5cec-449f-b281-cb724f366c95.jpg",
     },
   ];
 
@@ -135,7 +108,7 @@ function Home() {
 
   return (
     <div className="p-8">
-      <ImageBanner images={imagesSlider} />
+      <ImageBanner />
 
       <div className="flex justify-center">
         <Button

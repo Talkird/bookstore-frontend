@@ -1,7 +1,7 @@
 import axios from "axios";
-import { getToken } from "./token";
+import { getToken } from "../utils/token";
 
-const base_url = "http://localhost:8080/books/all";
+const base_url = "http://localhost:8080/books";
 
 export const addBook = async (book) => {
   try {

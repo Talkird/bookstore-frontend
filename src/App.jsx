@@ -33,13 +33,12 @@ function App() {
         <Route path="/como-comprar" element={<ComoComprar />} />
         <Route path="/quienes-somos" element={<QuienesSomos />} />
 
-        <Route path="/catalog/product" element={<ProductDetail />} />
+        <Route path="/catalog/product/:title" element={<ProductDetail />} />
         <Route path="/faq" element={<Faq />} />
 
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/catalog/product" element={<ProductDetail />} />
         <Route path="/faq" element={<Faq />} />
 
         <Route path="/" element={<Catalog />} />
