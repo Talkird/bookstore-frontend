@@ -33,6 +33,9 @@ function Register() {
     }
     
     const response = await register(name, email, password);
+    if (response) {
+      toast.success("Usuario creado exitosamente");
+    }
 
 
   };
@@ -93,10 +96,12 @@ function Register() {
           </div>
 
           <div className="flex flex-col gap-4 mt-4">
-            <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
-              Registrarse     
+            <Button 
+              type="submit" 
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
+              Registrarse
             </Button>
-
             <div className="text-center">
               <Link to="/login" className="text-blue-500 hover:underline">
                 Ya tengo una cuenta
