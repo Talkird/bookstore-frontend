@@ -1,38 +1,37 @@
-import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import CouponInput from "../coupon/CouponInput";
+import propTypes from "prop-types";
+import React, { useState } from "react";
 import { X } from "lucide-react";
 
-const ProductAddAdminPopup = () => {
-  const [productData, setProductData] = useState({
-    title: "",
-    author: "",
-    isbn: "",
-    year: "",
-    price: "",
-    stock: "",
-    imagePath: "",
-    genre: "",
-    description: "",
-  });
+const PurchasePopup = ({ cartItems, onCheckout }) => {
+  const totalPrice = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProductData({
-      ...productData,
-      [name]: value,
-    });
-  };
+  const [finalPrice, setFinalPrice] = useState(totalPrice);
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(productData); // Manejar el envío de datos
+  const applyDiscount = (coupon) => {
+    const validCoupons = ["DESCUENTO10", "PROMO20"];
+    const discount =
+      coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 : 0;
+
+    if (discount > 0) {
+      setFinalPrice(totalPrice * (1 - discount / 100));
+      setDiscountApplied(true);
+      return true;
+    }
+    return false;
   };
 
   return (
     <Popup
-      trigger={<Button className="rounded text-white">Add Product</Button>}
+      trigger={<Button className="rounded text-white">Comprar</Button>}
       modal
       contentStyle={{
         padding: "0",
@@ -43,7 +42,6 @@ const ProductAddAdminPopup = () => {
       {(close) => (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative h-auto w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
-            {/* Botón para cerrar */}
             <button
               onClick={close}
               className="absolute right-4 top-4 text-gray-600 hover:text-gray-800"
@@ -52,139 +50,128 @@ const ProductAddAdminPopup = () => {
             </button>
 
             <h1 className="mb-4 text-2xl font-bold text-gray-800">
-              Agregar Producto
+              Carrito de Compras
             </h1>
 
+            <div className="mb-4 max-h-48 space-y-4 overflow-y-auto">
+              {cartItems.length === 0 ? (
+                <p className="text-gray-600">Tu carrito está vacío.</p>
+              ) : (
+                cartItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between border-b p-2"
+                  >
+                    <div className="flex items-center">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="mr-2 h-16 w-16 rounded-lg object-cover"
+                      />
+                      <div>
+                        <h2 className="text-lg font-semibold text-gray-800">
+                          {item.title}
+                        </h2>
+                        <p className="text-gray-600">
+                          Cantidad: {item.quantity}
+                        </p>
+                        <p className="text-gray-600">
+                          ${(item.price * item.quantity).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            <div className="mb-4">
+              <h2 className="mb-5 text-lg font-bold text-gray-800">
+                Resumen de Compra
+              </h2>
+              <p className="text-lg font-semibold text-gray-800">
+                Total Original: ${totalPrice.toLocaleString()}
+              </p>
+              {discountApplied && (
+                <p className="text-lg font-semibold text-green-600">
+                  Total con Descuento: ${finalPrice.toLocaleString()}
+                </p>
+              )}
+            </div>
+
+            <CouponInput applyDiscount={applyDiscount} />
+
+            <h2 className="mb-2 mt-6 text-lg font-bold text-gray-800">
+              Completa tu compra
+            </h2>
+
             <form
-              onSubmit={handleSubmit}
+              onSubmit={(e) => {
+                e.preventDefault();
+                const name = e.target.name.value;
+                const email = e.target.email.value;
+                const phone = e.target.phone.value;
+                const address = e.target.address.value;
+                onCheckout({
+                  name,
+                  email,
+                  phone,
+                  address,
+                  cartItems,
+                  paymentMethod,
+                });
+                close();
+              }}
               className="grid grid-cols-1 gap-4 md:grid-cols-2"
             >
               <div>
-                <label htmlFor="title" className="block text-gray-700">
-                  Título:
+                <label htmlFor="name" className="block text-gray-700">
+                  Nombre:
                 </label>
-                <Input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={productData.title}
-                  onChange={handleChange}
-                  required
-                />
+                <Input type="text" id="name" required />
               </div>
 
               <div>
-                <label htmlFor="author" className="block text-gray-700">
-                  Autor:
+                <label htmlFor="email" className="block text-gray-700">
+                  Correo Electrónico:
                 </label>
-                <Input
-                  type="text"
-                  id="author"
-                  name="author"
-                  value={productData.author}
-                  onChange={handleChange}
-                  required
-                />
+                <Input type="email" id="email" required />
               </div>
 
               <div>
-                <label htmlFor="isbn" className="block text-gray-700">
-                  ISBN:
+                <label htmlFor="phone" className="block text-gray-700">
+                  Teléfono:
                 </label>
-                <Input
-                  type="text"
-                  id="isbn"
-                  name="isbn"
-                  value={productData.isbn}
-                  onChange={handleChange}
-                />
+                <Input type="tel" id="phone" required />
               </div>
 
               <div>
-                <label htmlFor="year" className="block text-gray-700">
-                  Año:
+                <label htmlFor="address" className="block text-gray-700">
+                  Dirección de Envío:
                 </label>
-                <Input
-                  type="number"
-                  id="year"
-                  name="year"
-                  value={productData.year}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="price" className="block text-gray-700">
-                  Precio:
-                </label>
-                <Input
-                  type="number"
-                  id="price"
-                  name="price"
-                  value={productData.price}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="stock" className="block text-gray-700">
-                  Stock:
-                </label>
-                <Input
-                  type="number"
-                  id="stock"
-                  name="stock"
-                  value={productData.stock}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="imagePath" className="block text-gray-700">
-                  Ruta de Imagen:
-                </label>
-                <Input
-                  type="text"
-                  id="imagePath"
-                  name="imagePath"
-                  value={productData.imagePath}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="genre" className="block text-gray-700">
-                  Género:
-                </label>
-                <Input
-                  type="text"
-                  id="genre"
-                  name="genre"
-                  value={productData.genre}
-                  onChange={handleChange}
-                  required
-                />
+                <Input type="text" id="address" required />
               </div>
 
               <div className="col-span-2">
-                <label htmlFor="description" className="block text-gray-700">
-                  Descripción:
+                <label htmlFor="paymentMethod" className="block text-gray-700">
+                  Método de Pago:
                 </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={productData.description}
-                  onChange={handleChange}
-                  className="w-full rounded border-gray-300 p-2"
+                <select
+                  id="paymentMethod"
+                  value={paymentMethod}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                   required
-                />
+                  className="w-full rounded border-gray-300 p-2"
+                >
+                  <option value="">Seleccione un método</option>
+                  <option value="creditCard">Tarjeta de Crédito</option>
+                  <option value="debitCard">Tarjeta de Débito</option>
+                  <option value="mp">Mercado Pago</option>
+                </select>
               </div>
 
               <Button type="submit" className="col-span-2 mt-4">
-                Agregar Producto
+                Confirmar Compra
               </Button>
             </form>
           </div>
@@ -194,4 +181,9 @@ const ProductAddAdminPopup = () => {
   );
 };
 
-export default ProductAddAdminPopup;
+PurchasePopup.propTypes = {
+  cartItems: propTypes.array.isRequired,
+  onCheckout: propTypes.func.isRequired,
+};
+
+export default PurchasePopup;

@@ -12,12 +12,12 @@ const ProductAddAdminPopup = () => {
     year: "",
     price: "",
     stock: "",
-    genre: "NOVELA", // Valor predeterminado
+    genre: "NOVELA",
     description: "",
-    imageFile: null,
+    imageUrl: "",
   });
 
-  const [selectedImageName, setSelectedImageName] = useState(""); // Para mostrar el nombre del archivo seleccionado
+  const [selectedImageName, setSelectedImageName] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +33,7 @@ const ProductAddAdminPopup = () => {
       ...productData,
       imageFile: file,
     });
-    setSelectedImageName(file ? file.name : ""); // Guardar el nombre del archivo seleccionado
+    setSelectedImageName(file ? file.name : "");
   };
 
   const handleSubmit = (e) => {
@@ -70,7 +70,6 @@ const ProductAddAdminPopup = () => {
       {(close) => (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative h-auto w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg">
-            {/* Botón de cierre con ícono 'X' */}
             <button
               onClick={close}
               className="absolute right-4 top-4 text-gray-600 hover:text-gray-800"
@@ -212,28 +211,33 @@ const ProductAddAdminPopup = () => {
               </div>
 
               <div className="col-span-2 mt-6">
-                <label htmlFor="imageFile" className="block text-gray-700">
-                  Cargar Imagen:
+                <label htmlFor="imageUrl" className="block text-gray-700">
+                  URL de Imagen:
                 </label>
                 <div className="mt-2 flex items-center space-x-4">
                   <Input
-                    type="file"
-                    id="imageFile"
-                    name="imageFile"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
+                    type="text"
+                    id="imageUrl"
+                    name="imageUrl"
+                    value={productData.imageUrl}
+                    onChange={handleChange}
+                    placeholder="https://example.com/image.jpg"
+                    required
+                    className="w-full"
                   />
-                  <label
-                    htmlFor="imageFile"
-                    className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                  >
-                    Seleccionar Imagen
-                  </label>
-                  <span className="text-gray-600">
-                    {selectedImageName || "Ningún archivo seleccionado"}
-                  </span>
                 </div>
+
+                {/* Vista previa de la imagen */}
+                {productData.imageUrl && (
+                  <div className="mt-4">
+                    <p className="text-gray-600">Vista previa de la imagen:</p>
+                    <img
+                      src={productData.imageUrl}
+                      alt="Vista previa"
+                      className="mt-2 h-40 w-auto rounded-lg shadow-md"
+                    />
+                  </div>
+                )}
               </div>
 
               <Button type="submit" className="col-span-2 mt-4">
