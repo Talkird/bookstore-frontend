@@ -216,7 +216,7 @@ const ProductAddAdminPopup = () => {
                   Cargar Imagen:
                 </label>
                 <div className="mt-2 flex items-center space-x-4">
-                  <input
+                  <Input
                     type="file"
                     id="imageFile"
                     name="imageFile"
