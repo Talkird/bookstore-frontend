@@ -48,7 +48,7 @@ function Cart() {
             id={item.id}
             bookId={item.book.id}
             key={item.id}
-            image={item.image}
+            image={item.book.imagePath}
             title={item.book.title}
             price={item.book.price}
             initialQuantity={item.quantity}
