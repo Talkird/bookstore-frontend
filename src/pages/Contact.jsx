@@ -4,7 +4,7 @@ import Testimonials from "../components/contact/Testimonial";
 
 function Contact() {
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="ml-20 mt-10 flex justify-start">
         <BackButton />
       </div>
@@ -13,22 +13,14 @@ function Contact() {
           Contacto
         </h1>
 
-        <p className="mb-6 text-center text-lg font-semibold">
+        <p className="mb-6 text-center text-lg font-semibold text-gray-700">
           HORARIO DE ATENCIÓN: Lunes a Sábados de 9 a 13 y de 16 a 20 hs.
         </p>
 
-        <div className="my-8 grid grid-cols-1 gap-4 text-center md:grid-cols-4">
-          <ContactInfo title="WhatsApp" info="+91 48762167" />
+        <div className="my-8 grid grid-cols-1 gap-4 text-center md:grid-cols-2">
+          <ContactInfo title="WhatsApp" info="+54 48762167" />
 
-          <ContactInfo title="Telefono" info="+54 43257941" />
-
-          <ContactInfo title="Email" info="ecommerce@gmail.com" />
-
-          <ContactInfo
-            title="Dirección"
-            info="Lima 757
-          "
-          />
+          <ContactInfo title="Email" info="plumaencantada@gmail.com" />
         </div>
 
         <Testimonials className="mb-8" />

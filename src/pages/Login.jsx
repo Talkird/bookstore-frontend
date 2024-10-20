@@ -8,15 +8,38 @@ import { getToken } from "../utils/token";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = async () => {
+  const validateInput = () => {
+    if (!email || !password) {
+      setError("Todos los campos son obligatorios.");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("El formato del correo electrónico no es válido.");
+      return false;
+    }
+
+    setError("");
+    return true;
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    if (!validateInput()) {
+      return;
+    }
+
     const response = await login(email, password);
-    console.log(response);
+    console.log(getToken());
+    // Handle response
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <div className="flex w-full max-w-md flex-col gap-8 rounded-xl bg-white p-8 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="flex w-full max-w-md flex-col gap-8 rounded-xl bg-white p-8 shadow-2xl">
         <div className="flex flex-col gap-3">
           <h2 className="text-center text-3xl font-bold text-gray-800">
             Bienvenido
@@ -26,41 +49,49 @@ function Login() {
           </p>
         </div>
 
-        <div className="space-y-2">
-          <p className="text-lg text-gray-700">Email</p>
-          <Input
-            variable={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            placeholder="Ingrese su correo electrónico"
-            type="email"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-lg text-gray-700">Contraseña</p>
-          <Input
-            variable={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            placeholder="Ingrese su contraseña"
-            type="password"
-          />
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <Button onClick={handleLogin} className="w-full">
-            Iniciar Sesión
-          </Button>
-
-          <div className="text-center">
-            <Link to="/register" className="text-primary hover:underline">
-              ¿No tenés cuenta? Registrate
-            </Link>
+        {error && (
+          <div className="text-center text-red-500">
+            {error}
           </div>
-        </div>
+        )}
+
+        <form onSubmit={handleLogin}>
+          <div className="space-y-2">
+            <p className="text-lg text-gray-700">Email</p>
+            <Input
+              variable={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Ingrese su correo electrónico"
+              type="email"
+              required
+              className="w-full rounded-md border border-gray-300 p-2"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <p className="text-lg text-gray-700">Contraseña</p>
+            <Input
+              variable={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Ingrese su contraseña"
+              type="password"
+              required
+              className="w-full rounded-md border border-gray-300 p-2"
+            />
+          </div>
+
+          <div className="flex flex-col gap-4 mt-4">
+            <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+              Iniciar Sesión
+            </Button>
+
+            <div className="text-center">
+              <Link to="/register" className="text-blue-500 hover:underline">
+                ¿No tenés cuenta? Registrate
+              </Link>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );

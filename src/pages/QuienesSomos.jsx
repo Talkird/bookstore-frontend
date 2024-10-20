@@ -9,7 +9,6 @@ function QuienesSomos() {
           <BackButton />
         </div>
         <nav className="text-gray-500">
-          {/* Enlace a Inicio */}
           <Link to="/" className="hover:text-primary">
             Home
           </Link>{" "}
