@@ -16,7 +16,7 @@ function CategoryPage() {
   }, []);
 
   const filteredBooks = books.filter(
-    (book) => book.category.toLowerCase() === decodeURIComponent(category),
+    (book) => book.genre.toLowerCase() === decodeURIComponent(category),
   );
 
   return (
@@ -35,7 +35,7 @@ function CategoryPage() {
           filteredBooks.map((book, index) => (
             <Product
               key={index}
-              image={book.image}
+              image={book.imagePath}
               title={book.title}
               author={book.author}
               price={book.price}
