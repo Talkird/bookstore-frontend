@@ -14,7 +14,7 @@ const ProductAddAdminPopup = () => {
     stock: "",
     genre: "NOVELA",
     description: "",
-    imageFile: null,
+    imageUrl: "",
   });
 
   const [selectedImageName, setSelectedImageName] = useState("");
@@ -211,28 +211,33 @@ const ProductAddAdminPopup = () => {
               </div>
 
               <div className="col-span-2 mt-6">
-                <label htmlFor="imageFile" className="block text-gray-700">
-                  Cargar Imagen:
+                <label htmlFor="imageUrl" className="block text-gray-700">
+                  URL de Imagen:
                 </label>
                 <div className="mt-2 flex items-center space-x-4">
                   <Input
-                    type="file"
-                    id="imageFile"
-                    name="imageFile"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
+                    type="text"
+                    id="imageUrl"
+                    name="imageUrl"
+                    value={productData.imageUrl}
+                    onChange={handleChange}
+                    placeholder="https://example.com/image.jpg"
+                    required
+                    className="w-full"
                   />
-                  <label
-                    htmlFor="imageFile"
-                    className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-                  >
-                    Seleccionar Imagen
-                  </label>
-                  <span className="text-gray-600">
-                    {selectedImageName || "Ningún archivo seleccionado"}
-                  </span>
                 </div>
+
+                {/* Vista previa de la imagen */}
+                {productData.imageUrl && (
+                  <div className="mt-4">
+                    <p className="text-gray-600">Vista previa de la imagen:</p>
+                    <img
+                      src={productData.imageUrl}
+                      alt="Vista previa"
+                      className="mt-2 h-40 w-auto rounded-lg shadow-md"
+                    />
+                  </div>
+                )}
               </div>
 
               <Button type="submit" className="col-span-2 mt-4">
