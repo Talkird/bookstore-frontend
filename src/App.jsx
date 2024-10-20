@@ -16,6 +16,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Faq from "./pages/Faq";
 
 
+
 function App() {
   return (
     <Router>
@@ -41,6 +42,8 @@ function App() {
         <Route path="/catalog/product" element={<ProductDetail />} />
         <Route path="/faq" element={<Faq />} />
 
+        <Route path="/" element={<Catalog />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
 
       </Routes>
       <Footer />
