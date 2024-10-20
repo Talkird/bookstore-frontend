@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const CouponInput = ({ applyDiscount }) => {
   const [coupon, setCoupon] = useState("");
@@ -27,16 +27,16 @@ const CouponInput = ({ applyDiscount }) => {
           placeholder="Ingresa tu cupón"
           value={coupon}
           onChange={(e) => setCoupon(e.target.value)}
-          className="border p-2 rounded-md"
+          className="rounded-md border p-2"
         />
         <button
           onClick={handleApplyCoupon}
-          className="ml-2 bg-primary text-white p-2 rounded-md"
+          className="ml-2 rounded-md bg-primary p-2 text-white"
         >
           Aplicar cupón
         </button>
       </div>
-      {error && <p className="text-red-600 mt-2">{error}</p>}
+      {error && <p className="mt-2 text-red-600">{error}</p>}
     </div>
   );
 };

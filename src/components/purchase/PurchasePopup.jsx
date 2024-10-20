@@ -3,10 +3,12 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 import CouponInput from "../coupon/CouponInput";
 import propTypes from "prop-types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { X } from "lucide-react";
+import { checkoutCart } from "../../api/cart";
+import { getUserId } from "../../utils/token";
 
-const PurchasePopup = ({ cartItems, onCheckout }) => {
+const PurchasePopup = ({ cartItems }) => {
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
@@ -15,8 +17,26 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
   const [finalPrice, setFinalPrice] = useState(totalPrice);
   const [discountApplied, setDiscountApplied] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    checkoutCart(getUserId(), {
+      customer_name: name,
+      customer_email: email,
+      customer_phone: phone,
+      shipping_address: address,
+      payment_method: paymentMethod,
+      discount_code: "",
+      items: cartItems,
+    });
+  };
 
   const applyDiscount = (coupon) => {
+    //TODO FETCH DESCUENTOS
     const validCoupons = ["DESCUENTO10", "PROMO20"];
     const discount =
       coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 : 0;
@@ -64,7 +84,7 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
                   >
                     <div className="flex items-center">
                       <img
-                        src={item.imageUrl}
+                        src={item.image}
                         alt={item.title}
                         className="mr-2 h-16 w-16 rounded-lg object-cover"
                       />
@@ -106,50 +126,59 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
             </h2>
 
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const name = e.target.name.value;
-                const email = e.target.email.value;
-                const phone = e.target.phone.value;
-                const address = e.target.address.value;
-                onCheckout({
-                  name,
-                  email,
-                  phone,
-                  address,
-                  cartItems,
-                  paymentMethod,
-                });
-                close();
-              }}
+              onSubmit={handleCheckout}
               className="grid grid-cols-1 gap-4 md:grid-cols-2"
             >
               <div>
                 <label htmlFor="name" className="block text-gray-700">
                   Nombre:
                 </label>
-                <Input type="text" id="name" required />
+                <Input
+                  variable={name}
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  id="name"
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-gray-700">
                   Correo Electrónico:
                 </label>
-                <Input type="email" id="email" required />
+                <Input
+                  variable={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  id="email"
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="phone" className="block text-gray-700">
                   Teléfono:
                 </label>
-                <Input type="tel" id="phone" required />
+                <Input
+                  variable={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  type="tel"
+                  id="phone"
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="address" className="block text-gray-700">
                   Dirección de Envío:
                 </label>
-                <Input type="text" id="address" required />
+                <Input
+                  variable={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  type="text"
+                  id="address"
+                  required
+                />
               </div>
 
               <div className="col-span-2">
@@ -164,9 +193,9 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
                   className="w-full rounded border-gray-300 p-2"
                 >
                   <option value="">Seleccione un método</option>
-                  <option value="creditCard">Tarjeta de Crédito</option>
-                  <option value="debitCard">Tarjeta de Débito</option>
-                  <option value="mp">Mercado Pago</option>
+                  <option value="CREDIT_CARD">Tarjeta de Crédito</option>
+                  <option value="DEBIT_CARD">Tarjeta de Débito</option>
+                  <option value="MERCADO_PAGO">Mercado Pago</option>
                 </select>
               </div>
 
@@ -183,7 +212,6 @@ const PurchasePopup = ({ cartItems, onCheckout }) => {
 
 PurchasePopup.propTypes = {
   cartItems: propTypes.array.isRequired,
-  onCheckout: propTypes.func.isRequired,
 };
 
 export default PurchasePopup;
