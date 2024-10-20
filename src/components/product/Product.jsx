@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart,Settings } from "lucide-react";
 import { formatPeso } from "../../utils/format";
 import { useNavigate } from "react-router-dom";
 

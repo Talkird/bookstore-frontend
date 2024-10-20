@@ -16,6 +16,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Faq from "./pages/Faq";
 import { Toaster } from "react-hot-toast";
 
+
 function App() {
   return (
     <Router>

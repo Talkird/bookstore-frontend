@@ -6,6 +6,7 @@ import BookSlider from "../components/bookslider/BookSlider";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getBooks } from "../api/book";
+import toast from "react-hot-toast";
 
 function Home() {
   const [books, setBooks] = useState([]);
