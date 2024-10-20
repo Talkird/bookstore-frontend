@@ -3,7 +3,7 @@ import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../api/user";
-import { setToken, getToken } from "../utils/token";
+import { getToken } from "../utils/token";
 
 function Login() {
   const [email, setEmail] = useState("");

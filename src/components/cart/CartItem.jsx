@@ -1,16 +1,17 @@
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
 import { Trash2 } from "lucide-react";
 import { formatPeso } from "../../utils/format";
-import { useState, useEffect } from "react";
+import { getUserId } from "../../utils/token";
+import { deleteCartItem, updateCartItem } from "../../api/cart";
 
-function CartItem({ image, title, price, initialQuantity = 1, onRemove, onQuantityChange }) {
+function CartItem({ id, bookId, image, title, price, initialQuantity = 1 }) {
   const [quantity, setQuantity] = useState(initialQuantity);
 
-  // Update the parent component when the quantity changes
   useEffect(() => {
-    onQuantityChange(quantity);
-  }, [quantity, onQuantityChange]);
+    handleQuantityChange();
+  }, [quantity]);
 
   const handleDecrease = () => {
     if (quantity > 1) {
@@ -20,6 +21,16 @@ function CartItem({ image, title, price, initialQuantity = 1, onRemove, onQuanti
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
+  };
+
+  const handleQuantityChange = () => {
+    const userId = getUserId();
+    updateCartItem(userId, id, { id, bookId, quantity });
+  };
+
+  const handleDelete = () => {
+    const userId = getUserId();
+    deleteCartItem(userId, id);
   };
 
   return (
@@ -34,11 +45,14 @@ function CartItem({ image, title, price, initialQuantity = 1, onRemove, onQuanti
           {title}
         </h2>
         <p className="text-lg/2">{formatPeso(price)}</p>
-        <div className="flex items-center gap-3 mt-2">
+        <div className="mt-2 flex items-center gap-3">
           <Button onClick={handleDecrease} disabled={quantity <= 1}>
             -
           </Button>
-          <span className="text-lg" style={{ minWidth: "32px", textAlign: "center" }}>
+          <span
+            className="text-lg"
+            style={{ minWidth: "32px", textAlign: "center" }}
+          >
             {quantity}
           </span>
           <Button onClick={handleIncrease}>+</Button>
@@ -46,10 +60,8 @@ function CartItem({ image, title, price, initialQuantity = 1, onRemove, onQuanti
       </div>
 
       <div className="flex flex-col items-end pr-4">
-        <p className="text-lg font-semibold">
-          {formatPeso(price * quantity)}
-        </p>
-        <Button className="mt-2 flex items-center gap-2" onClick={onRemove}>
+        <p className="text-lg font-semibold">{formatPeso(price * quantity)}</p>
+        <Button className="mt-2 flex items-center gap-2" onClick={handleDelete}>
           <Trash2 />
           Quitar
         </Button>
@@ -59,12 +71,12 @@ function CartItem({ image, title, price, initialQuantity = 1, onRemove, onQuanti
 }
 
 CartItem.propTypes = {
-  image: PropTypes.string,
-  title: PropTypes.string,
-  price: PropTypes.number,
+  id: PropTypes.string.isRequired,
+  bookId: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
   initialQuantity: PropTypes.number,
-  onRemove: PropTypes.func,
-  onQuantityChange: PropTypes.func,
 };
 
 export default CartItem;
