@@ -43,7 +43,7 @@ function CartItem({ id, bookId, image, title, price, initialQuantity = 1, onRemo
   };
 
   const navigateToBook = () => {
-    navigate(`/product/${encodeURIComponent(title)}`);
+    navigate(`/catalog/product/${encodeURIComponent(title)}`);
   };
 
   return (
