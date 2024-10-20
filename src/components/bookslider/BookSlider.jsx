@@ -73,14 +73,6 @@ function BookSlider({ title, books }) {
               {formatPeso(book.price)}
             </p>
 
-            {/* Botón para agregar al carrito */}
-            <Button
-              onClick={() => handleAddToCart(book.id)}
-              className="mt-2 flex items-center gap-4 px-4 py-2 text-lg"
-            >
-              <ShoppingCart className="h-6 w-6" />
-              Añadir al carrito
-            </Button>
           </div>
         ))}
       </Slider>
