@@ -4,22 +4,18 @@ import Pagination from "../components/ui/Pagination";
 import Filter from "../components/filters/Filter";
 import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
-import { useLocation } from "react-router-dom";
-import { getBooks } from "../api/book";
+import ProductAddAdminPopup from "../components/administrador/ProductAddAdminPopup"; // Importar el componente de popup
+import { useLocation } from "react-router-dom"; // Para obtener los parámetros de la URL
+
+const books = [
+  // Tu lista de libros
+];
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 function Catalog() {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    getBooks()
-      .then((books) => setBooks(books))
-      .catch((error) => console.error("Error getting books:", error));
-  }, []);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     minPrice: null,
@@ -27,21 +23,24 @@ function Catalog() {
     publisher: null,
     selectedCategories: [],
   });
-  const [sortOrder, setSortOrder] = useState(null);
+  const [sortOrder, setSortOrder] = useState(null); // Nuevo estado para el orden
   const booksPerPage = 20;
   const query = useQuery();
-  const searchTerm = query.get("search") || "";
+  const searchTerm = query.get("search") || ""; // Obtener el término de búsqueda desde la URL
 
+  // Maneja el cambio de filtros
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reinicia a la página 1 cuando se aplican nuevos filtros
   };
 
+  // Maneja el cambio de ordenamiento
   const handleSortChange = (newSortOrder) => {
     setSortOrder(newSortOrder);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reinicia a la página 1 cuando se aplica un nuevo orden
   };
 
+  // Filtrar los libros
   const filteredBooks = books.filter((book) => {
     const meetsPrice =
       (!filters.minPrice || book.price >= filters.minPrice) &&
@@ -57,13 +56,14 @@ function Catalog() {
     return meetsPrice && meetsPublisher && meetsCategory && meetsSearch;
   });
 
+  // Ordenar los libros
   const sortedBooks = filteredBooks.sort((a, b) => {
     if (sortOrder === "asc") {
       return a.price - b.price;
     } else if (sortOrder === "desc") {
       return b.price - a.price;
     }
-    return 0;
+    return 0; // Si no hay orden, no cambiar nada
   });
 
   const totalPages = Math.ceil(sortedBooks.length / booksPerPage);
@@ -73,7 +73,7 @@ function Catalog() {
     startIndex + booksPerPage,
   );
 
-  const totalBooks = filteredBooks.length;
+  const totalBooks = filteredBooks.length; // Cantidad total de libros filtrados
   const showingStart = startIndex + 1;
   const showingEnd = Math.min(startIndex + booksPerPage, totalBooks);
 
@@ -84,6 +84,7 @@ function Catalog() {
           <BackButton />
         </div>
         <Filter onFilterChange={handleFilterChange} />
+        <ProductAddAdminPopup /> {/* Aquí se añade el popup en la columna de filtros */}
       </div>
 
       {/* Columna para mostrar los productos */}
@@ -100,7 +101,7 @@ function Catalog() {
           {selectedBooks.map((book, index) => (
             <Product
               key={index}
-              id={index + 1}
+              id={index}
               image={book.image}
               title={book.title}
               author={book.author}
