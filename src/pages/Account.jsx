@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Account() {
   const userData = {
     email: "user@example.com",
-    password: "********",
+    role: "user",
   };
 
   return (
@@ -19,9 +19,9 @@ function Account() {
           </div>
         </div>
         <div className="flex items-center">
-          <label className="w-1/3 font-medium text-gray-700">Contraseña:</label>
+          <label className="w-1/3 font-medium text-gray-700">Rol:</label>
           <div className="w-2/3 rounded border bg-gray-100 p-3 text-gray-800">
-            {userData.password}
+            {userData.role}
           </div>
         </div>
       </div>
