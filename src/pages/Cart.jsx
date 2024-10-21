@@ -3,8 +3,9 @@ import CartItem from "../components/cart/CartItem";
 import { formatPeso } from "../utils/format";
 import BackButton from "../components/ui/BackButton";
 import PurchasePopup from "../components/purchase/PurchasePopup";
-import { getCart } from "../api/cart";
+import { getCart, clearCart } from "../api/cart"; // Import clearCart
 import { getUserId } from "../utils/token";
+import Button from "../components/ui/Button"; // Assuming you have a reusable Button component
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -49,6 +50,22 @@ function Cart() {
     setTotal(0);
   };
 
+  const handleClearCart = async () => {
+    const userId = getUserId();
+    const confirmClear = window.confirm("¿Estás seguro de que deseas vaciar el carrito?");
+    if (!confirmClear) {
+      return; // Exit if the user cancels
+    }
+
+    try {
+      await clearCart(userId);
+      setCartItems([]); // Clear the local cart state
+      setTotal(0); // Reset the total to 0
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+    }
+  };
+
   return (
     <div className="p-4">
       <div className="flex items-start justify-between">
@@ -58,6 +75,9 @@ function Cart() {
           <p className="mt-4 text-lg font-semibold">
             Total: {formatPeso(total)}
           </p>
+          <Button onClick={handleClearCart} className="mt-2">
+            Vaciar Carrito
+          </Button>
         </div>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
