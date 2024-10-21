@@ -7,15 +7,17 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { checkoutCart } from "../../api/cart";
 import { getUserId } from "../../utils/token";
+import { useNavigate } from "react-router-dom";
 
 const PurchasePopup = ({ cartItems }) => {
-  const [finalPrice, setFinalPrice] = useState(0);  // Inicializamos el precio final
+  const [finalPrice, setFinalPrice] = useState(0); // Inicializamos el precio final
   const [discountApplied, setDiscountApplied] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const navigate = useNavigate(); // Para redirigir a la página de órdenes
 
   // Actualizamos el precio total cada vez que cambia el carrito
   useEffect(() => {
@@ -26,11 +28,9 @@ const PurchasePopup = ({ cartItems }) => {
     setFinalPrice(totalPrice);
   }, [cartItems]);
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
-  
-    // Creamos el objeto con los datos de la compra
-    const purchaseData = {
+    const orderData = {
       customer_name: name,
       customer_email: email,
       customer_phone: phone,
@@ -39,19 +39,25 @@ const PurchasePopup = ({ cartItems }) => {
       discount_code: "",
       items: cartItems,
     };
-  
-    // Hacemos un console.log de los datos de la compra
-    console.log("Datos de la compra:", purchaseData);
-  
-    // Llamamos a la función de checkout con el ID del usuario y los datos
-    checkoutCart(getUserId(), purchaseData);
+
+    try {
+      await checkoutCart(getUserId(), orderData);
+      navigate("/orders"); // Redirige a la página de órdenes tras completar la compra
+    } catch (error) {
+      console.error("Error completing checkout:", error);
+    }
   };
 
   const applyDiscount = (coupon) => {
     const validCoupons = ["DESCUENTO10", "PROMO20", "OCTUBRE24"];
     const discount =
-      coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 :
-      coupon === "OCTUBRE24" ? 25 : 0;
+      coupon === "DESCUENTO10"
+        ? 10
+        : coupon === "PROMO20"
+        ? 20
+        : coupon === "OCTUBRE24"
+        ? 25
+        : 0;
 
     if (discount > 0) {
       setFinalPrice((prevPrice) => prevPrice * (1 - discount / 100));
