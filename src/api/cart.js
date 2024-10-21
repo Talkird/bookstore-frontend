@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getToken } from '../utils/token';
+import toast from 'react-hot-toast';
 
 const base_url = "http://localhost:8080";
 
@@ -44,7 +45,13 @@ export const addCartItem = async (userId, cartItemRequest) => {
         "Content-Type": "application/json"
       }
     });
-    console.log(response.data);
+    
+    if (response.status === 201) {
+      toast.success("Libro añadido al carrito");
+    } else {
+      toast.error("Error añadiendo libro al carrito");
+    }
+
     return response.data;
 
   } catch (error) {
@@ -77,6 +84,13 @@ export const deleteCartItem = async (userId, cartItemId) => {
             Authorization: `Bearer ${token}`
         }
     });
+
+    if (response.status === 200) {
+      toast.success("Item eliminado del carrito");
+    } else {
+      toast.error("Error eliminando item del carrito");
+    }
+
     return response.data;
   } catch (error) {
     console.error("Error deleting cart item:", error);
@@ -93,6 +107,13 @@ export const checkoutCart = async (userId, orderRequest) => {
         "Content-Type": "application/json"
       }
     });
+
+    if (response.status === 201) {
+      toast.success("Compra realizada con éxito");
+    } else {
+      toast.error("Error realizando compra");
+    }
+
     return response.data;
 
   } catch (error) {

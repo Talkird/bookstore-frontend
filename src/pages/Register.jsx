@@ -3,7 +3,7 @@ import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { register } from "../api/user";
-
+import toast from "react-hot-toast";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ function Register() {
     if (!validateInput()) {
       return;
     }
-    
+
     const response = await register(name, email, password);
   };
 
@@ -48,11 +48,7 @@ function Register() {
           </p>
         </div>
 
-        {error && (
-          <div className="text-center text-red-500">
-            {error}
-          </div>
-        )}
+        {error && <div className="text-center text-red-500">{error}</div>}
 
         <form onSubmit={handleRegister}>
           <div className="space-y-2">
@@ -91,10 +87,10 @@ function Register() {
             />
           </div>
 
-          <div className="flex flex-col gap-4 mt-4">
-            <Button 
-              type="submit" 
-              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+          <div className="mt-4 flex flex-col gap-4">
+            <Button
+              type="submit"
+              className="w-full rounded-md bg-blue-500 py-2 text-white hover:bg-blue-600"
             >
               Registrarse
             </Button>

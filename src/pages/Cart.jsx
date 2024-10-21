@@ -26,9 +26,27 @@ function Cart() {
   const updateTotal = () => {
     const newTotal = cartItems.reduce(
       (acc, item) => acc + item.book.price * item.quantity,
-      0,
+      0
     );
     setTotal(newTotal);
+  };
+
+  const handleRemoveItem = (itemId) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  };
+
+  const handleQuantityChange = (itemId, newQuantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const handleCheckout = () => {
+    console.log("Checkout completed");
+    setCartItems([]);
+    setTotal(0);
   };
 
   return (
@@ -36,7 +54,7 @@ function Cart() {
       <div className="flex items-start justify-between">
         <BackButton className="mb-4" />
         <div className="mr-4 flex flex-col items-center rounded-md p-4 outline outline-primary/40">
-          <PurchasePopup cartItems={cartItems} />
+          <PurchasePopup cartItems={cartItems} onCheckout={handleCheckout} />
           <p className="mt-4 text-lg font-semibold">
             Total: {formatPeso(total)}
           </p>
@@ -48,10 +66,12 @@ function Cart() {
             id={item.id}
             bookId={item.book.id}
             key={item.id}
-            image={item.image}
+            image={item.book.imagePath}
             title={item.book.title}
             price={item.book.price}
             initialQuantity={item.quantity}
+            onRemove={handleRemoveItem}
+            onQuantityChange={handleQuantityChange}
           />
         ))}
       </div>
