@@ -30,10 +30,10 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-6 text-xl">
           <NavbarLink to="/cart">
-            <ShoppingCart size={24} strokeWidth={1.5} />
+            <ShoppingCart size={40} strokeWidth={1.5} />
           </NavbarLink>
           <NavbarLink to="/account">
-            <User size={24} strokeWidth={1.5} />
+            <User size={40} strokeWidth={1.5} />
           </NavbarLink>
 
           {!isLoggedIn() && (

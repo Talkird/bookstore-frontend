@@ -97,10 +97,10 @@ function Catalog() {
 
         {/* Grid de libros */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
-          {selectedBooks.map((book, index) => (
+          {selectedBooks.map((book) => (
             <Product
-              key={index}
-              id={index + 1}
+              key={book.id}
+              id={book.id}
               image={book.imagePath}
               title={book.title}
               author={book.author}
