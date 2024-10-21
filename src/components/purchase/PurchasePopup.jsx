@@ -3,18 +3,13 @@ import Button from "../ui/Button";
 import Input from "../ui/Input";
 import CouponInput from "../coupon/CouponInput";
 import propTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { checkoutCart } from "../../api/cart";
 import { getUserId } from "../../utils/token";
 
 const PurchasePopup = ({ cartItems }) => {
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
-
-  const [finalPrice, setFinalPrice] = useState(totalPrice);
+  const [finalPrice, setFinalPrice] = useState(0);  // Inicializamos el precio final
   const [discountApplied, setDiscountApplied] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
@@ -22,9 +17,20 @@ const PurchasePopup = ({ cartItems }) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
+  // Actualizamos el precio total cada vez que cambia el carrito
+  useEffect(() => {
+    const totalPrice = cartItems.reduce(
+      (acc, item) => acc + item.book.price * item.quantity,
+      0
+    );
+    setFinalPrice(totalPrice);
+  }, [cartItems]);
+
   const handleCheckout = (e) => {
     e.preventDefault();
-    checkoutCart(getUserId(), {
+  
+    // Creamos el objeto con los datos de la compra
+    const purchaseData = {
       customer_name: name,
       customer_email: email,
       customer_phone: phone,
@@ -32,18 +38,23 @@ const PurchasePopup = ({ cartItems }) => {
       payment_method: paymentMethod,
       discount_code: "",
       items: cartItems,
-    });
+    };
+  
+    // Hacemos un console.log de los datos de la compra
+    console.log("Datos de la compra:", purchaseData);
+  
+    // Llamamos a la función de checkout con el ID del usuario y los datos
+    checkoutCart(getUserId(), purchaseData);
   };
 
   const applyDiscount = (coupon) => {
-    //TODO FETCH DESCUENTOS
     const validCoupons = ["DESCUENTO10", "PROMO20", "OCTUBRE24"];
     const discount =
       coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 :
-      coupon ==="OCTUBRE24" ? 25:0;
+      coupon === "OCTUBRE24" ? 25 : 0;
 
     if (discount > 0) {
-      setFinalPrice(totalPrice * (1 - discount / 100));
+      setFinalPrice((prevPrice) => prevPrice * (1 - discount / 100));
       setDiscountApplied(true);
       return true;
     }
@@ -85,19 +96,19 @@ const PurchasePopup = ({ cartItems }) => {
                   >
                     <div className="flex items-center">
                       <img
-                        src={item.imagePath}
-                        alt={item.title}
+                        src={item.book.imagePath}
+                        alt={item.book.title}
                         className="mr-2 h-16 w-16 rounded-lg object-cover"
                       />
                       <div>
                         <h2 className="text-lg font-semibold text-gray-800">
-                          {item.title}
+                          {item.book.title}
                         </h2>
                         <p className="text-gray-600">
                           Cantidad: {item.quantity}
                         </p>
                         <p className="text-gray-600">
-                          ${(item.price * item.quantity).toLocaleString()}
+                          ${(item.book.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -111,7 +122,7 @@ const PurchasePopup = ({ cartItems }) => {
                 Resumen de Compra
               </h2>
               <p className="text-lg font-semibold text-gray-800">
-                Total Original: ${totalPrice.toLocaleString()}
+                Total Original: ${finalPrice.toLocaleString()}
               </p>
               {discountApplied && (
                 <p className="text-lg font-semibold text-green-600">
