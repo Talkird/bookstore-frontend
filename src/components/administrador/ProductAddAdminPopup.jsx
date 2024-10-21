@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Popup from "reactjs-popup";
 import { X } from "lucide-react";
 import Button from "../ui/Button";
@@ -229,7 +229,6 @@ const ProductAddAdminPopup = () => {
                   />
                 </div>
 
-                {/* Vista previa de la imagen */}
                 {productData.imageUrl && (
                   <div className="mt-4">
                     <p className="text-gray-600">Vista previa de la imagen:</p>
