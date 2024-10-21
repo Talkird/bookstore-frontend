@@ -87,24 +87,29 @@ function Catalog() {
   const showingEnd = Math.min(startIndex + booksPerPage, totalBooks);
 
   return (
-    <div className="flex">
-      <div className="flex w-1/4 flex-col p-7">
+    <div className="flex flex-col">
+
+
+    <div className="flex flex-row">
+
+      {/*Volver atras y filtros*/}
+      <div className="flex flex-col p-8">
         <div className="mb-4">
           <BackButton />
         </div>
         <Filter onFilterChange={handleFilterChange} />
-        {role === "ADMIN" && (
-          <div className="mt-8 gap-2">
-          </div>
-        )}
+
       </div>
 
-      <div className="w-3/4 p-4">
+
+      <div className="flex flex-col p-4">
       
-        <div className="mb-4 flex items-center justify-between">
-          <div className="text-gray-600">
+
+        <div className="flex flex-row items-center justify-between">
+          
+          <p className="text-gray-600 text-center">
             Mostrando {showingStart}-{showingEnd} de {totalBooks} resultados
-          </div>
+          </p>
           
           <Sort onSortChange={handleSortChange} />
         </div>
@@ -125,20 +130,19 @@ function Catalog() {
 
 
         </div>
-        
+            </div>
 
 
         {isPopupOpen && <ProductAddAdminPopup onClose={closePopup} />}
 
-        <div className="mt-4">
-          {" "}
+
+
+      </div>
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={(page) => setCurrentPage(page)}
           />
-        </div>
-      </div>
     </div>
   );
 }

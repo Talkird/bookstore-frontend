@@ -38,6 +38,7 @@ function Login() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="flex w-full max-w-md flex-col gap-8 rounded-xl bg-white p-8 shadow-2xl">
         <div className="flex flex-col gap-3">
+          
           <h2 className="text-center text-3xl font-bold text-gray-800">
             Bienvenido
           </h2>
@@ -46,10 +47,9 @@ function Login() {
           </p>
         </div>
 
-        {error && <div className="text-center text-red-500">{error}</div>}
+        <form className="flex flex-col gap-8" onSubmit={handleLogin}>
 
-        <form onSubmit={handleLogin}>
-          <div className="space-y-2">
+          <div>
             <p className="text-lg text-gray-700">Email</p>
             <Input
               variable={email}
@@ -61,7 +61,7 @@ function Login() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div >
             <p className="text-lg text-gray-700">Contraseña</p>
             <Input
               variable={password}
@@ -73,7 +73,7 @@ function Login() {
             />
           </div>
 
-          <div className="mt-4 flex flex-col gap-4">
+          <div className="mt-4 flex flex-col gap-2">
             <Button
               type="submit"
               className="w-full rounded-md bg-blue-500 py-2 text-white hover:bg-blue-600"
