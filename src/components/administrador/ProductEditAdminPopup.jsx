@@ -89,7 +89,6 @@ const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
                   Precio:
                 </label>
                 <Input
-                  type="number"
                   id="price"
                   defaultValue={product.price}
                   required
@@ -105,7 +104,6 @@ const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
                   Stock:
                 </label>
                 <Input
-                  type="number"
                   id="stock"
                   defaultValue={product.stock}
                   required
