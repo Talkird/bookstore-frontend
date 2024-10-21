@@ -95,20 +95,23 @@ function Catalog() {
         <Filter onFilterChange={handleFilterChange} />
         {role === "ADMIN" && (
           <div className="mt-8 gap-2">
-            <ProductAddAdminPopup/>
           </div>
         )}
       </div>
 
       <div className="w-3/4 p-4">
+      
         <div className="mb-4 flex items-center justify-between">
           <div className="text-gray-600">
             Mostrando {showingStart}-{showingEnd} de {totalBooks} resultados
           </div>
+          
           <Sort onSortChange={handleSortChange} />
         </div>
 
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+          <ProductAddAdminPopup/>
           {selectedBooks.map((book, index) => (
             <Product
               key={index}
@@ -119,7 +122,10 @@ function Catalog() {
               price={book.price}
             />
           ))}
+
+
         </div>
+        
 
 
         {isPopupOpen && <ProductAddAdminPopup onClose={closePopup} />}

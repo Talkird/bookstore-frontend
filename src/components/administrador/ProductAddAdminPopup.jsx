@@ -59,7 +59,12 @@ const ProductAddAdminPopup = () => {
 
   return (
     <Popup
-      trigger={<Button className="rounded text-white">Añadir producto</Button>}
+      trigger={<Button variant="outline" className="rounded outline outline-1"> 
+      <div className="flex flex-col items-center gap-2">
+        <p className="rounded-full text-8xl ">+</p>
+        <p className="text-2xl">Agregar producto</p>
+      </div>
+      </Button>}
       modal
       contentStyle={{
         padding: "0",
