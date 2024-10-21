@@ -136,7 +136,6 @@ const ProductAddAdminPopup = () => {
                   Año:
                 </label>
                 <Input
-                  type="number"
                   id="year"
                   name="year"
                   value={productData.year}
@@ -149,7 +148,6 @@ const ProductAddAdminPopup = () => {
                   Precio:
                 </label>
                 <Input
-                  type="number"
                   id="price"
                   name="price"
                   value={productData.price}
@@ -163,7 +161,6 @@ const ProductAddAdminPopup = () => {
                   Stock:
                 </label>
                 <Input
-                  type="number"
                   id="stock"
                   name="stock"
                   value={productData.stock}
