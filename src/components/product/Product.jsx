@@ -4,12 +4,27 @@ import Button from "../ui/Button";
 import { ShoppingCart, X } from "lucide-react";
 import { formatPeso } from "../../utils/format";
 import { useNavigate } from "react-router-dom";
-
-import { getUserId, getToken } from "../../utils/token";
+import { getUserId, getToken, getRole } from "../../utils/token";
 import { addCartItem } from "../../api/cart";
+import ProductEditAdminPopup from "../administrador/ProductEditAdminPopup";
 
 function Product({ id, image, title, author, price }) {
   const navigate = useNavigate();
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+
+  const handleEdit = (productId, updatedData) => {
+    console.log("Producto editado:", productId, updatedData);
+  };
+
+  const handleDelete = (productId) => {
+    console.log("Producto eliminado:", productId);
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
+  const role = getRole(); 
   const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
 
   const handleClick = () => {
@@ -59,13 +74,34 @@ function Product({ id, image, title, author, price }) {
         </div>
 
         <div className="flex justify-center">
-          <Button
-            onClick={handleAddToCart}
-            className="mt-2 flex items-center gap-4 px-4 py-2 text-lg"
-          >
-            <ShoppingCart className="h-6 w-6" />
-            Añadir
-          </Button>
+          {role === "USER" && (
+            <Button
+              onClick={handleAddToCart}
+              className="mt-2 flex items-center gap-4 px-4 py-2 text-lg"
+            >
+              <ShoppingCart className="h-6 w-6" />
+              Añadir
+            </Button>
+          )}
+
+  
+          {role === "ADMIN" && (
+            <Button
+              onClick={togglePopup}
+              className="mt-2 flex items-center gap-4 px-4 py-2 text-lg bg-red-500 text-white"
+            >
+              Administrar Producto
+            </Button>
+          )}
+
+          {isPopupOpen && (
+            <ProductEditAdminPopup
+              product={{ id, title, author, price }}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onClose={togglePopup}
+            />
+          )}
         </div>
       </div>
     {/* Mostrar mensaje de confirmación como popup */}

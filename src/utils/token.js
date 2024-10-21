@@ -34,3 +34,7 @@ export const getUserId = () => {
 export const isLoggedIn = () => {
     return getToken() !== null;
 }
+
+export const clearLocalStorage = () => {
+    localStorage.clear();
+}

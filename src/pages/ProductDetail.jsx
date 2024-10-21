@@ -5,14 +5,31 @@ import PaymentPopup from "../components/payment/PaymentPopup";
 import { useParams, useNavigate } from "react-router-dom";
 import { Plus, Minus, Star, X, ShoppingCart} from "lucide-react";
 import Input from "../components/ui/Input";
-import { getUserId, getToken } from "../utils/token";
+import { getUserId, getToken, getRole } from "../utils/token";
 import { addCartItem } from "../api/cart";
 import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
+import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
 
 const ProductDetail = () => {
   const { title } = useParams();
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+
+  const handleEdit = (productId, updatedData) => {
+    console.log("Producto editado:", productId, updatedData);
+  };
+
+  const handleDelete = (productId) => {
+    console.log("Producto eliminado:", productId);
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
+  const role = getRole(); 
+
 
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
@@ -183,27 +200,51 @@ const ProductDetail = () => {
           </p>
           <p className="mb-6 text-2xl text-primary">Stock: {product.stock}</p>
 
+          
           <div className="mb-6 flex items-center">
-            <Button className="quantity-button" onClick={decreaseQuantity}>
-              <Minus size={16} />
-            </Button>
-            <Input
-              min="1"
-              max={product.stock}
-              value={quantity}
-              onChange={handleQuantityChange}
-              style={{ width: "190px" }}
-              className="mx-4 px-4 py-2 text-center"
-            />
-            <Button onClick={increaseQuantity}>
-              <Plus size={16} />
-            </Button>
+            
+            {role === "USER" && (
+              <>
+                <Button className="quantity-button" onClick={decreaseQuantity}>
+                  <Minus size={16} />
+                </Button>
+                <Input
+                  min="1"
+                  max={product.stock}
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  style={{ width: "190px" }}
+                  className="mx-4 px-4 py-2 text-center"
+                />
+                <Button onClick={increaseQuantity}>
+                  <Plus size={16} />
+                </Button>
+                <Button
+                  onClick={handleAddToCart}
+                  className="w-50 h-18 ml-4 text-center text-lg"
+                >
+                  Agregar al carrito
+                </Button>
+              </>
+            )}
+            {role === "ADMIN" && (
             <Button
-              onClick={handleAddToCart}
-              className="w-50 h-18 ml-4 text-center text-lg"
+              onClick={togglePopup}
+              className="mt-2 flex items-center gap-4 px-4 py-2 text-lg bg-red-500 text-white"
             >
-              Agregar al carrito
+              Administrar Producto
             </Button>
+          )}
+
+            
+          {isPopupOpen && (
+            <ProductEditAdminPopup
+              product={{ id, title, author, price }}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onClose={togglePopup}
+            />
+          )}
           </div>
 
           {/* Mostrar mensaje de confirmación como popup */}
@@ -233,12 +274,12 @@ const ProductDetail = () => {
           </Button>
         </div>
       )}
-
+          {role === "USER" &&
           <div className="mb-6">
             <h3 className="mb-2 text-3xl font-bold">Calificar producto</h3>
             <div className="flex items-center">{renderStars()}</div>
           </div>
-
+          }
           <div className="flex gap-4">
             <Button
               onClick={openShippingPopup}

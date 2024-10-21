@@ -1,16 +1,26 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
-import { ShoppingCart, User } from "lucide-react";
+import { ShoppingCart, User, LogOut } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
-import { isLoggedIn } from "../../utils/token";
+import { isLoggedIn, clearLocalStorage } from "../../utils/token";
 
 function Navbar() {
   const navigate = useNavigate();
 
   const handleCategoryClick = (categoryRoute) => {
     navigate(categoryRoute);
+  };
+
+  const handleLogout = () => {
+    const isConfirmed = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
+    if (isConfirmed) {
+      clearLocalStorage();
+
+      navigate("/");
+    }
   };
 
   const categories = [
@@ -29,13 +39,6 @@ function Navbar() {
           <h1 className="font-poppins text text-5xl">La pluma encantada</h1>
         </div>
         <div className="flex items-center gap-6 text-xl">
-          <NavbarLink to="/cart">
-            <ShoppingCart size={40} strokeWidth={1.5} />
-          </NavbarLink>
-          <NavbarLink to="/account">
-            <User size={40} strokeWidth={1.5} />
-          </NavbarLink>
-
           {!isLoggedIn() && (
             <div className="flex items-center gap-6">
               <NavbarLink to="/login">
@@ -45,6 +48,19 @@ function Navbar() {
               </NavbarLink>
               <NavbarLink to="/register">
                 <Button>Registrarse</Button>
+              </NavbarLink>
+            </div>
+          )}
+          {isLoggedIn() && (
+            <div className="flex items-center gap-6">
+              <NavbarLink to="/cart">
+                <ShoppingCart size={40} strokeWidth={1.5} />
+              </NavbarLink>
+              <NavbarLink to="/account">
+                <User size={40} strokeWidth={1.5} />
+              </NavbarLink>
+              <NavbarLink to="/">
+                <LogOut size={40} strokeWidth={1.5} onClick={handleLogout} />
               </NavbarLink>
             </div>
           )}

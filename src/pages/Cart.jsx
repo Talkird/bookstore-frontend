@@ -54,13 +54,13 @@ function Cart() {
     const userId = getUserId();
     const confirmClear = window.confirm("¿Estás seguro de que deseas vaciar el carrito?");
     if (!confirmClear) {
-      return; // Exit if the user cancels
+      return;
     }
 
     try {
       await clearCart(userId);
-      setCartItems([]); // Clear the local cart state
-      setTotal(0); // Reset the total to 0
+      setCartItems([]);
+      setTotal(0);
     } catch (error) {
       console.error("Error clearing cart:", error);
     }

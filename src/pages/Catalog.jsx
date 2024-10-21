@@ -6,6 +6,8 @@ import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
 import { useLocation } from "react-router-dom";
 import { getBooks } from "../api/book";
+import { getRole } from "../utils/token"; 
+import ProductAddAdminPopup from "../components/administrador/ProductAddAdminPopup";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -13,6 +15,13 @@ function useQuery() {
 
 function Catalog() {
   const [books, setBooks] = useState([]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  const role = getRole(); 
 
   useEffect(() => {
     getBooks()
@@ -50,10 +59,10 @@ function Catalog() {
       !filters.publisher || book.publisher === filters.publisher;
     const meetsCategory =
       filters.selectedCategories.length === 0 ||
-      filters.selectedCategories.includes(book.category); // Filtra por múltiples categorías
+      filters.selectedCategories.includes(book.category); 
     const meetsSearch =
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchTerm.toLowerCase()); // Filtra por título o autor
+      book.author.toLowerCase().includes(searchTerm.toLowerCase()); 
     return meetsPrice && meetsPublisher && meetsCategory && meetsSearch;
   });
 
@@ -84,20 +93,26 @@ function Catalog() {
           <BackButton />
         </div>
         <Filter onFilterChange={handleFilterChange} />
+        {role === "ADMIN" && (
+          <div className="mt-8 gap-2">
+          </div>
+        )}
       </div>
 
-      {/* Columna para mostrar los productos */}
       <div className="w-3/4 p-4">
+      
         <div className="mb-4 flex items-center justify-between">
           <div className="text-gray-600">
             Mostrando {showingStart}-{showingEnd} de {totalBooks} resultados
           </div>
+          
           <Sort onSortChange={handleSortChange} />
         </div>
 
-        {/* Grid de libros */}
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
-          {selectedBooks.map((book) => (
+          <ProductAddAdminPopup/>
+          {selectedBooks.map((book, index) => (
             <Product
               key={book.id}
               id={book.id}
@@ -107,11 +122,16 @@ function Catalog() {
               price={book.price}
             />
           ))}
+
+
         </div>
+        
+
+
+        {isPopupOpen && <ProductAddAdminPopup onClose={closePopup} />}
 
         <div className="mt-4">
           {" "}
-          {/* Margen superior para separación */}
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
