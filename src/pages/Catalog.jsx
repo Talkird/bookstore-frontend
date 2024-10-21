@@ -6,7 +6,7 @@ import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
 import { useLocation } from "react-router-dom";
 import { getBooks } from "../api/book";
-import { getRole } from "../utils/token"; 
+import { getRole } from "../utils/token";
 import ProductAddAdminPopup from "../components/administrador/ProductAddAdminPopup";
 
 function useQuery() {
@@ -15,13 +15,13 @@ function useQuery() {
 
 function Catalog() {
   const [books, setBooks] = useState([]);
-  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const closePopup = () => {
     setIsPopupOpen(false);
   };
 
-  const role = getRole(); 
+  const role = getRole();
 
   useEffect(() => {
     getBooks()
@@ -59,10 +59,10 @@ function Catalog() {
       !filters.publisher || book.publisher === filters.publisher;
     const meetsCategory =
       filters.selectedCategories.length === 0 ||
-      filters.selectedCategories.includes(book.category); 
+      filters.selectedCategories.includes(book.category);
     const meetsSearch =
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchTerm.toLowerCase()); 
+      book.author.toLowerCase().includes(searchTerm.toLowerCase());
     return meetsPrice && meetsPublisher && meetsCategory && meetsSearch;
   });
 
@@ -87,58 +87,47 @@ function Catalog() {
   const showingEnd = Math.min(startIndex + booksPerPage, totalBooks);
 
   return (
-    <div className="flex">
-      <div className="flex w-1/4 flex-col p-7">
-        <div className="mb-4">
-          <BackButton />
-        </div>
-        <Filter onFilterChange={handleFilterChange} />
-
-      </div>
-
-      <div className="w-3/4 p-4">
-      
-        <div className="mb-4 flex items-center justify-between">
-          <div className="text-gray-600">
-            Mostrando {showingStart}-{showingEnd} de {totalBooks} resultados
+    <div className="flex flex-col">
+      <div className="flex flex-row">
+        {/*Volver atras y filtros*/}
+        <div className="flex flex-col p-8">
+          <div className="mb-4">
+            <BackButton />
           </div>
-          
-          <Sort onSortChange={handleSortChange} />
+          <Filter onFilterChange={handleFilterChange} />
         </div>
 
+        <div className="flex flex-col p-4">
+          <div className="flex w-full flex-row items-center justify-between">
+            <p className="text-gray-600">
+              Mostrando {showingStart}-{showingEnd} de {totalBooks} resultados
+            </p>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
-        {role === "ADMIN" && (
-          <ProductAddAdminPopup/>
-        )}
+            <Sort onSortChange={handleSortChange} />
+          </div>
 
-          {selectedBooks.map((book, index) => (
-            <Product
-              key={book.id}
-              id={book.id}
-              image={book.imagePath}
-              title={book.title}
-              author={book.author}
-              price={book.price}
-            />
-          ))}
-
-
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+            <ProductAddAdminPopup />
+            {selectedBooks.map((book, index) => (
+              <Product
+                key={book.id}
+                id={book.id}
+                image={book.imagePath}
+                title={book.title}
+                author={book.author}
+                price={book.price}
+              />
+            ))}
+          </div>
         </div>
-        
-
 
         {isPopupOpen && <ProductAddAdminPopup onClose={closePopup} />}
-
-        <div className="mt-4">
-          {" "}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
-        </div>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 }

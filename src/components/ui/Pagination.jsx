@@ -27,7 +27,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
   };
 
   return (
-    <div className="mt-4 flex justify-center space-x-2">
+    <div className="my-4 flex justify-center w-screen items-center">
       <Button
         onClick={handlePrevious}
         variant="outline"

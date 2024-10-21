@@ -32,7 +32,7 @@ function Register() {
     if (!validateInput()) {
       return;
     }
-
+    
     const response = await register(name, email, password);
   };
 
@@ -50,7 +50,7 @@ function Register() {
 
         {error && <div className="text-center text-red-500">{error}</div>}
 
-        <form onSubmit={handleRegister}>
+        <form className="flex flex-col gap-8" onSubmit={handleRegister}>
           <div className="space-y-2">
             <p className="text-lg text-gray-700">Nombre</p>
             <Input
@@ -63,7 +63,7 @@ function Register() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="">
             <p className="text-lg text-gray-700">Email</p>
             <Input
               variable={email}
@@ -75,7 +75,7 @@ function Register() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="">
             <p className="text-lg text-gray-700">Contraseña</p>
             <Input
               variable={password}
@@ -87,7 +87,7 @@ function Register() {
             />
           </div>
 
-          <div className="mt-4 flex flex-col gap-4">
+          <div className="mt-4 flex flex-col gap-2">
             <Button
               type="submit"
               className="w-full rounded-md bg-blue-500 py-2 text-white hover:bg-blue-600"

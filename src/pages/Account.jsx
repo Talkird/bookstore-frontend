@@ -3,7 +3,7 @@ import { getEmail,getRole } from "../utils/token";
 function Account() {
 
   return (
-    <div className="mx-auto mt-10 max-w-md rounded-lg bg-white p-6 shadow-md">
+    <div className="mx-auto mt-10 max-w-md rounded-lg bg-white p-6 shadow-md ">
       <h2 className="mb-6 text-center text-3xl font-semibold text-gray-800">
         Mi cuenta
       </h2>
