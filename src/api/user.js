@@ -23,7 +23,6 @@ export const login = async (userEmail, password) => {
         setUserId(user_id);
         setEmail(email);
         setRole(role);
-    
 
         return { access_token, user_id, email, role}; 
 

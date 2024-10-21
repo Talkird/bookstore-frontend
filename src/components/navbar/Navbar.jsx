@@ -4,6 +4,7 @@ import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
 import { ShoppingCart, User } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
+import { isLoggedIn } from "../../utils/token";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -34,14 +35,19 @@ function Navbar() {
           <NavbarLink to="/account">
             <User size={40} strokeWidth={1.5} />
           </NavbarLink>
-          <NavbarLink to="/login">
-            <Button variant="outline" className="bg-white text-primary">
-              Iniciar Sesión
-            </Button>
-          </NavbarLink>
-          <NavbarLink to="/register">
-            <Button>Registrarse</Button>
-          </NavbarLink>
+
+          {!isLoggedIn() && (
+            <div className="flex items-center gap-6">
+              <NavbarLink to="/login">
+                <Button variant="outline" className="bg-white text-primary">
+                  Iniciar Sesión
+                </Button>
+              </NavbarLink>
+              <NavbarLink to="/register">
+                <Button>Registrarse</Button>
+              </NavbarLink>
+            </div>
+          )}
         </div>
       </div>
 
