@@ -6,7 +6,7 @@ import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
 import { useLocation } from "react-router-dom";
 import { getBooks } from "../api/book";
-import { getRole } from "../utils/token"; 
+import { getRole } from "../utils/token";
 import ProductAddAdminPopup from "../components/administrador/ProductAddAdminPopup";
 
 function useQuery() {
@@ -15,13 +15,13 @@ function useQuery() {
 
 function Catalog() {
   const [books, setBooks] = useState([]);
-  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const closePopup = () => {
     setIsPopupOpen(false);
   };
 
-  const role = getRole(); 
+  const role = getRole();
 
   useEffect(() => {
     getBooks()
@@ -59,10 +59,10 @@ function Catalog() {
       !filters.publisher || book.publisher === filters.publisher;
     const meetsCategory =
       filters.selectedCategories.length === 0 ||
-      filters.selectedCategories.includes(book.category); 
+      filters.selectedCategories.includes(book.category);
     const meetsSearch =
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchTerm.toLowerCase()); 
+      book.author.toLowerCase().includes(searchTerm.toLowerCase());
     return meetsPrice && meetsPublisher && meetsCategory && meetsSearch;
   });
 
@@ -88,61 +88,46 @@ function Catalog() {
 
   return (
     <div className="flex flex-col">
-
-
-    <div className="flex flex-row">
-
-      {/*Volver atras y filtros*/}
-      <div className="flex flex-col p-8">
-        <div className="mb-4">
-          <BackButton />
-        </div>
-        <Filter onFilterChange={handleFilterChange} />
-
-      </div>
-
-
-      <div className="flex flex-col p-4">
-      
-
-        <div className="flex flex-row items-center justify-between">
-          
-          <p className="text-gray-600 text-center">
-            Mostrando {showingStart}-{showingEnd} de {totalBooks} resultados
-          </p>
-          
-          <Sort onSortChange={handleSortChange} />
+      <div className="flex flex-row">
+        {/*Volver atras y filtros*/}
+        <div className="flex flex-col p-8">
+          <div className="mb-4">
+            <BackButton />
+          </div>
+          <Filter onFilterChange={handleFilterChange} />
         </div>
 
+        <div className="flex flex-col p-4">
+          <div className="flex w-full flex-row items-center justify-between">
+            <p className="text-gray-600">
+              Mostrando {showingStart}-{showingEnd} de {totalBooks} resultados
+            </p>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
-          <ProductAddAdminPopup/>
-          {selectedBooks.map((book, index) => (
-            <Product
-              key={book.id}
-              id={book.id}
-              image={book.imagePath}
-              title={book.title}
-              author={book.author}
-              price={book.price}
-            />
-          ))}
+            <Sort onSortChange={handleSortChange} />
+          </div>
 
-
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+            <ProductAddAdminPopup />
+            {selectedBooks.map((book, index) => (
+              <Product
+                key={book.id}
+                id={book.id}
+                image={book.imagePath}
+                title={book.title}
+                author={book.author}
+                price={book.price}
+              />
+            ))}
+          </div>
         </div>
-            </div>
-
 
         {isPopupOpen && <ProductAddAdminPopup onClose={closePopup} />}
-
-
-
       </div>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 }
