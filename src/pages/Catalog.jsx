@@ -107,7 +107,7 @@ function Catalog() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
-            <ProductAddAdminPopup />
+            {role === "ADMIN" && <ProductAddAdminPopup />}
             {selectedBooks.map((book, index) => (
               <Product
                 key={book.id}
