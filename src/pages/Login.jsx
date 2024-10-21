@@ -3,7 +3,6 @@ import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../api/user";
-import { getToken } from "../utils/token";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -33,8 +32,6 @@ function Login() {
     }
 
     const response = await login(email, password);
-    console.log(getToken());
-    // Handle response
   };
 
   return (
@@ -49,11 +46,7 @@ function Login() {
           </p>
         </div>
 
-        {error && (
-          <div className="text-center text-red-500">
-            {error}
-          </div>
-        )}
+        {error && <div className="text-center text-red-500">{error}</div>}
 
         <form onSubmit={handleLogin}>
           <div className="space-y-2">
@@ -80,8 +73,11 @@ function Login() {
             />
           </div>
 
-          <div className="flex flex-col gap-4 mt-4">
-            <Button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+          <div className="mt-4 flex flex-col gap-4">
+            <Button
+              type="submit"
+              className="w-full rounded-md bg-blue-500 py-2 text-white hover:bg-blue-600"
+            >
               Iniciar Sesión
             </Button>
 
