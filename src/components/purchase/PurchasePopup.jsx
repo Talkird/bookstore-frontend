@@ -37,9 +37,10 @@ const PurchasePopup = ({ cartItems }) => {
 
   const applyDiscount = (coupon) => {
     //TODO FETCH DESCUENTOS
-    const validCoupons = ["DESCUENTO10", "PROMO20"];
+    const validCoupons = ["DESCUENTO10", "PROMO20", "OCTUBRE24"];
     const discount =
-      coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 : 0;
+      coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 :
+      coupon ==="OCTUBRE24" ? 25:0;
 
     if (discount > 0) {
       setFinalPrice(totalPrice * (1 - discount / 100));
@@ -84,7 +85,7 @@ const PurchasePopup = ({ cartItems }) => {
                   >
                     <div className="flex items-center">
                       <img
-                        src={item.image}
+                        src={item.imagePath}
                         alt={item.title}
                         className="mr-2 h-16 w-16 rounded-lg object-cover"
                       />

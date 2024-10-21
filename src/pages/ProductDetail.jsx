@@ -2,17 +2,21 @@ import Button from "../components/ui/Button";
 import BackButton from "../components/ui/BackButton";
 import ShippingPopup from "../components/shippingPopup/ShippingPopup";
 import PaymentPopup from "../components/payment/PaymentPopup";
-import { useParams } from "react-router-dom";
-import { Plus, Minus, Star } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Plus, Minus, Star, X, ShoppingCart} from "lucide-react";
 import Input from "../components/ui/Input";
 import { getUserId, getToken } from "../utils/token";
 import { addCartItem } from "../api/cart";
 import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
+import { formatPeso } from "../utils/format";
 
 const ProductDetail = () => {
   const { title } = useParams();
 
+  const navigate = useNavigate();
+  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
+  
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,6 +59,14 @@ const ProductDetail = () => {
       bookId: product.id,
       quantity: quantity,
     });
+
+    // Mostrar confirmación
+    setShowConfirmation(true);
+
+    // Ocultar la confirmación después de 5 segundos
+    setTimeout(() => {
+      setShowConfirmation(false);
+    }, 5000);
   };
 
   const handleQuantityChange = (e) => {
@@ -193,6 +205,34 @@ const ProductDetail = () => {
               Agregar al carrito
             </Button>
           </div>
+
+          {/* Mostrar mensaje de confirmación como popup */}
+    {showConfirmation && (
+        <div className="fixed top-4 right-4 w-80 bg-white border-2 border-gray-200 rounded-lg shadow-lg p-4 z-50">
+          <div className="flex justify-between items-center">
+            <p className="font-bold text-gray-700">¡Ya agregamos tu producto al carrito!</p>
+            <button
+              className="text-gray-500 hover:text-gray-700"
+              onClick={() => setShowConfirmation(false)}
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          <div className="flex items-center mt-4">
+            <img className="h-20 w-20 rounded-md" src={product.imagePath} alt={product.title} />
+            <div className="ml-4">
+              <p className="font-semibold text-gray-800">{product.title}</p>
+              <p className="text-gray-600">1 x {formatPeso(product.price)}</p>
+            </div>
+          </div>
+          <Button
+            onClick={() => navigate("/cart")}
+            className="mt-4 w-full bg-primary text-white py-2 rounded-md"
+          >
+            Ver Carrito
+          </Button>
+        </div>
+      )}
 
           <div className="mb-6">
             <h3 className="mb-2 text-3xl font-bold">Calificar producto</h3>

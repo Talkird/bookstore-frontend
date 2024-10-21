@@ -8,11 +8,11 @@ const images = [
   {src:"https://media.discordapp.net/attachments/1182409225155137566/1295842748502638644/file-N711TPtzhJYYOtZuZRb7H8CJ.png?ex=6715651a&is=6714139a&hm=25fe7a62cba611b50d26452ae35ddcfbc1b4c4f988f85761b0dc54200da4964a&=&format=webp&quality=lossless&width=1057&height=604",
     link:"/catalog"},
   {src:"https://market2.livriz.com/storage/section/1/REVERTE%20A_LA%20ISLA%20DE%20LA%20MUJER%20DORMIDA_BANNER-CUSPIDE-1050X580.jpg",
-    link:"http://localhost:5174/catalog/product/La%20isla%20de%20la%20mujer%20dormida"},
+    link:"/catalog/product/La%20Isla%20de%20la%20Mujer%20Dormida"},
   {src:"https://market2.livriz.com/storage/section/1/escape%20de%20viena.png",
     link:"/catalog/product/Escape%20de%20Viena"},
   {src:"https://market2.livriz.com/storage/section/1/Blackwater.jpg",
-    link:"/catalog/product/Blackwater%3A%20La%20Riada"},
+    link:"/catalog?search=blackwater"},
   
 ];
 

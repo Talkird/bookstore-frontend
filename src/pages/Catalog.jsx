@@ -114,8 +114,8 @@ function Catalog() {
           <ProductAddAdminPopup/>
           {selectedBooks.map((book, index) => (
             <Product
-              key={index}
-              id={index + 1}
+              key={book.id}
+              id={book.id}
               image={book.imagePath}
               title={book.title}
               author={book.author}

@@ -1,9 +1,9 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import Button from "../ui/Button";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, X } from "lucide-react";
 import { formatPeso } from "../../utils/format";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { getUserId, getToken, getRole } from "../../utils/token";
 import { addCartItem } from "../../api/cart";
 import ProductEditAdminPopup from "../administrador/ProductEditAdminPopup";
@@ -25,6 +25,7 @@ function Product({ id, image, title, author, price }) {
   };
 
   const role = getRole(); 
+  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
 
   const handleClick = () => {
     navigate(`/catalog/product/${encodeURIComponent(title)}`);
@@ -45,6 +46,14 @@ function Product({ id, image, title, author, price }) {
       bookId: id,
       quantity: 1,
     });
+
+    // Mostrar confirmación
+    setShowConfirmation(true);
+
+    // Ocultar la confirmación después de 5 segundos
+    setTimeout(() => {
+      setShowConfirmation(false);
+    }, 5000);
   };
 
   return (
@@ -95,6 +104,33 @@ function Product({ id, image, title, author, price }) {
           )}
         </div>
       </div>
+    {/* Mostrar mensaje de confirmación como popup */}
+    {showConfirmation && (
+        <div className="fixed top-4 right-4 w-80 bg-white border-2 border-gray-200 rounded-lg shadow-lg p-4 z-50">
+          <div className="flex justify-between items-center">
+            <p className="font-bold text-gray-700">¡Ya agregamos tu producto al carrito!</p>
+            <button
+              className="text-gray-500 hover:text-gray-700"
+              onClick={() => setShowConfirmation(false)}
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          <div className="flex items-center mt-4">
+            <img className="h-20 w-20 rounded-md" src={image} alt={title} />
+            <div className="ml-4">
+              <p className="font-semibold text-gray-800">{title}</p>
+              <p className="text-gray-600">1 x {formatPeso(price)}</p>
+            </div>
+          </div>
+          <Button
+            onClick={() => navigate("/cart")}
+            className="mt-4 w-full bg-primary text-white py-2 rounded-md"
+          >
+            Ver Carrito
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
