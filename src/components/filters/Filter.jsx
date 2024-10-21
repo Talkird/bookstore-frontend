@@ -57,17 +57,6 @@ function Filter({ onFilterChange }) {
         />
       </div>
 
-      <h2 className="mb-2 mt-2 text-lg font-bold">Filtrar por Editorial</h2>
-      <select
-        value={publisher}
-        onChange={(e) => setPublisher(e.target.value)}
-        className="mb-4 w-full rounded-lg border p-2"
-      >
-        <option value="">Todas</option>
-        <option value="Editorial A">Editorial A</option>
-        <option value="Editorial B">Editorial B</option>
-      </select>
-
       <h2 className="mb-2 text-lg font-bold">Filtrar por Categoría</h2>
       <div className="mb-4 grid grid-cols-2 gap-2">
         {categories.map((category) => (
