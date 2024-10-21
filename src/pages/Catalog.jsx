@@ -93,10 +93,7 @@ function Catalog() {
           <BackButton />
         </div>
         <Filter onFilterChange={handleFilterChange} />
-        {role === "ADMIN" && (
-          <div className="mt-8 gap-2">
-          </div>
-        )}
+
       </div>
 
       <div className="w-3/4 p-4">
@@ -111,7 +108,10 @@ function Catalog() {
 
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
+        {role === "ADMIN" && (
           <ProductAddAdminPopup/>
+        )}
+
           {selectedBooks.map((book, index) => (
             <Product
               key={book.id}
