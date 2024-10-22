@@ -11,7 +11,7 @@ import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
 import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
-import {  }
+
 
 const ProductDetail = () => {
   const { title } = useParams();
