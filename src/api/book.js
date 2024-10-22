@@ -20,59 +20,53 @@ export const addBook = async (book) => {
 };
 
 export const getBooks = async () => {
-    try {
-        const response = await axios.get(`${base_url}/all`);
-        return response.data;
-    } catch (error) {
-
-        console.error("Error getting books:", error);
-        throw error;
-    }
-}
-
-export const getBook = async (id) => {
-    try {
-        const response = await axios.get(`${base_url}/get/${id}`);
-        return response.data;
-
-    } catch (error) {
-        console.error("Error getting book:", error);
-        throw error;
-    }
-}
-
-
-export const updateBook = async (id, book) => {  
   try {
-      const token = getToken();
-        const response = await axios.put(`${base_url}/edit/${id}`, book, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-        return response.data; 
-
-    } catch (error) {
-        console.error("Error updating book:", error);
-        throw error;
-    }
+    const response = await axios.get(`${base_url}/all`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting books:", error);
+    throw error;
+  }
 };
 
+export const getBook = async (id) => {
+  try {
+    const response = await axios.get(`${base_url}/get/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting book:", error);
+    throw error;
+  }
+};
+
+export const updateBook = async (id, book) => {
+  try {
+    const token = getToken();
+    const response = await axios.put(`${base_url}/edit/${id}`, book, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating book:", error);
+    throw error;
+  }
+};
 
 export const deleteBook = async (id) => {
   try {
-      const token = getToken();
-        const response = await axios.delete(`${base_url}/delete/${id}`, {
-            Authorization: `Bearer ${token}`,
-        });
-        return response.data;
-
-    } catch (error) {
-        console.error("Error deleting book:", error);
-        throw error;
-    }
-}
+    const token = getToken();
+    const response = await axios.delete(`${base_url}/delete/${id}`, {
+      Authorization: `Bearer ${token}`,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting book:", error);
+    throw error;
+  }
+};
 
 export const getBooksByGenre = async (genre) => {
   try {
