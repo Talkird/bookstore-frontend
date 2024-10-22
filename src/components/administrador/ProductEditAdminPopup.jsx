@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 
-const ProductAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
+const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const openEditModal = () => {
@@ -138,4 +138,4 @@ const ProductAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
   );
 };
 
-export default ProductAdminPopup;
+export default ProductEditAdminPopup;

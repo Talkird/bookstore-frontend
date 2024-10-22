@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Popup from "reactjs-popup";
 import { X } from "lucide-react";
 import Button from "../ui/Button";
@@ -59,7 +59,12 @@ const ProductAddAdminPopup = () => {
 
   return (
     <Popup
-      trigger={<Button className="rounded text-white">Add Product</Button>}
+      trigger={<Button variant="outline" className="rounded outline outline-1"> 
+      <div className="flex flex-col items-center gap-2">
+        <p className="rounded-full text-8xl ">+</p>
+        <p className="text-2xl">Agregar producto</p>
+      </div>
+      </Button>}
       modal
       contentStyle={{
         padding: "0",
@@ -131,7 +136,6 @@ const ProductAddAdminPopup = () => {
                   Año:
                 </label>
                 <Input
-                  type="number"
                   id="year"
                   name="year"
                   value={productData.year}
@@ -144,7 +148,6 @@ const ProductAddAdminPopup = () => {
                   Precio:
                 </label>
                 <Input
-                  type="number"
                   id="price"
                   name="price"
                   value={productData.price}
@@ -158,7 +161,6 @@ const ProductAddAdminPopup = () => {
                   Stock:
                 </label>
                 <Input
-                  type="number"
                   id="stock"
                   name="stock"
                   value={productData.stock}
@@ -227,7 +229,6 @@ const ProductAddAdminPopup = () => {
                   />
                 </div>
 
-                {/* Vista previa de la imagen */}
                 {productData.imageUrl && (
                   <div className="mt-4">
                     <p className="text-gray-600">Vista previa de la imagen:</p>
