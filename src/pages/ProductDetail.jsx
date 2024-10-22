@@ -11,7 +11,7 @@ import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
 import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
-import { createOrUpdateRating, getRatings } from "../api/rating";
+//import { createOrUpdateRating, getRatings } from "../api/rating";
 
 const ProductDetail = () => {
   const { title } = useParams();
@@ -42,7 +42,7 @@ const ProductDetail = () => {
   const [discount, setDiscount] = useState(0);
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
-  const [rating, setRating] = useState(0);
+  //const [rating, setRating] = useState(0);
 
   useEffect(() => {
     getBooks()
@@ -128,7 +128,7 @@ const ProductDetail = () => {
     ? product.price - product.price * (discount / 100)
     : 0;
 
-  const handleRating = (star) => {
+ /* const handleRating = (star) => {
     setRating(star);
     console.log(
       `Rating enviado: ${star} estrellas para el producto ${product?.title}`,
@@ -148,7 +148,7 @@ const ProductDetail = () => {
       );
     }
     return stars;
-  };
+  };*/
 
   if (loading) {
     return <div>Loading...</div>;
