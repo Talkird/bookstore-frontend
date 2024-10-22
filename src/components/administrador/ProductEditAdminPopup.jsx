@@ -30,7 +30,6 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
       isbn: product.isbn,
       title: product.title,
       author: product.author,
-      description: product.description,
       year: product.year,
       genre: product.genre,
       description: product.description,

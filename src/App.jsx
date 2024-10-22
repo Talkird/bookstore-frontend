@@ -43,6 +43,7 @@ function App() {
 
         <Route path="/" element={<Catalog />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+
       </Routes>
       <Footer />
       <Toaster />

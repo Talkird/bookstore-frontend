@@ -1,25 +1,7 @@
 import axios from "axios";
 import { getToken } from "../utils/token";
-import toast from "react-hot-toast";
 
 const base_url = "http://localhost:8080/ratings";
-
-export const getRating = async (bookId) => {
-    try {
-        const token = getToken();
-        const response = await axios.get(`${base_url}/${bookId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
-        console.log("Rating:", response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Error getting rating:", error);
-        throw error;
-    }
-}
 
 export const getRatings = async (bookId) => {
     try {
@@ -82,7 +64,6 @@ export const createOrUpdateRating = async (userId, bookId, ratingRequest) => {
                 },
             }
         );
-        toast.success("Gracias por tu calificación!");
         return response.data;
     } catch (error) {
         console.error("Error creating/updating rating:", error);

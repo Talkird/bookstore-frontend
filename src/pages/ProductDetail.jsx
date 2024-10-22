@@ -11,7 +11,7 @@ import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
 import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
-import { createOrUpdateRating } from "../api/rating";
+import { createOrUpdateRating, getRatings } from "../api/rating";
 
 const ProductDetail = () => {
   const { title } = useParams();
@@ -56,6 +56,7 @@ const ProductDetail = () => {
         setLoading(false);
       });
   }, []);
+
 
   const product = books.find(
     (book) => book.title === decodeURIComponent(title),
@@ -123,9 +124,8 @@ const ProductDetail = () => {
     ? product.price - product.price * (discount / 100)
     : 0;
 
-  const handleRating = (star) => {
+ const handleRating = (star) => {
     setRating(star);
-
     const ratingRequest = {
       userId: getUserId(),
       bookId: product.id,
