@@ -5,10 +5,10 @@ import Testimonials from "../components/contact/Testimonial";
 function Contact() {
   return (
     <div>
-      <div className="ml-20 mt-10 flex justify-start shadow-lg border border-gray-200">
+      <div className="ml-20 mt-10 flex justify-start border-gray-200">
         <BackButton />
       </div>
-      <div className="mx-auto mb-10 flex flex-col items-center p-8">
+      <div className="mx-auto mb-10 flex flex-col items-center p-8 ">
         <h1 className="mb-12 text-center text-5xl font-extrabold text-gray-800">
           Contacto
         </h1>
