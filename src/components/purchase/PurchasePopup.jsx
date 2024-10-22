@@ -111,7 +111,7 @@ const PurchasePopup = ({ cartItems }) => {
               </p>
               {totalPrice !== totalPriceDiscount && totalPriceDiscount !== 0 && (
                 <p className="text-lg font-semibold text-green-800">
-                    Total con Descuento: ${totalPriceDiscount.toLocaleString()}
+                    Total con descuento: ${totalPriceDiscount.toLocaleString()}
                 </p>
               )}
             </div>
