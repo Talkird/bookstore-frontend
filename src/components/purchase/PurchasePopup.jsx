@@ -5,21 +5,16 @@ import CouponInput from "../coupon/CouponInput";
 import propTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import { checkoutCart } from "../../api/cart";
-import { getUserId } from "../../utils/token";
-import { useNavigate } from "react-router-dom";
 
 const PurchasePopup = ({ cartItems }) => {
-  const [finalPrice, setFinalPrice] = useState(0); // Inicializamos el precio final
+  const [finalPrice, setFinalPrice] = useState(0); 
   const [discountApplied, setDiscountApplied] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const navigate = useNavigate(); // Para redirigir a la página de órdenes
 
-  // Actualizamos el precio total cada vez que cambia el carrito
   useEffect(() => {
     const totalPrice = cartItems.reduce(
       (acc, item) => acc + item.book.price * item.quantity,
@@ -40,12 +35,6 @@ const PurchasePopup = ({ cartItems }) => {
       items: cartItems,
     };
 
-    try {
-      await checkoutCart(getUserId(), orderData);
-      navigate("/orders"); // Redirige a la página de órdenes tras completar la compra
-    } catch (error) {
-      console.error("Error completing checkout:", error);
-    }
   };
 
   const applyDiscount = (coupon) => {

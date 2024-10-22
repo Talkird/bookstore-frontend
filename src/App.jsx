@@ -14,7 +14,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductDetail from "./pages/ProductDetail";
 import Faq from "./pages/Faq";
-import Order from "./pages/Order";
 import { Toaster } from "react-hot-toast";
 
 
@@ -44,7 +43,6 @@ function App() {
         <Route path="/" element={<Catalog />} />
         <Route path="/product/:id" element={<ProductDetail />} />
 
-        <Route path="/order" element={<Order />} />
       </Routes>
       <Footer />
       <Toaster />
