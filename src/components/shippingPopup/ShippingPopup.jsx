@@ -42,40 +42,7 @@ const ShippingPopup = ({ isOpen, onClose }) => {
             </tr>
           </tbody>
         </table>
-
-        {/* Tabla de costos de envío */}
-        <h3 className="mb-2 text-xl font-bold">Costos de envío</h3>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="border-b">
-              <th className="p-2 text-left">Región</th>
-              <th className="p-2 text-left">Costo fijo</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="p-2">Buenos Aires (GBA)</td>
-              <td className="p-2">$3500</td>
-            </tr>
-            <tr>
-              <td className="p-2">Buenos Aires (Interior)</td>
-              <td className="p-2">$4800</td>
-            </tr>
-            <tr>
-              <td className="p-2">CABA</td>
-              <td className="p-2">$4000</td>
-            </tr>
-            <tr>
-              <td className="p-2">Catamarca</td>
-              <td className="p-2">$4800</td>
-            </tr>
-            <tr>
-              <td className="p-2">Chaco</td>
-              <td className="p-2">$4800</td>
-            </tr>
-          </tbody>
-        </table>
-
+        
         <p className="mt-4 text-sm text-gray-500">
           *A las compras durante el fin de semana se les sumarán 48 horas
           hábiles.
