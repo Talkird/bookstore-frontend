@@ -13,7 +13,7 @@ function Orders() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-8 bg-gray-100 p-12">
+    <div className="flex h-screen flex-col gap-8 bg-gray-100 p-12">
       <h1 className="mb-8 rounded-md text-center text-5xl font-bold text-gray-800">
         Mis Órdenes
       </h1>

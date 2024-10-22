@@ -8,7 +8,7 @@ import { getUserId, getToken, getRole } from "../../utils/token";
 import { addCartItem } from "../../api/cart";
 import ProductEditAdminPopup from "../administrador/ProductEditAdminPopup";
 
-function Product({ id, image, title, author, price, isbn, year, stock }) {
+function Product({ id, image, title, author, price }) {
   const navigate = useNavigate();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -95,16 +95,7 @@ function Product({ id, image, title, author, price, isbn, year, stock }) {
 
           {isPopupOpen && (
             <ProductEditAdminPopup
-              product={{
-                id,
-                title,
-                author,
-                price,
-                isbn,
-                year,
-                stock,
-                imageUrl: image,
-              }}
+              product={{ id, title, author, price }}
               onEdit={handleEdit}
               onDelete={handleDelete}
               onClose={togglePopup}

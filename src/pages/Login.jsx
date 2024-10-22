@@ -38,6 +38,7 @@ function Login() {
     <div className="flex min-h-screen items-center justify-center">
       <div className="flex w-full max-w-md flex-col gap-8 rounded-xl bg-white p-8 shadow-2xl">
         <div className="flex flex-col gap-3">
+          
           <h2 className="text-center text-3xl font-bold text-gray-800">
             Bienvenido
           </h2>
@@ -47,6 +48,7 @@ function Login() {
         </div>
 
         <form className="flex flex-col gap-8" onSubmit={handleLogin}>
+
           <div>
             <p className="text-lg text-gray-700">Email</p>
             <Input
@@ -59,7 +61,7 @@ function Login() {
             />
           </div>
 
-          <div>
+          <div >
             <p className="text-lg text-gray-700">Contraseña</p>
             <Input
               variable={password}

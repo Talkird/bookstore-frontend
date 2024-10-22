@@ -59,7 +59,7 @@ function Catalog() {
       !filters.publisher || book.publisher === filters.publisher;
     const meetsCategory =
       filters.selectedCategories.length === 0 ||
-      filters.selectedCategories.includes(book.category);
+      filters.selectedCategories.includes(book.genre);
     const meetsSearch =
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       book.author.toLowerCase().includes(searchTerm.toLowerCase());
@@ -116,9 +116,6 @@ function Catalog() {
                 title={book.title}
                 author={book.author}
                 price={book.price}
-                isbn={book.isbn}
-                year={book.year}
-                stock={book.stock}
               />
             ))}
           </div>

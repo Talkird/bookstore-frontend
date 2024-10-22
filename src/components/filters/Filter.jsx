@@ -16,7 +16,7 @@ function Filter({ onFilterChange }) {
     "NOVELA",
     "ROMANTICO",
     "TERROR",
-    "CIENCIA FICCION",
+    "CIENCIA_FICCION",
     "FANTASIA",
     "AVENTURAS",
     "SUSPENSO",

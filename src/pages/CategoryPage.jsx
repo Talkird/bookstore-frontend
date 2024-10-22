@@ -26,7 +26,7 @@ function CategoryPage() {
           <BackButton />
         </div>
         <h1 className="mb-5 text-left text-3xl font-semibold">
-          Libros en la categoría: {category}
+          Libros en la categoría: {category.toUpperCase()}
         </h1>
       </div>
 

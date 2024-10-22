@@ -85,13 +85,13 @@ const PurchasePopup = ({ cartItems }) => {
                   >
                     <div className="flex items-center">
                       <img
-                        src={item.imagePath}
-                        alt={item.title}
+                        src={item.book.imagePath}
+                        alt={item.book.title}
                         className="mr-2 h-16 w-16 rounded-lg object-cover"
                       />
                       <div>
                         <h2 className="text-lg font-semibold text-gray-800">
-                          {item.title}
+                          {item.book.title}
                         </h2>
                         <p className="text-gray-600">
                           Cantidad: {item.quantity}

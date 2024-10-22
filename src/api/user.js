@@ -35,9 +35,8 @@ export const register = async (
   name,
   userEmail,
   password,
-  userRole = "ADMIN",
+  userRole = "USER",
 ) => {
-  //TODO implementar logica de roles
   try {
     const response = await axios.post(`${base_url}/register`, {
       name,
