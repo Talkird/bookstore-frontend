@@ -29,6 +29,7 @@ function Orders() {
             paymentMethod={order.payment_method}
             books={order.items}
             id={order.id}
+            preDiscountPrice={order.pre_discount_price}
           />
         ))}
       </div>

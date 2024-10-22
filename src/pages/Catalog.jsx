@@ -27,7 +27,7 @@ function Catalog() {
     getBooks()
       .then((books) => setBooks(books))
       .catch((error) => console.error("Error getting books:", error));
-  }, []);
+  }, [books]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -116,6 +116,10 @@ function Catalog() {
                 title={book.title}
                 author={book.author}
                 price={book.price}
+                isbn={book.isbn}
+                year={book.year}
+                genre={book.genre}
+                stock={book.stock}
               />
             ))}
           </div>

@@ -1,12 +1,14 @@
 import Popup from "reactjs-popup";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import CouponInput from "../coupon/CouponInput";
 import propTypes from "prop-types";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { checkoutCart } from "../../api/cart";
 import { getUserId } from "../../utils/token";
+import { applyDiscount } from "../../api/discount";
+import { formatPeso } from "../../utils/format";
+
 
 const PurchasePopup = ({ cartItems }) => {
   const totalPrice = cartItems.reduce(
@@ -14,40 +16,34 @@ const PurchasePopup = ({ cartItems }) => {
     0,
   );
 
-  const [finalPrice, setFinalPrice] = useState(totalPrice);
-  const [discountApplied, setDiscountApplied] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [coupon, setCoupon] = useState("");
+  const [totalPriceDiscount, setTotalPriceDiscount] = useState(totalPrice);
+
+  const handleApplyDiscount = async (coupon) => {
+
+      const data = await applyDiscount(coupon, totalPrice);
+      console.log(data);
+      setTotalPriceDiscount(data);
+  };
+  
 
   const handleCheckout = (e) => {
     e.preventDefault();
+
     checkoutCart(getUserId(), {
       customer_name: name,
       customer_email: email,
       customer_phone: phone,
       shipping_address: address,
       payment_method: paymentMethod,
-      discount_code: "",
+      discount_code: coupon,
       items: cartItems,
     });
-  };
-
-  const applyDiscount = (coupon) => {
-    //TODO FETCH DESCUENTOS
-    const validCoupons = ["DESCUENTO10", "PROMO20", "OCTUBRE24"];
-    const discount =
-      coupon === "DESCUENTO10" ? 10 : coupon === "PROMO20" ? 20 :
-      coupon ==="OCTUBRE24" ? 25:0;
-
-    if (discount > 0) {
-      setFinalPrice(totalPrice * (1 - discount / 100));
-      setDiscountApplied(true);
-      return true;
-    }
-    return false;
   };
 
   return (
@@ -113,14 +109,27 @@ const PurchasePopup = ({ cartItems }) => {
               <p className="text-lg font-semibold text-gray-800">
                 Total Original: ${totalPrice.toLocaleString()}
               </p>
-              {discountApplied && (
-                <p className="text-lg font-semibold text-green-600">
-                  Total con Descuento: ${finalPrice.toLocaleString()}
+              {totalPrice !== totalPriceDiscount && totalPriceDiscount !== 0 && (
+                <p className="text-lg font-semibold text-green-800">
+                    Total con descuento: ${totalPriceDiscount.toLocaleString()}
                 </p>
               )}
             </div>
 
-            <CouponInput applyDiscount={applyDiscount} />
+            <div className="mt-4">
+              <div className="flex items-center">
+                <Input
+                  type="text"
+                  placeholder="Ingresa tu cupón"
+                  value={coupon}
+                  onChange={(e) => setCoupon(e.target.value)}
+                />
+                <Button onClick={() => handleApplyDiscount(coupon)}>
+                  Aplicar cupón
+                </Button>
+              </div>
+
+            </div>
 
             <h2 className="mb-2 mt-6 text-lg font-bold text-gray-800">
               Completa tu compra

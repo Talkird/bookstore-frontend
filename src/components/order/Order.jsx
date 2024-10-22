@@ -9,6 +9,7 @@ function Order({
   books,
   total,
   paymentMethod,
+  preDiscountPrice,
   id,
 }) {
   return (
@@ -32,7 +33,11 @@ function Order({
         Método de pago: <span className="font-normal">{paymentMethod}</span>
       </p>
 
-      <h2 className="mt-4 text-xl font-bold">Total: {formatPeso(total)}</h2>
+      <h2 className="mt-4 text-xl font-bold">Total: {formatPeso(preDiscountPrice)}</h2>
+      {preDiscountPrice !== total && (
+        <h2 className="mt-4 text-xl font-bold">Total con descuento: {formatPeso(total)}</h2>
+      )}
+
       <h2 className="mt-2 text-xl font-bold">Productos:</h2>
       <div className="flex w-full flex-col">
         {books.map((book) => (
