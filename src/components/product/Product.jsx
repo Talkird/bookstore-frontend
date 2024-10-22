@@ -8,9 +8,9 @@ import { getUserId, getToken, getRole } from "../../utils/token";
 import { addCartItem } from "../../api/cart";
 import ProductEditAdminPopup from "../administrador/ProductEditAdminPopup";
 
-function Product({ id, image, title, author, price }) {
+function Product({ id, image, title, author, price, isbn, year, stock }) {
   const navigate = useNavigate();
-  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleEdit = (productId, updatedData) => {
     console.log("Producto editado:", productId, updatedData);
@@ -24,7 +24,7 @@ function Product({ id, image, title, author, price }) {
     setIsPopupOpen(!isPopupOpen);
   };
 
-  const role = getRole(); 
+  const role = getRole();
   const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
 
   const handleClick = () => {
@@ -84,11 +84,10 @@ function Product({ id, image, title, author, price }) {
             </Button>
           )}
 
-  
           {role === "ADMIN" && (
             <Button
               onClick={togglePopup}
-              className="mt-2 flex items-center gap-4 px-4 py-2 text-lg bg-red-500 text-white"
+              className="mt-2 flex items-center gap-4 bg-red-500 px-4 py-2 text-lg text-white"
             >
               Administrar Producto
             </Button>
@@ -96,7 +95,16 @@ function Product({ id, image, title, author, price }) {
 
           {isPopupOpen && (
             <ProductEditAdminPopup
-              product={{ id, title, author, price }}
+              product={{
+                id,
+                title,
+                author,
+                price,
+                isbn,
+                year,
+                stock,
+                imageUrl: image,
+              }}
               onEdit={handleEdit}
               onDelete={handleDelete}
               onClose={togglePopup}
@@ -104,11 +112,13 @@ function Product({ id, image, title, author, price }) {
           )}
         </div>
       </div>
-    {/* Mostrar mensaje de confirmación como popup */}
-    {showConfirmation && (
-        <div className="fixed top-4 right-4 w-80 bg-white border-2 border-gray-200 rounded-lg shadow-lg p-4 z-50">
-          <div className="flex justify-between items-center">
-            <p className="font-bold text-gray-700">¡Ya agregamos tu producto al carrito!</p>
+      {/* Mostrar mensaje de confirmación como popup */}
+      {showConfirmation && (
+        <div className="fixed right-4 top-4 z-50 w-80 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg">
+          <div className="flex items-center justify-between">
+            <p className="font-bold text-gray-700">
+              ¡Ya agregamos tu producto al carrito!
+            </p>
             <button
               className="text-gray-500 hover:text-gray-700"
               onClick={() => setShowConfirmation(false)}
@@ -116,7 +126,7 @@ function Product({ id, image, title, author, price }) {
               <X className="h-6 w-6" />
             </button>
           </div>
-          <div className="flex items-center mt-4">
+          <div className="mt-4 flex items-center">
             <img className="h-20 w-20 rounded-md" src={image} alt={title} />
             <div className="ml-4">
               <p className="font-semibold text-gray-800">{title}</p>
@@ -125,7 +135,7 @@ function Product({ id, image, title, author, price }) {
           </div>
           <Button
             onClick={() => navigate("/cart")}
-            className="mt-4 w-full bg-primary text-white py-2 rounded-md"
+            className="mt-4 w-full rounded-md bg-primary py-2 text-white"
           >
             Ver Carrito
           </Button>

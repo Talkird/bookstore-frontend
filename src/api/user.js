@@ -35,7 +35,7 @@ export const register = async (
   name,
   userEmail,
   password,
-  userRole = "USER",
+  userRole = "ADMIN",
 ) => {
   //TODO implementar logica de roles
   try {
