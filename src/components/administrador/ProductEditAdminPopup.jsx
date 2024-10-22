@@ -33,7 +33,7 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
       year: product.year,
       genre: product.genre,
       description: product.description,
-      image: product.imageUrl,
+      imagePath: product.image,
       price: price,
       stock: stock,
     };
@@ -53,7 +53,7 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
           </h2>
           <div className="mb-3 flex border-b pb-3">
             <img
-              src={product.imageUrl}
+              src={product.image}
               alt={product.title}
               className="mr-2 h-24 w-24 rounded-lg object-cover"
             />
