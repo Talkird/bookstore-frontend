@@ -32,7 +32,7 @@ function Order({
       <p className="text-lg">
         Método de pago: <span className="font-normal">{paymentMethod}</span>
       </p>
-      
+
       <h2 className="mt-4 text-xl font-bold">Total: {formatPeso(preDiscountPrice)}</h2>
       {preDiscountPrice !== total && (
         <h2 className="mt-4 text-xl font-bold">Total con descuento: {formatPeso(total)}</h2>
