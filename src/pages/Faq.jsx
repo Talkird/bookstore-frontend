@@ -4,9 +4,8 @@ import BackButton from "../components/ui/BackButton";
 
 const questions = [
   {
-    question: "¿Cuál es el costo de envío?",
-    answer:
-      "El costo es de $250 para compras menores a $2000 y gratis para compras mayores a $2000.",
+    question: "¿Cuál es el tiempo de entrega?",
+    answer: "El tiempo de entrega es de 3 a 5 días hábiles.",
   },
   {
     question: "¿Cómo se realizan los envíos?",
@@ -20,6 +19,10 @@ const questions = [
     question: "¿Cuál es el plazo para realizar un cambio de libro?",
     answer:
       "Se puede solicitar un cambio hasta 15 días luego de realizada la compra.",
+  },
+  {
+    question: "¿Qué métodos de pago aceptan?",
+    answer: "Aceptamos tarjetas de crédito, débito y mercado pago.",
   },
 ];
 
