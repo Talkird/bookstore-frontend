@@ -3,58 +3,35 @@ import Popup from "reactjs-popup";
 import { X } from "lucide-react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import { addBook } from "../../api/book";
 
 const ProductAddAdminPopup = () => {
-  const [productData, setProductData] = useState({
-    title: "",
-    author: "",
-    isbn: "",
-    year: "",
-    price: "",
-    stock: "",
-    genre: "NOVELA",
-    description: "",
-    imageUrl: "",
-  });
+  const [title, setTitle] = useState("titulo");
+  const [author, setAuthor] = useState("author");
+  const [isbn, setIsbn] = useState(0);
+  const [year, setYear] = useState(2024);
+  const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(0);
+  const [genre, setGenre] = useState("NOVELA");
+  const [description, setDescription] = useState("descripción");
+  const [imageUrl, setImageUrl] = useState("https://example.com/image.jpg");
 
-  const [selectedImageName, setSelectedImageName] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProductData({
-      ...productData,
-      [name]: value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setProductData({
-      ...productData,
-      imageFile: file,
-    });
-    setSelectedImageName(file ? file.name : "");
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("title", productData.title);
-    formData.append("author", productData.author);
-    formData.append("isbn", productData.isbn);
-    formData.append("year", productData.year);
-    formData.append("price", productData.price);
-    formData.append("stock", productData.stock);
-    formData.append("genre", productData.genre);
-    formData.append("description", productData.description);
+    const bookRequest = {
+      isbn: isbn,
+      title: title,
+      author: author,
+      year: year,
+      price: price,
+      stock: stock,
+      genre: genre,
+      description: description,
+      imagePath: imageUrl,
+    };
 
-    if (productData.imageFile) {
-      formData.append("imageFile", productData.imageFile);
-    }
-
-    console.log([...formData]); // Para revisar los datos, luego enviarlos al backend
-    // Realiza el envío al backend
+    addBook(bookRequest);
   };
 
   return (
@@ -103,8 +80,8 @@ const ProductAddAdminPopup = () => {
                   type="text"
                   id="title"
                   name="title"
-                  value={productData.title}
-                  onChange={handleChange}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   required
                 />
               </div>
@@ -117,8 +94,8 @@ const ProductAddAdminPopup = () => {
                   type="text"
                   id="author"
                   name="author"
-                  value={productData.author}
-                  onChange={handleChange}
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
                   required
                 />
               </div>
@@ -128,11 +105,11 @@ const ProductAddAdminPopup = () => {
                   ISBN:
                 </label>
                 <Input
-                  type="text"
+                  type="number"
                   id="isbn"
                   name="isbn"
-                  value={productData.isbn}
-                  onChange={handleChange}
+                  value={isbn}
+                  onChange={(e) => setIsbn(e.target.value)}
                 />
               </div>
 
@@ -143,8 +120,8 @@ const ProductAddAdminPopup = () => {
                 <Input
                   id="year"
                   name="year"
-                  value={productData.year}
-                  onChange={handleChange}
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
                 />
               </div>
 
@@ -155,8 +132,8 @@ const ProductAddAdminPopup = () => {
                 <Input
                   id="price"
                   name="price"
-                  value={productData.price}
-                  onChange={handleChange}
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                   required
                 />
               </div>
@@ -168,8 +145,8 @@ const ProductAddAdminPopup = () => {
                 <Input
                   id="stock"
                   name="stock"
-                  value={productData.stock}
-                  onChange={handleChange}
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
                   required
                 />
               </div>
@@ -181,8 +158,8 @@ const ProductAddAdminPopup = () => {
                 <select
                   id="genre"
                   name="genre"
-                  value={productData.genre}
-                  onChange={handleChange}
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
                   className="w-full rounded border-gray-300 p-2"
                   required
                 >
@@ -210,8 +187,8 @@ const ProductAddAdminPopup = () => {
                 <textarea
                   id="description"
                   name="description"
-                  value={productData.description}
-                  onChange={handleChange}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   className="w-full rounded border border-gray-300 p-3 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -226,19 +203,19 @@ const ProductAddAdminPopup = () => {
                     type="text"
                     id="imageUrl"
                     name="imageUrl"
-                    value={productData.imageUrl}
-                    onChange={handleChange}
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
                     placeholder="https://example.com/image.jpg"
                     required
                     className="w-full"
                   />
                 </div>
 
-                {productData.imageUrl && (
+                {imageUrl && (
                   <div className="mt-4">
                     <p className="text-gray-600">Vista previa de la imagen:</p>
                     <img
-                      src={productData.imageUrl}
+                      src={imageUrl}
                       alt="Vista previa"
                       className="mt-2 h-40 w-auto rounded-lg shadow-md"
                     />

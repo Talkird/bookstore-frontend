@@ -3,9 +3,9 @@ import CartItem from "../components/cart/CartItem";
 import { formatPeso } from "../utils/format";
 import BackButton from "../components/ui/BackButton";
 import PurchasePopup from "../components/purchase/PurchasePopup";
-import { getCart, clearCart } from "../api/cart"; // Import clearCart
+import { getCart, clearCart } from "../api/cart"; 
 import { getUserId } from "../utils/token";
-import Button from "../components/ui/Button"; // Assuming you have a reusable Button component
+import Button from "../components/ui/Button"; 
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
