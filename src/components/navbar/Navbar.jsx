@@ -27,8 +27,17 @@ function Navbar() {
     { name: "NOVELA", route: "/books/novela" },
     { name: "SUSPENSO", route: "/books/suspenso" },
     { name: "INFANTIL", route: "/books/infantil" },
-    { name: "CIENCIA FICCIÓN", route: "/books/ciencia-ficcion" },
+    { name: "CIENCIA_FICCION", route: "/books/ciencia_ficcion" },
     { name: "ROMÁNTICO", route: "/books/romantico" },
+    { name: "TERROR", route: "/books/terror" },
+    { name: "FANTASÍA", route: "/books/fantasia" },
+    { name: "AVENTURAS", route: "/books/aventuras" },
+    { name: "POESÍA", route: "/books/poesia" },
+    { name: "AUTOAYUDA", route: "/books/autoayuda" },
+    { name: "DEPORTE", route: "/books/deporte" },
+    { name: "ARTE", route: "/books/arte" },
+    { name: "MÚSICA", route: "/books/musica" },
+    { name: "COCINA", route: "/books/cocina" }
   ];
 
   return (

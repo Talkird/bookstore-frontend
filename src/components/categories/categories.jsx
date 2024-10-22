@@ -21,8 +21,8 @@ function Categories() {
         "bg-green-500 border-green-500 hover:bg-green-600 focus:ring-green-400",
     },
     {
-      name: "CIENCIA FICCION",
-      route: "/books/cienciaficcion",
+      name: "TERROR",
+      route: "/books/terror",
       color:
         "bg-orange-500 border-orange-500 hover:bg-orange-600 focus:ring-orange-400",
     },
