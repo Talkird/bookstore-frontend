@@ -11,7 +11,7 @@ import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
 import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
-import { createOrUpdateRating, getRatings } from "../api/rating";
+import { createOrUpdateRating } from "../api/rating";
 
 const ProductDetail = () => {
   const { title } = useParams();
@@ -56,11 +56,6 @@ const ProductDetail = () => {
         setLoading(false);
       });
   }, []);
-
-  useEffect(() => {
-    getRatings(product.id);
-    
-  }, [rating]);
 
   const product = books.find(
     (book) => book.title === decodeURIComponent(title),
@@ -130,9 +125,14 @@ const ProductDetail = () => {
 
   const handleRating = (star) => {
     setRating(star);
-    console.log(
-      `Rating enviado: ${star} estrellas para el producto ${product?.title}`,
-    );
+
+    const ratingRequest = {
+      userId: getUserId(),
+      bookId: product.id,
+      ratingValue: star,
+    };
+
+    createOrUpdateRating(getUserId(), product.id, ratingRequest);
   };
 
   const renderStars = () => {
