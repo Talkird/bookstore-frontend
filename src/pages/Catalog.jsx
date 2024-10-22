@@ -116,6 +116,9 @@ function Catalog() {
                 title={book.title}
                 author={book.author}
                 price={book.price}
+                isbn={book.isbn}
+                year={book.year}
+                stock={book.stock}
               />
             ))}
           </div>
