@@ -1,9 +1,19 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
+import { deleteBook, updateBook } from "../../api/book";
+import { generatePath } from "react-router-dom";
 
-const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
+const ProductEditAdminPopup = ({ product, onClose }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [price, setPrice] = useState(0);
+  const [stock, setStock] = useState(0);
+
+  const handleDeleteBook = async (id) => {
+    deleteBook(id);
+  };
+
+  const handleEditBook = async (id, book) => {};
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -15,9 +25,21 @@ const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    const price = e.target.price.value;
-    const stock = e.target.stock.value;
-    onEdit(product.id, { price, stock });
+
+    const book = {
+      isbn: product.isbn,
+      title: product.title,
+      author: product.author,
+      year: product.year,
+      genre: product.genre,
+      description: product.description,
+      image: product.imageUrl,
+      price: price,
+      stock: stock,
+    };
+
+    updateBook(product.id, book);
+
     closeEditModal();
     onClose();
   };
@@ -56,7 +78,7 @@ const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
                     "¿Estás seguro de que deseas eliminar este producto?",
                   )
                 ) {
-                  onDelete(product.id);
+                  handleDeleteBook(product.id);
                   onClose();
                 }
               }}
@@ -90,7 +112,8 @@ const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
                 </label>
                 <Input
                   id="price"
-                  defaultValue={product.price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  variable={price}
                   required
                   placeholder="Introduce el nuevo precio"
                 />
@@ -105,14 +128,20 @@ const ProductEditAdminPopup = ({ product, onEdit, onDelete, onClose }) => {
                 </label>
                 <Input
                   id="stock"
-                  defaultValue={product.stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  variable={stock}
                   required
                   placeholder="Introduce el nuevo stock"
                 />
               </div>
 
               <div className="mt-3 flex justify-between">
-                <Button type="submit" variant="default" size="sm">
+                <Button
+                  onClick={handleEditBook}
+                  type="submit"
+                  variant="default"
+                  size="sm"
+                >
                   Guardar
                 </Button>
                 <Button
