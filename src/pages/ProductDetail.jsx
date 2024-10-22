@@ -3,7 +3,7 @@ import BackButton from "../components/ui/BackButton";
 import ShippingPopup from "../components/shippingPopup/ShippingPopup";
 import PaymentPopup from "../components/payment/PaymentPopup";
 import { useParams, useNavigate } from "react-router-dom";
-import { Plus, Minus, Star, X, ShoppingCart} from "lucide-react";
+import { Plus, Minus, Star, X, ShoppingCart } from "lucide-react";
 import Input from "../components/ui/Input";
 import { getUserId, getToken, getRole } from "../utils/token";
 import { addCartItem } from "../api/cart";
@@ -11,10 +11,11 @@ import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
 import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
+import { createOrUpdateRating } from "../api/rating";
 
 const ProductDetail = () => {
   const { title } = useParams();
-  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleEdit = (productId, updatedData) => {
     console.log("Producto editado:", productId, updatedData);
@@ -28,21 +29,20 @@ const ProductDetail = () => {
     setIsPopupOpen(!isPopupOpen);
   };
 
-  const role = getRole(); 
-
+  const role = getRole();
 
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
-  
+
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [quantity, setQuantity] = useState(1);
   const [discount, setDiscount] = useState(0);
-  const [rating, setRating] = useState(0);
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     getBooks()
@@ -125,9 +125,14 @@ const ProductDetail = () => {
 
   const handleRating = (star) => {
     setRating(star);
-    console.log(
-      `Rating enviado: ${star} estrellas para el producto ${product?.title}`,
-    );
+
+    const ratingRequest = {
+      userId: getUserId(),
+      bookId: product.id,
+      ratingValue: star,
+    };
+
+    createOrUpdateRating(getUserId(), product.id, ratingRequest);
   };
 
   const renderStars = () => {
@@ -200,9 +205,7 @@ const ProductDetail = () => {
           </p>
           <p className="mb-6 text-2xl text-primary">Stock: {product.stock}</p>
 
-          
           <div className="mb-6 flex items-center">
-            
             {role === "USER" && (
               <>
                 <Button className="quantity-button" onClick={decreaseQuantity}>
@@ -228,58 +231,65 @@ const ProductDetail = () => {
               </>
             )}
             {role === "ADMIN" && (
-            <Button
-              onClick={togglePopup}
-              className="mt-2 flex items-center gap-4 px-4 py-2 text-lg bg-red-500 text-white"
-            >
-              Administrar Producto
-            </Button>
-          )}
+              <Button
+                onClick={togglePopup}
+                className="mt-2 flex items-center gap-4 bg-red-500 px-4 py-2 text-lg text-white"
+              >
+                Administrar Producto
+              </Button>
+            )}
 
-            
-          {isPopupOpen && (
-            <ProductEditAdminPopup
-              product={{ id, title, author, price }}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onClose={togglePopup}
-            />
-          )}
+            {isPopupOpen && (
+              <ProductEditAdminPopup
+                product={{ id, title, author, price }}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onClose={togglePopup}
+              />
+            )}
           </div>
 
           {/* Mostrar mensaje de confirmación como popup */}
-    {showConfirmation && (
-        <div className="fixed top-4 right-4 w-80 bg-white border-2 border-gray-200 rounded-lg shadow-lg p-4 z-50">
-          <div className="flex justify-between items-center">
-            <p className="font-bold text-gray-700">¡Ya agregamos tu producto al carrito!</p>
-            <button
-              className="text-gray-500 hover:text-gray-700"
-              onClick={() => setShowConfirmation(false)}
-            >
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-          <div className="flex items-center mt-4">
-            <img className="h-20 w-20 rounded-md" src={product.imagePath} alt={product.title} />
-            <div className="ml-4">
-              <p className="font-semibold text-gray-800">{product.title}</p>
-              <p className="text-gray-600">1 x {formatPeso(product.price)}</p>
+          {showConfirmation && (
+            <div className="fixed right-4 top-4 z-50 w-80 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg">
+              <div className="flex items-center justify-between">
+                <p className="font-bold text-gray-700">
+                  ¡Ya agregamos tu producto al carrito!
+                </p>
+                <button
+                  className="text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowConfirmation(false)}
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <div className="mt-4 flex items-center">
+                <img
+                  className="h-20 w-20 rounded-md"
+                  src={product.imagePath}
+                  alt={product.title}
+                />
+                <div className="ml-4">
+                  <p className="font-semibold text-gray-800">{product.title}</p>
+                  <p className="text-gray-600">
+                    1 x {formatPeso(product.price)}
+                  </p>
+                </div>
+              </div>
+              <Button
+                onClick={() => navigate("/cart")}
+                className="mt-4 w-full rounded-md bg-primary py-2 text-white"
+              >
+                Ver Carrito
+              </Button>
             </div>
-          </div>
-          <Button
-            onClick={() => navigate("/cart")}
-            className="mt-4 w-full bg-primary text-white py-2 rounded-md"
-          >
-            Ver Carrito
-          </Button>
-        </div>
-      )}
-          {role === "USER" &&
-          <div className="mb-6">
-            <h3 className="mb-2 text-3xl font-bold">Calificar producto</h3>
-            <div className="flex items-center">{renderStars()}</div>
-          </div>
-          }
+          )}
+          {role === "USER" && (
+            <div className="mb-6">
+              <h3 className="mb-2 text-3xl font-bold">Calificar producto</h3>
+              <div className="flex items-center">{renderStars()}</div>
+            </div>
+          )}
           <div className="flex gap-4">
             <Button
               onClick={openShippingPopup}
