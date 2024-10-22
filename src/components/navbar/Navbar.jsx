@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
@@ -15,7 +14,9 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    const isConfirmed = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
+    const isConfirmed = window.confirm(
+      "¿Estás seguro de que deseas cerrar sesión?",
+    );
     if (isConfirmed) {
       clearLocalStorage();
 
@@ -61,9 +62,9 @@ function Navbar() {
             </div>
           )}
           {isLoggedIn() && (
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-12">
               <NavbarLink to="/cart">
-                <ShoppingCart size={40} strokeWidth={1.5} />
+                <ShoppingCart size={36} strokeWidth={1.5} />
               </NavbarLink>
               <NavbarLink to="/account">
                 <User size={40} strokeWidth={1.5} />
@@ -101,6 +102,7 @@ function Navbar() {
           <NavbarLink to="/contact">Contacto</NavbarLink>
           <NavbarLink to="/faq">Preguntas Frecuentes</NavbarLink>
           <NavbarLink to="/quienes-somos">Quiénes Somos</NavbarLink>
+          {isLoggedIn() && <NavbarLink to="/orders">Mis Órdenes</NavbarLink>}
         </div>
 
         <div className="flex items-center gap-3">
