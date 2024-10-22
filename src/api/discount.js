@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getToken } from "../utils/token";
+import toast from "react-hot-toast";
 
 const base_url = "http://localhost:8080/discounts";
 
@@ -21,8 +22,10 @@ export const applyDiscount = async (discountCode, totalPrice) => {
                 },
             }
         );
+        toast.success("Descuento aplicado");
         return response.data;
     } catch (error) {
+        toast.error("Error al aplicar descuento");
         console.error("Error applying discount:", error);
         throw error;
     }
