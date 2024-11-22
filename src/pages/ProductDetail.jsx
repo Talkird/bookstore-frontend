@@ -11,7 +11,10 @@ import { getBooks } from "../api/book";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
 import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
-import { createOrUpdateRating, getRatings } from "../api/rating";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getRatings, createOrUpdateRating } from "../redux/slice/ratingSlice";
+
 
 const ProductDetail = () => {
   const { title } = useParams();
@@ -42,7 +45,19 @@ const ProductDetail = () => {
   const [discount, setDiscount] = useState(0);
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
-  const [rating, setRating] = useState(0);
+
+  const { rating } = useSelector((state) => state.ratings);
+  const dispatch = useDispatch();
+  
+  const product = books.find(
+    (book) => book.title === decodeURIComponent(title),
+  );
+
+  useEffect(() => {
+    if (product) {
+      dispatch(getRatings(product.id));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     getBooks()
@@ -55,12 +70,8 @@ const ProductDetail = () => {
         setError("Error fetching product data");
         setLoading(false);
       });
-  }, []);
 
-
-  const product = books.find(
-    (book) => book.title === decodeURIComponent(title),
-  );
+  }, [books]);
 
   const handleAddToCart = () => {
     console.log("User tried adding to cart.");
@@ -124,16 +135,18 @@ const ProductDetail = () => {
     ? product.price - product.price * (discount / 100)
     : 0;
 
- const handleRating = (star) => {
-    setRating(star);
-    const ratingRequest = {
-      userId: getUserId(),
-      bookId: product.id,
-      ratingValue: star,
-    };
+    const handleRating = (star) => {
+      const userId = getUserId();
+      if (!userId) return;
+      
+      const ratingRequest = {
+        userId: getUserId(),
+        bookId: product.id,
+        ratingValue: star,
+      };
 
-    createOrUpdateRating(getUserId(), product.id, ratingRequest);
-  };
+      dispatch(createOrUpdateRating({ userId, bookId: product.id, ratingRequest: ratingRequest}));
+    };
 
   const renderStars = () => {
     const stars = [];

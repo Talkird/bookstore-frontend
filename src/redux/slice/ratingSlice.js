@@ -1,28 +1,45 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  getRatings as fetchRatings,
-  createOrUpdateRating as apiCreateOrUpdateRating,
-  deleteRating,
-} from "../../api/rating";
+import { getToken } from "../../utils/token";
+import axios from "axios";
+
+const base_url = "http://localhost:8080/ratings";
 
 export const getRatings = createAsyncThunk(
   "ratings/getRatings",
   async (bookId) => {
-    const { data } = await fetchRatings(bookId);
-    return data;
+    const token = getToken();
+    const response = await axios.get(`${base_url}/book/${bookId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
   },
 );
 
 export const createOrUpdateRating = createAsyncThunk(
   "ratings/createOrUpdateRating",
-  async (ratingRequest) => {
-    const { data } = await apiCreateOrUpdateRating(ratingRequest);
-    return data;
+  async ({userId, bookId, ratingRequest}) => {
+    const token = getToken();
+    const response = await axios.post(
+      `${base_url}/user/${userId}/book/${bookId}`,
+      ratingRequest,
+      { 
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    return response.data;
   },
 );
 
 const initialState = {
-  items: [],
+  rating: 0,
   loading: true,
   error: null,
 };
@@ -31,7 +48,11 @@ export const ratingSlice = createSlice({
   initialState: initialState,
   name: "ratings",
 
-  reducers: {},
+  reducers: {
+    setRating: (state, action) => {
+      state.rating = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getRatings.pending, (state) => {
@@ -39,7 +60,7 @@ export const ratingSlice = createSlice({
         state.error = null;
       })
       .addCase(getRatings.fulfilled, (state, action) => {
-        state.items = action.payload;
+        state.rating = action.payload;
         state.loading = false;
       })
       .addCase(getRatings.rejected, (state, action) => {
@@ -51,7 +72,7 @@ export const ratingSlice = createSlice({
         state.error = null;
       })
       .addCase(createOrUpdateRating.fulfilled, (state, action) => {
-        state.items = action.payload;
+        state.rating = action.payload;
         state.loading = false;
       })
       .addCase(createOrUpdateRating.rejected, (state, action) => {
