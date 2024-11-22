@@ -1,40 +1,25 @@
+import { store } from '../redux/store';
+
 export const getToken = () => {
-    return localStorage.getItem("token");
+  return store.getState().user.token;
 };
 
-export const setToken = (token) => {
-    localStorage.setItem("token", token);
-}
-
 export const getRole = () => {
-    return localStorage.getItem("role");
-}
-
-export const setRole = (role) => {
-    localStorage.setItem("role", role);
-}
+  return store.getState().user.role;
+};
 
 export const getEmail = () => {
-    return localStorage.getItem("email");
-}
-
-export const setEmail = (email) => {
-    localStorage.setItem("email", email);
-}
-
-export const setUserId = (userId) => {
-    localStorage.setItem("userId", userId);
-    
+  return store.getState().user.email;
 };
 
 export const getUserId = () => {
-    return localStorage.getItem("userId");
+  return store.getState().user.userId;
 };
 
 export const isLoggedIn = () => {
-    return getToken() !== null;
-}
+  return getToken() !== null;
+};
 
 export const clearLocalStorage = () => {
-    localStorage.clear();
-}
+  store.dispatch(logout());
+};

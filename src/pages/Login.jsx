@@ -1,13 +1,19 @@
+
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { login } from "../api/user";
+import { login } from "../redux/slice/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+
 
   const validateInput = () => {
     if (!email || !password) {
@@ -30,8 +36,7 @@ function Login() {
     if (!validateInput()) {
       return;
     }
-
-    const response = await login(email, password);
+    dispatch(login({ email, password }));
   };
 
   return (

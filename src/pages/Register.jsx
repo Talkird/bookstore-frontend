@@ -1,15 +1,19 @@
+
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { register } from "../api/user";
+import { register } from "../redux/slice/userSlice";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from 'react-redux';
 
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
 
   const validateInput = () => {
     if (!name || !email || !password) {
@@ -32,8 +36,7 @@ function Register() {
     if (!validateInput()) {
       return;
     }
-    
-    const response = await register(name, email, password);
+    dispatch(register({ name, email, password }));
   };
 
   return (
