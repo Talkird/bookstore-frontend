@@ -7,7 +7,7 @@ import NavbarSearch from "./NavbarSearch";
 import { ShoppingCart, User, LogOut } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
 import { isLoggedIn, clearLocalStorage } from "../../utils/token";
-
+import { logout } from "../../redux/slice/userSlice";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -19,21 +19,16 @@ function Navbar() {
 
   const { user } = useSelector((state) => state.user);
 
-  useEffect(() => {dis}, [dispatch]);
-
-
-
-
 
   const handleLogout = () => {
     const isConfirmed = window.confirm(
       "¿Estás seguro de que deseas cerrar sesión?",
     );
     if (isConfirmed) {
+      dispatch(logout());
       clearLocalStorage();
-
       navigate("/");
-    }
+     }
   };
 
   const categories = [
