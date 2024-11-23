@@ -1,35 +1,50 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  getBooks as fetchBooks,
-  getBook as fetchBook,
-  addBook as createBook,
-  updateBook as apiUpdateBook,
-  deleteBook as apiDeleteBook,
-} from "../../api/book";
+import axios from "axios";
+import { getToken } from "../../utils/token";
+
+const base_url = "http://localhost:8080/books";
 
 export const getBooks = createAsyncThunk("books/getBooks", async () => {
-  const { data } = await fetchBooks();
-  return data;
+  const response = await axios.get(`${base_url}/all`);
+  return response.data;
 });
 
 export const getBook = createAsyncThunk("books/getBook", async (id) => {
-  const { data } = await fetchBook(id);
-  return data;
+  const response = await axios.get(`${base_url}/get/${id}`);
+  return response.data;
 });
 
 export const addBook = createAsyncThunk("books/addBook", async (book) => {
-  const { data } = await createBook(book);
-  return data;
+  const token = getToken();
+  const response = await axios.post(`${base_url}/create`, book, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  return response.data;
 });
 
-export const updateBook = createAsyncThunk("books/updateBook", async (book) => {
-  const { data } = await apiUpdateBook(book);
-  return data;
-});
+export const updateBook = createAsyncThunk(
+  "books/updateBook",
+  async (id, book) => {
+    const token = getToken();
+    const response = await axios.put(`${base_url}/edit/${id}`, book, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  },
+);
 
 export const deleteBook = createAsyncThunk("books/deleteBook", async (id) => {
-  const { data } = await apiDeleteBook(id);
-  return data;
+  const token = getToken();
+  const response = await axios.delete(`${base_url}/delete/${id}`, {
+    Authorization: `Bearer ${token}`,
+  });
+  return response.data;
 });
 
 const initialState = {
@@ -62,6 +77,7 @@ const bookSlice = createSlice({
       })
       .addCase(getBook.fulfilled, (state, action) => {
         state.loading = false;
+        state.items = [action.payload];
       })
       .addCase(getBook.rejected, (state, action) => {
         state.loading = false;

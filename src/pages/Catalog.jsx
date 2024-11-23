@@ -5,16 +5,16 @@ import Filter from "../components/filters/Filter";
 import Sort from "../components/filters/Sort";
 import BackButton from "../components/ui/BackButton";
 import { useLocation } from "react-router-dom";
-import { getBooks } from "../api/book";
+import { getBooks } from "../redux/slice/bookSlice";
 import { getRole } from "../utils/token";
 import ProductAddAdminPopup from "../components/administrador/ProductAddAdminPopup";
+import { useDispatch, useSelector } from "react-redux";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 function Catalog() {
-  const [books, setBooks] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const closePopup = () => {
@@ -22,12 +22,8 @@ function Catalog() {
   };
 
   const role = getRole();
-
-  useEffect(() => {
-    getBooks()
-      .then((books) => setBooks(books))
-      .catch((error) => console.error("Error getting books:", error));
-  }, [books]);
+  const dispatch = useDispatch();
+  const { items: books, loading, error } = useSelector((state) => state.books);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -85,6 +81,32 @@ function Catalog() {
   const totalBooks = filteredBooks.length;
   const showingStart = startIndex + 1;
   const showingEnd = Math.min(startIndex + booksPerPage, totalBooks);
+
+  useEffect(() => {
+    dispatch(getBooks());
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-t-4 border-blue-500"></div>
+        <p className="ml-4 text-xl text-blue-700">
+          Cargando, por favor espera...
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-8 text-center">
+        <h2 className="mb-2 text-2xl font-semibold text-red-600">
+          ¡Ups! Algo salió mal.
+        </h2>
+        <p className="text-lg text-gray-700">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col">
