@@ -19,7 +19,7 @@ function Navbar() {
 
   const { user } = useSelector((state) => state.user);
 
-  useEffect(() => {dispatch}, [dispatch]);
+  useEffect(() => {dis}, [dispatch]);
 
 
 
