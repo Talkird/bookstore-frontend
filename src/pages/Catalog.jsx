@@ -111,7 +111,6 @@ function Catalog() {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">
-        {/*Volver atras y filtros*/}
         <div className="flex flex-col p-8">
           <div className="mb-4">
             <BackButton />

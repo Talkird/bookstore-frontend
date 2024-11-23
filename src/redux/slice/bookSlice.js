@@ -27,7 +27,7 @@ export const addBook = createAsyncThunk("books/addBook", async (book) => {
 
 export const updateBook = createAsyncThunk(
   "books/updateBook",
-  async (id, book) => {
+  async ({ id, book }) => {
     const token = getToken();
     const response = await axios.put(`${base_url}/edit/${id}`, book, {
       headers: {
@@ -100,12 +100,9 @@ const bookSlice = createSlice({
         state.error = null;
       })
       .addCase(updateBook.fulfilled, (state, action) => {
-        const index = state.items.findIndex(
-          (book) => book.id === action.payload.id,
+        state.items = state.items.map((book) =>
+          book.id === action.payload.id ? action.payload : book,
         );
-        if (index !== -1) {
-          state.items[index] = action.payload;
-        }
         state.loading = false;
       })
       .addCase(updateBook.rejected, (state, action) => {
@@ -117,11 +114,14 @@ const bookSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteBook.fulfilled, (state, action) => {
-        state.items = state.items.filter(
-          (book) => book.id !== action.payload.id,
-        );
+        state.items = state.items
+          .map((book) =>
+            book.id === action.payload.id ? { ...book, deleted: true } : book,
+          )
+          .filter((book) => !book.deleted);
         state.loading = false;
       })
+
       .addCase(deleteBook.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;

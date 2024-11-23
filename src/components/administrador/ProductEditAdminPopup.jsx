@@ -1,19 +1,14 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import { deleteBook, updateBook } from "../../api/book";
-
+import { deleteBook, updateBook } from "../../redux/slice/bookSlice";
+import { useDispatch } from "react-redux";
 
 const ProductEditAdminPopup = ({ product, onClose }) => {
+  const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [price, setPrice] = useState(0);
-  const [stock, setStock] = useState(0);
-
-  const handleDeleteBook = async (id) => {
-    deleteBook(id);
-  };
-
-  const handleEditBook = async (id, book) => {};
+  const [price, setPrice] = useState(product.price);
+  const [stock, setStock] = useState(product.stock);
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -21,6 +16,11 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
+  };
+  
+  const handleDeleteBook = (id) => {
+    dispatch(deleteBook(id));
+    onClose();
   };
 
   const handleEditSubmit = (e) => {
@@ -38,7 +38,7 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
       stock: stock,
     };
 
-    updateBook(product.id, book);
+    dispatch(updateBook({ id: product.id, book }));
 
     closeEditModal();
     onClose();
@@ -79,7 +79,6 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
                   )
                 ) {
                   handleDeleteBook(product.id);
-                  onClose();
                 }
               }}
             >
@@ -113,7 +112,7 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
                 <Input
                   id="price"
                   onChange={(e) => setPrice(e.target.value)}
-                  variable={price}
+                  value={price}
                   required
                   placeholder="Introduce el nuevo precio"
                 />
@@ -129,19 +128,14 @@ const ProductEditAdminPopup = ({ product, onClose }) => {
                 <Input
                   id="stock"
                   onChange={(e) => setStock(e.target.value)}
-                  variable={stock}
+                  value={stock}
                   required
                   placeholder="Introduce el nuevo stock"
                 />
               </div>
 
               <div className="mt-3 flex justify-between">
-                <Button
-                  onClick={handleEditBook}
-                  type="submit"
-                  variant="default"
-                  size="sm"
-                >
+                <Button type="submit" variant="default" size="sm">
                   Guardar
                 </Button>
                 <Button
