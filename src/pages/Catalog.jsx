@@ -23,7 +23,7 @@ function Catalog() {
 
   const role = getRole();
   const dispatch = useDispatch();
-  const { items: books, loading, error } = useSelector((state) => state.books);
+  const { items: books, loading } = useSelector((state) => state.books);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -93,17 +93,6 @@ function Catalog() {
         <p className="ml-4 text-xl text-blue-700">
           Cargando, por favor espera...
         </p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-8 text-center">
-        <h2 className="mb-2 text-2xl font-semibold text-red-600">
-          ¡Ups! Algo salió mal.
-        </h2>
-        <p className="text-lg text-gray-700">{error}</p>
       </div>
     );
   }

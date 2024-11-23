@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function Home() {
   const dispatch = useDispatch();
-  const { items: books, loading, error } = useSelector((state) => state.books);
+  const { items: books, loading } = useSelector((state) => state.books);
 
   const navigate = useNavigate();
 
@@ -109,17 +109,6 @@ function Home() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="p-8 text-center">
-        <h2 className="mb-2 text-2xl font-semibold text-red-600">
-          ¡Ups! Algo salió mal.
-        </h2>
-        <p className="text-lg text-gray-700">{error}</p>
-      </div>
-    );
-  }
-  
   return (
     <div className="p-8">
       <ImageBanner />

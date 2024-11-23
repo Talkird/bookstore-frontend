@@ -60,22 +60,22 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     const token = getToken();
     const userId = getUserId();
-  
+
     if (!token || !userId) {
       console.error("User is not authenticated.");
       return;
     }
-  
-    dispatch(
-      addCartItem({
-        userId,
-        bookId: product.id,
-        quantity,
-      })
-    );
-  
+
+    const item = {
+      userId,
+      bookId: id,
+      quantity: 1,
+    };
+
+    dispatch(addCartItem({ userId, item }));
+
     setShowConfirmation(true);
-  
+
     setTimeout(() => {
       setShowConfirmation(false);
     }, 5000);
@@ -250,7 +250,6 @@ const ProductDetail = () => {
               />
             )}
           </div>
-
 
           {showConfirmation && (
             <div className="fixed right-4 top-4 z-50 w-80 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg">

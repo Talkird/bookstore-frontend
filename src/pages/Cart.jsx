@@ -9,14 +9,14 @@ import Button from "../components/ui/Button";
 import { useDispatch, useSelector } from "react-redux";
 
 function Cart() {
-  const { items: cartItems, loading, error } = useSelector((state) => state.cart);
+  const { items: cartItems, loading } = useSelector((state) => state.cart);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
 
   const updateTotal = () => {
     const newTotal = cartItems.reduce(
       (acc, item) => acc + item.book.price * item.quantity,
-      0
+      0,
     );
     setTotal(newTotal);
   };
@@ -28,7 +28,9 @@ function Cart() {
 
   const handleClearCart = async () => {
     const userId = getUserId();
-    const confirmClear = window.confirm("¿Estás seguro de que deseas vaciar el carrito?");
+    const confirmClear = window.confirm(
+      "¿Estás seguro de que deseas vaciar el carrito?",
+    );
     if (!confirmClear) {
       return;
     }
@@ -51,17 +53,6 @@ function Cart() {
         <p className="ml-4 text-xl text-blue-700">
           Cargando, por favor espera...
         </p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-8 text-center">
-        <h2 className="mb-2 text-2xl font-semibold text-red-600">
-          ¡Ups! Algo salió mal.
-        </h2>
-        <p className="text-lg text-gray-700">{error}</p>
       </div>
     );
   }

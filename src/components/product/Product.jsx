@@ -56,13 +56,12 @@ function Product({
     }
 
     try {
-      await dispatch(
-        addCartItem({
-          userId,
-          bookId: id,
-          quantity: 1,
-        })
-      );
+      const item = {
+        userId,
+        bookId: id,
+        quantity: 1,
+      };
+      await dispatch(addCartItem({ userId, item }));
 
       setShowConfirmation(true);
 
