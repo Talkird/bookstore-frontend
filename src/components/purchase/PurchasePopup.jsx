@@ -4,18 +4,17 @@ import Input from "../ui/Input";
 import propTypes from "prop-types";
 import { useState } from "react";
 import { X } from "lucide-react";
-import { checkoutCart } from "../../api/cart";
+import { checkoutCart } from "../../redux/slice/cartSlice";
 import { getUserId } from "../../utils/token";
 import { applyDiscount } from "../../redux/slice/discountSlice";
 import { formatPeso } from "../../utils/format";
 import { useDispatch, useSelector } from "react-redux";
 
 const PurchasePopup = ({ cartItems }) => {
-  const dispatch=useDispatch();
-  
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
+  const dispatch = useDispatch();
+
+  const { discountAmount, totalPriceWithDiscount } = useSelector(
+    (state) => state.discount
   );
 
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -24,28 +23,37 @@ const PurchasePopup = ({ cartItems }) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [coupon, setCoupon] = useState("");
-  const [totalPriceDiscount, setTotalPriceDiscount] = useState(totalPrice);
 
-  const handleApplyDiscount = async (coupon) => {
+  const totalPrice = cartItems.reduce(
+    (acc, item) => acc + item.book.price * item.quantity,
+    0
+  );
 
-      const data = dispatch(applyDiscount(coupon, totalPrice));
-      console.log(data);
-      setTotalPriceDiscount(data);
+  const handleApplyDiscount = async () => {
+    const userId = getUserId();
+    try {
+      await dispatch(applyDiscount({ userId, coupon, totalPrice }));
+    } catch (error) {
+      console.error("Failed to apply discount", error);
+    }
   };
-  
 
   const handleCheckout = (e) => {
     e.preventDefault();
+    const userId = getUserId();
 
-    checkoutCart(getUserId(), {
-      customer_name: name,
-      customer_email: email,
-      customer_phone: phone,
-      shipping_address: address,
-      payment_method: paymentMethod,
-      discount_code: coupon,
-      items: cartItems,
-    });
+    dispatch(
+      checkoutCart({
+        userId,
+        customerName: name,
+        customerEmail: email,
+        customerPhone: phone,
+        shippingAddress: address,
+        paymentMethod,
+        discountCode: coupon,
+        items: cartItems,
+      })
+    );
   };
 
   return (
@@ -95,7 +103,7 @@ const PurchasePopup = ({ cartItems }) => {
                           Cantidad: {item.quantity}
                         </p>
                         <p className="text-gray-600">
-                          ${(item.price * item.quantity).toLocaleString()}
+                          {formatPeso(item.book.price * item.quantity)}
                         </p>
                       </div>
                     </div>
@@ -109,11 +117,11 @@ const PurchasePopup = ({ cartItems }) => {
                 Resumen de Compra
               </h2>
               <p className="text-lg font-semibold text-gray-800">
-                Total Original: ${totalPrice.toLocaleString()}
+                Total Original: {formatPeso(totalPrice)}
               </p>
-              {totalPrice !== totalPriceDiscount && totalPriceDiscount !== 0 && (
+              {discountAmount > 0 && (
                 <p className="text-lg font-semibold text-green-800">
-                    Total con descuento: ${totalPriceDiscount.toLocaleString()}
+                  Total con descuento: {formatPeso(totalPriceWithDiscount)}
                 </p>
               )}
             </div>
@@ -126,11 +134,10 @@ const PurchasePopup = ({ cartItems }) => {
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
                 />
-                <Button onClick={() => handleApplyDiscount(coupon)}>
+                <Button onClick={handleApplyDiscount}>
                   Aplicar cupón
                 </Button>
               </div>
-
             </div>
 
             <h2 className="mb-2 mt-6 text-lg font-bold text-gray-800">
@@ -146,7 +153,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Nombre:
                 </label>
                 <Input
-                  variable={name}
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                   type="text"
                   id="name"
@@ -159,7 +166,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Correo Electrónico:
                 </label>
                 <Input
-                  variable={email}
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   id="email"
@@ -172,7 +179,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Teléfono:
                 </label>
                 <Input
-                  variable={phone}
+                  value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   type="tel"
                   id="phone"
@@ -185,7 +192,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Dirección de Envío:
                 </label>
                 <Input
-                  variable={address}
+                  value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   type="text"
                   id="address"

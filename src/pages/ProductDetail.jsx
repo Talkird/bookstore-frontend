@@ -6,7 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Plus, Minus, Star, X, ShoppingCart } from "lucide-react";
 import Input from "../components/ui/Input";
 import { getUserId, getToken, getRole } from "../utils/token";
-import { addCartItem } from "../api/cart";
+import { addCartItem } from "../redux/slice/cartSlice";
 import { getBooks } from "../redux/slice/bookSlice";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
@@ -58,23 +58,24 @@ const ProductDetail = () => {
   }, [dispatch]);
 
   const handleAddToCart = () => {
-    console.log("User tried adding to cart.");
-
     const token = getToken();
     const userId = getUserId();
-
+  
     if (!token || !userId) {
       console.error("User is not authenticated.");
       return;
     }
-
-    addCartItem(userId, {
-      bookId: product.id,
-      quantity: quantity,
-    });
-
+  
+    dispatch(
+      addCartItem({
+        userId,
+        bookId: product.id,
+        quantity,
+      })
+    );
+  
     setShowConfirmation(true);
-
+  
     setTimeout(() => {
       setShowConfirmation(false);
     }, 5000);
