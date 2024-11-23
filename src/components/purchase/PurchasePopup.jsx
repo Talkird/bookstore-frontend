@@ -6,11 +6,13 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { checkoutCart } from "../../api/cart";
 import { getUserId } from "../../utils/token";
-import { applyDiscount } from "../../api/discount";
+import { applyDiscount } from "../../redux/slice/discountSlice";
 import { formatPeso } from "../../utils/format";
-
+import { useDispatch, useSelector } from "react-redux";
 
 const PurchasePopup = ({ cartItems }) => {
+  const dispatch=useDispatch();
+  
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
@@ -26,7 +28,7 @@ const PurchasePopup = ({ cartItems }) => {
 
   const handleApplyDiscount = async (coupon) => {
 
-      const data = await applyDiscount(coupon, totalPrice);
+      const data = dispatch(applyDiscount(coupon, totalPrice));
       console.log(data);
       setTotalPriceDiscount(data);
   };
