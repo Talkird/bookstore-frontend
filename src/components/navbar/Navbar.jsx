@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
@@ -6,12 +8,22 @@ import { ShoppingCart, User, LogOut } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
 import { isLoggedIn, clearLocalStorage } from "../../utils/token";
 
+
 function Navbar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCategoryClick = (categoryRoute) => {
     navigate(categoryRoute);
   };
+
+  const { user } = useSelector((state) => state.user);
+
+  useEffect(() => {dispatch}, [dispatch]);
+
+
+
+
 
   const handleLogout = () => {
     const isConfirmed = window.confirm(
@@ -40,6 +52,7 @@ function Navbar() {
     { name: "MÚSICA", route: "/books/musica" },
     { name: "COCINA", route: "/books/cocina" }
   ];
+
 
   return (
     <nav className="flex flex-col bg-background shadow-md">

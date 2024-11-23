@@ -36,7 +36,7 @@ function Register() {
     if (!validateInput()) {
       return;
     }
-    dispatch(register({ name, email, password }));
+    dispatch(register({ name, userEmail: email, password }));
   };
 
   return (

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setToken, setUserId, setEmail, setRole } from "../utils/token";
 import toast from "react-hot-toast";
 
 const base_url = "http://localhost:8080/api/v1/auth";
@@ -18,11 +17,6 @@ export const login = async (userEmail, password) => {
     } else {
       toast.error("Error al iniciar sesión");
     }
-
-    setToken(access_token);
-    setUserId(user_id);
-    setEmail(email);
-    setRole(role);
 
     return { access_token, user_id, email, role };
   } catch (error) {
@@ -53,11 +47,6 @@ export const register = async (
     } else {
       toast.error("Error al registrarse");
     }
-
-    setToken(access_token);
-    setUserId(user_id);
-    setEmail(email);
-    setRole(role);
 
     return { access_token, user_id, email, role };
   } catch (error) {

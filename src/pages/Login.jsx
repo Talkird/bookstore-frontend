@@ -36,7 +36,7 @@ function Login() {
     if (!validateInput()) {
       return;
     }
-    dispatch(login({ email, password }));
+    dispatch(login({ userEmail:email, password }));
   };
 
   return (
