@@ -43,6 +43,7 @@ function Home() {
       image:
         "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/b5132fcc-ec40-4fc2-ba6a-b33763c3c1c4/9789505472222.jpg",
     },
+    
   ];
 
   const recommendedBooks = [

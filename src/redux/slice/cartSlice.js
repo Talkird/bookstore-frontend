@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { getToken } from "../../utils/token";
+import toast from "react-hot-toast";
 
 const base_url = "http://localhost:8080";
 

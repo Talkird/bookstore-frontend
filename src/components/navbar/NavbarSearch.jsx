@@ -13,6 +13,7 @@ function NavbarSearch({ className }) {
   const handleSearch = () => {
     if (searchTerm.trim()) {
       navigate(`/catalog?search=${searchTerm}`);
+      setSearchTerm("");
     }
   };
 

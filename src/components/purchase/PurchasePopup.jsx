@@ -29,7 +29,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
     dispatch(applyDiscount({ discountCode: coupon, totalPrice }));
   };
 
-  const handleCheckout = (e) => {
+  const handleCheckout = (e, close) => {
     e.preventDefault();
 
     const order = {
@@ -42,13 +42,18 @@ const PurchasePopup = ({ cartItems = [] }) => {
       discount_code: coupon,
       items: cartItems,
     };
-    dispatch(
-      checkoutCart({ userId: getUserId(), orderRequest: order }),
-      clearCart(getUserId()),
-    );
 
-    dispatch(resetDiscount());
+    dispatch(checkoutCart({ userId: getUserId(), orderRequest: order }))
+      .then(() => {
+        dispatch(clearCart(getUserId()));
+        dispatch(resetDiscount());
+        close(); 
+      })
+      .catch((error) => {
+        console.error("Error al confirmar la compra:", error);
+      });
   };
+
   useEffect(() => {
     if (error) {
       console.error("Error al aplicar descuento:", error);
@@ -152,7 +157,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
             </h2>
 
             <form
-              onSubmit={handleCheckout}
+              onSubmit={(e) => handleCheckout(e, close)}
               className="grid grid-cols-1 gap-4 md:grid-cols-2"
             >
               <div>
@@ -238,7 +243,6 @@ const PurchasePopup = ({ cartItems = [] }) => {
 
 PurchasePopup.propTypes = {
   cartItems: propTypes.array.isRequired,
-  onCheckout: propTypes.func.isRequired,
 };
 
 export default PurchasePopup;
