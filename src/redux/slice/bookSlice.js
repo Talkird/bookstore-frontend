@@ -44,7 +44,7 @@ export const deleteBook = createAsyncThunk("books/deleteBook", async (id) => {
   const response = await axios.delete(`${base_url}/delete/${id}`, {
     Authorization: `Bearer ${token}`,
   });
-  return response.data;
+  return {id: id};
 });
 
 const initialState = {

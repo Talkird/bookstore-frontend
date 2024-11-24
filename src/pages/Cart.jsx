@@ -15,13 +15,13 @@ function Cart() {
   const userId = getUserId();
 
   const updateTotal = () => {
-    const newTotal = cartItems?.reduce(
-      (acc, item) => acc + item.book.price * item.quantity,
-      0
-    ) || 0;
+    const newTotal =
+      cartItems?.reduce(
+        (acc, item) => acc + item.book.price * item.quantity,
+        0,
+      ) || 0;
     setTotal(newTotal);
   };
-  
 
   const handleCheckout = () => {
     console.log("Checkout completed");
@@ -46,17 +46,6 @@ function Cart() {
     updateTotal();
   }, [cartItems]);
 
-  if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-16 w-16 animate-spin rounded-full border-t-4 border-blue-500"></div>
-        <p className="ml-4 text-xl text-blue-700">
-          Cargando, por favor espera...
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="p-4">
       <div className="flex items-start justify-between">
@@ -72,10 +61,9 @@ function Cart() {
         </div>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {cartItems?.map((item) => (
-        <CartItem id={item.id} key={item.id} />
-      ))}
-
+        {cartItems?.map((item) => (
+          <CartItem id={item.id} key={item.id} />
+        ))}
       </div>
     </div>
   );
