@@ -8,12 +8,12 @@ import pluma from "../../assets/images/banner.png"
 const images = [
   {src:pluma,
     link:"/catalog"},
-  {src:"https://market2.livriz.com/storage/section/1/REVERTE%20A_LA%20ISLA%20DE%20LA%20MUJER%20DORMIDA_BANNER-CUSPIDE-1050X580.jpg",
-    link:"/catalog/product/La%20Isla%20de%20la%20Mujer%20Dormida"},
-  {src:"https://market2.livriz.com/storage/section/1/escape%20de%20viena.png",
-    link:"/catalog/product/Escape%20de%20Viena"},
-  {src:"https://market2.livriz.com/storage/section/1/Blackwater.jpg",
-    link:"/catalog?search=blackwater"},
+  {src:"https://market2.livriz.com/storage/section/1/jardin%20de%20noche.jpg",
+    link:"/catalog/product/Jardín%20de%20noche"},
+  {src:"https://market2.livriz.com/storage/section/1/hankang(1).jpg",
+    link:"/catalog?search=han%20kang"},
+  {src:"https://market2.livriz.com/storage/section/1/banner%20pack%20yarros.jpg",
+    link:"/catalog/product/Pack%20Alas%20de%20Sangre%20y%20Hierro"},
   
 ];
 

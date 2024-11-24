@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { getOrdersByUserId } from "../api/order";
+import { getOrdersByUserId } from "../redux/slice/orderSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../utils/token";
 import Order from "../components/order/Order";
 
 function Orders() {
-  const [orders, setOrders] = useState([]);
-
+  const {orders} = useSelector((state)=>state.orders);
+  const dispatch=useDispatch();
   useEffect(() => {
-    getOrdersByUserId(getUserId())
-      .then((orders) => setOrders(orders))
-      .catch((error) => console.error("Error getting orders:", error));
-  }, []);
+    dispatch(getOrdersByUserId(getUserId()))
+  }, [dispatch]);
+  console.log(orders);
 
   return (
     <div className="flex h-screen flex-col gap-8 bg-gray-100 p-12">

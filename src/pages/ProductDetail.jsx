@@ -6,15 +6,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Plus, Minus, Star, X, ShoppingCart } from "lucide-react";
 import Input from "../components/ui/Input";
 import { getUserId, getToken, getRole } from "../utils/token";
-import { addCartItem } from "../api/cart";
-import { getBooks } from "../api/book";
+import { addCartItem } from "../redux/slice/cartSlice";
+import { getBooks } from "../redux/slice/bookSlice";
 import { useState, useEffect } from "react";
 import { formatPeso } from "../utils/format";
 import ProductEditAdminPopup from "../components/administrador/ProductEditAdminPopup";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getRatings, createOrUpdateRating } from "../redux/slice/ratingSlice";
-
 
 const ProductDetail = () => {
   const { title } = useParams();
@@ -35,20 +33,20 @@ const ProductDetail = () => {
   const role = getRole();
 
   const navigate = useNavigate();
-  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
-
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [discount, setDiscount] = useState(0);
   const [isShippingPopupOpen, setIsShippingPopupOpen] = useState(false);
   const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
 
+  const { items: books, loading, error } = useSelector((state) => state.books);
   const { rating } = useSelector((state) => state.ratings);
   const dispatch = useDispatch();
-  
+
+  useEffect(() => {
+    dispatch(getBooks());
+  }, [dispatch]);
+
   const product = books.find(
     (book) => book.title === decodeURIComponent(title),
   );
@@ -59,23 +57,7 @@ const ProductDetail = () => {
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    getBooks()
-      .then((books) => {
-        setBooks(books);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error getting books:", error);
-        setError("Error fetching product data");
-        setLoading(false);
-      });
-
-  }, [books]);
-
   const handleAddToCart = () => {
-    console.log("User tried adding to cart.");
-
     const token = getToken();
     const userId = getUserId();
 
@@ -84,15 +66,16 @@ const ProductDetail = () => {
       return;
     }
 
-    addCartItem(userId, {
+    const item = {
+      userId,
       bookId: product.id,
       quantity: quantity,
-    });
+    };
 
-    // Mostrar confirmación
+    dispatch(addCartItem({ userId, cartItemRequest: item }));
+
     setShowConfirmation(true);
 
-    // Ocultar la confirmación después de 5 segundos
     setTimeout(() => {
       setShowConfirmation(false);
     }, 5000);
@@ -135,18 +118,24 @@ const ProductDetail = () => {
     ? product.price - product.price * (discount / 100)
     : 0;
 
-    const handleRating = (star) => {
-      const userId = getUserId();
-      if (!userId) return;
-      
-      const ratingRequest = {
-        userId: getUserId(),
-        bookId: product.id,
-        ratingValue: star,
-      };
+  const handleRating = (star) => {
+    const userId = getUserId();
+    if (!userId) return;
 
-      dispatch(createOrUpdateRating({ userId, bookId: product.id, ratingRequest: ratingRequest}));
+    const ratingRequest = {
+      userId: getUserId(),
+      bookId: product.id,
+      ratingValue: star,
     };
+
+    dispatch(
+      createOrUpdateRating({
+        userId,
+        bookId: product.id,
+        ratingRequest: ratingRequest,
+      }),
+    );
+  };
 
   const renderStars = () => {
     const stars = [];
@@ -262,7 +251,6 @@ const ProductDetail = () => {
             )}
           </div>
 
-          {/* Mostrar mensaje de confirmación como popup */}
           {showConfirmation && (
             <div className="fixed right-4 top-4 z-50 w-80 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg">
               <div className="flex items-center justify-between">

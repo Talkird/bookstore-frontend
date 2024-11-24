@@ -5,25 +5,12 @@ import ImageBanner from "../components/banners/ImageBanner";
 import BookSlider from "../components/bookslider/BookSlider";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getBooks } from "../api/book";
-//import toast from "react-hot-toast";
+import { getBooks } from "../redux/slice/bookSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function Home() {
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const data = await getBooks();
-        setBooks(data);
-        console.log(books);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      }
-    };
-
-    fetchBooks();
-  }, []);
+  const dispatch = useDispatch();
+  const { items: books, loading } = useSelector((state) => state.books);
 
   const navigate = useNavigate();
 
@@ -106,6 +93,21 @@ function Home() {
   const handleViewAllProducts = () => {
     navigate("/catalog");
   };
+
+  useEffect(() => {
+    dispatch(getBooks());
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-t-4 border-blue-500"></div>
+        <p className="ml-4 text-xl text-blue-700">
+          Cargando, por favor espera...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">
