@@ -243,7 +243,7 @@ const ProductDetail = () => {
 
             {isPopupOpen && (
               <ProductEditAdminPopup
-                product={{ id, title, author, price }}
+                product={product}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
                 onClose={togglePopup}

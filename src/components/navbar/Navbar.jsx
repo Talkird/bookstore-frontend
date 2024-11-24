@@ -8,8 +8,10 @@ import { ShoppingCart, User, LogOut } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
 import { isLoggedIn, clearLocalStorage } from "../../utils/token";
 import { logout } from "../../redux/slice/userSlice";
+import { getRole } from "../../utils/token";
 
 function Navbar() {
+  const role = getRole();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,7 +21,6 @@ function Navbar() {
 
   const { user } = useSelector((state) => state.user);
 
-
   const handleLogout = () => {
     const isConfirmed = window.confirm(
       "¿Estás seguro de que deseas cerrar sesión?",
@@ -28,7 +29,7 @@ function Navbar() {
       dispatch(logout());
       clearLocalStorage();
       navigate("/");
-     }
+    }
   };
 
   const categories = [
@@ -45,9 +46,8 @@ function Navbar() {
     { name: "DEPORTE", route: "/books/deporte" },
     { name: "ARTE", route: "/books/arte" },
     { name: "MÚSICA", route: "/books/musica" },
-    { name: "COCINA", route: "/books/cocina" }
+    { name: "COCINA", route: "/books/cocina" },
   ];
-
 
   return (
     <nav className="flex flex-col bg-background shadow-md">
@@ -71,9 +71,11 @@ function Navbar() {
           )}
           {isLoggedIn() && (
             <div className="flex items-center gap-12">
-              <NavbarLink to="/cart">
-                <ShoppingCart size={36} strokeWidth={1.5} />
-              </NavbarLink>
+              {role === "USER" && (
+                <NavbarLink to="/cart">
+                  <ShoppingCart size={36} strokeWidth={1.5} />
+                </NavbarLink>
+              )}
               <NavbarLink to="/account">
                 <User size={40} strokeWidth={1.5} />
               </NavbarLink>

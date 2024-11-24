@@ -6,20 +6,17 @@ import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { checkoutCart, clearCart } from "../../redux/slice/cartSlice";
 import { getUserId } from "../../utils/token";
-import { resetDiscount,applyDiscount } from "../../redux/slice/discountSlice";
+import { resetDiscount, applyDiscount } from "../../redux/slice/discountSlice";
 import { formatPeso } from "../../utils/format";
 import { useDispatch, useSelector } from "react-redux";
 
 const PurchasePopup = ({ cartItems = [] }) => {
-
   const dispatch = useDispatch();
-  const { discountAmount, loading, error } = useSelector((state) => state.discount);
-  
-  const totalPrice = cartItems?.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  ) || 0;
-  
+  const { discountAmount, loading, error } = useSelector(
+    (state) => state.discount,
+  );
+
+  const totalPrice = cartItems?.reduce((acc, item) => acc + item.price, 0) || 0;
 
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
@@ -34,7 +31,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
 
   const handleCheckout = (e) => {
     e.preventDefault();
-  
+
     const order = {
       userId: getUserId(),
       customer_name: name,
@@ -44,16 +41,14 @@ const PurchasePopup = ({ cartItems = [] }) => {
       payment_method: paymentMethod,
       discount_code: coupon,
       items: cartItems,
-    }
+    };
     dispatch(
       checkoutCart({ userId: getUserId(), orderRequest: order }),
-      clearCart(getUserId())
+      clearCart(getUserId()),
     );
 
     dispatch(resetDiscount());
-  }
-;
-
+  };
   useEffect(() => {
     if (error) {
       console.error("Error al aplicar descuento:", error);
@@ -107,7 +102,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
                           Cantidad: {item.quantity}
                         </p>
                         <p className="text-gray-600">
-                          {formatPeso(item.price * item.quantity)}
+                          {formatPeso(item.price)}
                         </p>
                       </div>
                     </div>
@@ -129,7 +124,9 @@ const PurchasePopup = ({ cartItems = [] }) => {
                 </p>
               )}
               {error && (
-                <p className="text-sm text-red-600">Error: No existe el descuento</p>
+                <p className="text-sm text-red-600">
+                  Error: No existe el descuento
+                </p>
               )}
             </div>
 
