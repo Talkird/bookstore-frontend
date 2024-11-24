@@ -10,12 +10,15 @@ import { applyDiscount } from "../../redux/slice/discountSlice";
 import { formatPeso } from "../../utils/format";
 import { useDispatch, useSelector } from "react-redux";
 
-const PurchasePopup = ({ cartItems }) => {
-  const dispatch = useDispatch();
+const PurchasePopup = ({ cartItems = [] }) => {
 
-  const { discountAmount, totalPriceWithDiscount } = useSelector(
-    (state) => state.discount
-  );
+  const dispatch = useDispatch();
+  
+  const totalPrice = cartItems?.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  ) || 0;
+  
 
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
@@ -23,36 +26,31 @@ const PurchasePopup = ({ cartItems }) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [coupon, setCoupon] = useState("");
+  const [totalPriceDiscount, setTotalPriceDiscount] = useState(totalPrice);
 
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.book.price * item.quantity,
-    0
-  );
+  const handleApplyDiscount = async (coupon) => {
 
-  const handleApplyDiscount = async () => {
-    const userId = getUserId();
-    try {
-      await dispatch(applyDiscount({ userId, coupon, totalPrice }));
-    } catch (error) {
-      console.error("Failed to apply discount", error);
-    }
+      const data = dispatch(applyDiscount(coupon, totalPrice));
+      console.log(data);
+      setTotalPriceDiscount(data);
   };
+  
 
   const handleCheckout = (e) => {
     e.preventDefault();
-    const userId = getUserId();
-
+  
+    const order = {
+      userId: getUserId(),
+      customer_name: name,
+      customer_email: email,
+      customer_phone: phone,
+      shipping_address: address,
+      payment_method: paymentMethod,
+      discount_code: coupon,
+      items: cartItems,
+    }
     dispatch(
-      checkoutCart({
-        userId,
-        customerName: name,
-        customerEmail: email,
-        customerPhone: phone,
-        shippingAddress: address,
-        paymentMethod,
-        discountCode: coupon,
-        items: cartItems,
-      })
+      checkoutCart({ userId: getUserId(), orderRequest: order })
     );
   };
 
@@ -103,7 +101,7 @@ const PurchasePopup = ({ cartItems }) => {
                           Cantidad: {item.quantity}
                         </p>
                         <p className="text-gray-600">
-                          {formatPeso(item.book.price * item.quantity)}
+                          ${(item.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -117,11 +115,11 @@ const PurchasePopup = ({ cartItems }) => {
                 Resumen de Compra
               </h2>
               <p className="text-lg font-semibold text-gray-800">
-                Total Original: {formatPeso(totalPrice)}
+                Total Original: ${totalPrice.toLocaleString()}
               </p>
-              {discountAmount > 0 && (
+              {totalPrice !== totalPriceDiscount && totalPriceDiscount !== 0 && (
                 <p className="text-lg font-semibold text-green-800">
-                  Total con descuento: {formatPeso(totalPriceWithDiscount)}
+                    Total con descuento: ${totalPriceDiscount.toLocaleString()}
                 </p>
               )}
             </div>
@@ -134,10 +132,11 @@ const PurchasePopup = ({ cartItems }) => {
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
                 />
-                <Button onClick={handleApplyDiscount}>
+                <Button onClick={() => handleApplyDiscount(coupon)}>
                   Aplicar cupón
                 </Button>
               </div>
+
             </div>
 
             <h2 className="mb-2 mt-6 text-lg font-bold text-gray-800">
@@ -153,7 +152,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Nombre:
                 </label>
                 <Input
-                  value={name}
+                  variable={name}
                   onChange={(e) => setName(e.target.value)}
                   type="text"
                   id="name"
@@ -166,7 +165,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Correo Electrónico:
                 </label>
                 <Input
-                  value={email}
+                  variable={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   id="email"
@@ -179,7 +178,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Teléfono:
                 </label>
                 <Input
-                  value={phone}
+                  variable={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   type="tel"
                   id="phone"
@@ -192,7 +191,7 @@ const PurchasePopup = ({ cartItems }) => {
                   Dirección de Envío:
                 </label>
                 <Input
-                  value={address}
+                  variable={address}
                   onChange={(e) => setAddress(e.target.value)}
                   type="text"
                   id="address"

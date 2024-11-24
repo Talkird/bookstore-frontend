@@ -14,12 +14,13 @@ function Cart() {
   const dispatch = useDispatch();
 
   const updateTotal = () => {
-    const newTotal = cartItems.reduce(
+    const newTotal = cartItems?.reduce(
       (acc, item) => acc + item.book.price * item.quantity,
-      0,
-    );
+      0
+    ) || 0;
     setTotal(newTotal);
   };
+  
 
   const handleCheckout = () => {
     console.log("Checkout completed");
@@ -72,9 +73,10 @@ function Cart() {
         </div>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {cartItems.map((item) => (
-          <CartItem id={item.id} key={item.id} />
-        ))}
+      {cartItems?.map((item) => (
+        <CartItem id={item.id} key={item.id} />
+      ))}
+
       </div>
     </div>
   );
