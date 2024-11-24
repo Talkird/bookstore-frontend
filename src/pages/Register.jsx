@@ -1,6 +1,6 @@
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { register } from "../redux/slice/userSlice";
 import toast from "react-hot-toast";
@@ -11,6 +11,9 @@ function Register() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+  const { token, error: registerError } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
@@ -35,7 +38,12 @@ function Register() {
     if (!validateInput()) {
       return;
     }
-    dispatch(register({ name, userEmail: email, password }));
+    const resultAction = await dispatch(register({ name, userEmail: email, password }));
+    if (register.fulfilled.match(resultAction)) {
+      navigate("/");
+    } else if (register.rejected.match(resultAction)) {
+      setError("Error al registrarse. Por favor, inténtelo de nuevo.");
+    }
   };
 
   return (
