@@ -2,17 +2,18 @@ import Popup from "reactjs-popup";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
 import propTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { checkoutCart, clearCart } from "../../redux/slice/cartSlice";
 import { getUserId } from "../../utils/token";
-import { applyDiscount } from "../../redux/slice/discountSlice";
+import { resetDiscount,applyDiscount } from "../../redux/slice/discountSlice";
 import { formatPeso } from "../../utils/format";
 import { useDispatch, useSelector } from "react-redux";
 
 const PurchasePopup = ({ cartItems = [] }) => {
 
   const dispatch = useDispatch();
+  const { discountAmount, loading, error } = useSelector((state) => state.discount);
   
   const totalPrice = cartItems?.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -26,15 +27,10 @@ const PurchasePopup = ({ cartItems = [] }) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [coupon, setCoupon] = useState("");
-  const [totalPriceDiscount, setTotalPriceDiscount] = useState(totalPrice);
 
-  const handleApplyDiscount = async (coupon) => {
-
-      const data = dispatch(applyDiscount(coupon, totalPrice));
-      console.log(data);
-      setTotalPriceDiscount(data);
+  const handleApplyDiscount = () => {
+    dispatch(applyDiscount({ discountCode: coupon, totalPrice }));
   };
-  
 
   const handleCheckout = (e) => {
     e.preventDefault();
@@ -53,8 +49,17 @@ const PurchasePopup = ({ cartItems = [] }) => {
       checkoutCart({ userId: getUserId(), orderRequest: order }),
       clearCart(getUserId())
     );
-  };
-  
+
+    dispatch(resetDiscount());
+  }
+;
+
+  useEffect(() => {
+    if (error) {
+      console.error("Error al aplicar descuento:", error);
+    }
+  }, [error]);
+
   return (
     <Popup
       trigger={<Button className="rounded text-white">Comprar</Button>}
@@ -102,7 +107,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
                           Cantidad: {item.quantity}
                         </p>
                         <p className="text-gray-600">
-                          ${(item.price * item.quantity).toLocaleString()}
+                          {formatPeso(item.price * item.quantity)}
                         </p>
                       </div>
                     </div>
@@ -116,12 +121,15 @@ const PurchasePopup = ({ cartItems = [] }) => {
                 Resumen de Compra
               </h2>
               <p className="text-lg font-semibold text-gray-800">
-                Total Original: ${totalPrice.toLocaleString()}
+                Total Original: {formatPeso(totalPrice)}
               </p>
-              {totalPrice !== totalPriceDiscount && totalPriceDiscount !== 0 && (
+              {discountAmount > 0 && (
                 <p className="text-lg font-semibold text-green-800">
-                    Total con descuento: ${totalPriceDiscount.toLocaleString()}
+                  Total con descuento: {formatPeso(totalPrice - discountAmount)}
                 </p>
+              )}
+              {error && (
+                <p className="text-sm text-red-600">Error: No existe el descuento</p>
               )}
             </div>
 
@@ -133,11 +141,13 @@ const PurchasePopup = ({ cartItems = [] }) => {
                   value={coupon}
                   onChange={(e) => setCoupon(e.target.value)}
                 />
-                <Button onClick={() => handleApplyDiscount(coupon)}>
-                  Aplicar cupón
+                <Button
+                  onClick={handleApplyDiscount}
+                  disabled={loading || !coupon}
+                >
+                  {loading ? "Aplicando..." : "Aplicar cupón"}
                 </Button>
               </div>
-
             </div>
 
             <h2 className="mb-2 mt-6 text-lg font-bold text-gray-800">
@@ -153,7 +163,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
                   Nombre:
                 </label>
                 <Input
-                  variable={name}
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                   type="text"
                   id="name"
@@ -166,7 +176,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
                   Correo Electrónico:
                 </label>
                 <Input
-                  variable={email}
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   id="email"
@@ -179,7 +189,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
                   Teléfono:
                 </label>
                 <Input
-                  variable={phone}
+                  value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   type="tel"
                   id="phone"
@@ -192,7 +202,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
                   Dirección de Envío:
                 </label>
                 <Input
-                  variable={address}
+                  value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   type="text"
                   id="address"
@@ -231,6 +241,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
 
 PurchasePopup.propTypes = {
   cartItems: propTypes.array.isRequired,
+  onCheckout: propTypes.func.isRequired,
 };
 
 export default PurchasePopup;

@@ -10,6 +10,7 @@ function Orders() {
   useEffect(() => {
     dispatch(getOrdersByUserId(getUserId()))
   }, [dispatch]);
+  console.log(orders);
 
   return (
     <div className="flex h-screen flex-col gap-8 bg-gray-100 p-12">
