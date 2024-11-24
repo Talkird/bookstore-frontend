@@ -112,7 +112,7 @@ function Navbar() {
           <NavbarLink to="/contact">Contacto</NavbarLink>
           <NavbarLink to="/faq">Preguntas Frecuentes</NavbarLink>
           <NavbarLink to="/quienes-somos">Quiénes Somos</NavbarLink>
-          {isLoggedIn() && <NavbarLink to="/orders">Mis Órdenes</NavbarLink>}
+          {isLoggedIn() && role==="USER" && <NavbarLink to="/orders">Mis Órdenes</NavbarLink>}
         </div>
 
         <div className="flex items-center gap-3">

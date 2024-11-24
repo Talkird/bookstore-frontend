@@ -25,8 +25,9 @@ function BookSlider({ title, books }) {
     prevArrow: <SliderArrow arrowDirection="left" />,
     adaptiveHeight: true,
     customPaging: (i) => (
-      <div className="w-3 h-3 bg-blue-300 rounded-full hover:bg-blue-700"></div>
+      <div className="mt-9 w-3 h-3 bg-blue-300 rounded-full hover:bg-blue-700"></div>
     ),
+    
   };
 
   const handleClick = (bookTitle) => {
