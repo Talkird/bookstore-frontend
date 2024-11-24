@@ -67,7 +67,7 @@ export const deleteCartItem = createAsyncThunk("cart/deleteCartItem", async ({ u
       } else {
         toast.error("Error eliminando item del carrito");
       }
-    return response.data;
+    return cartItemId;
 });
 
 export const checkoutCart = createAsyncThunk("cart/checkoutCart", async ({ userId, orderRequest }) => {
@@ -105,7 +105,7 @@ const cartSlice = createSlice({
             state.error = null;
         })
         .addCase(getCart.fulfilled, (state, action) => {
-            state.items = action.payload.items;
+            state.items = action.payload;
             state.loading = false;
         })
         .addCase(getCart.rejected, (state, action) => {

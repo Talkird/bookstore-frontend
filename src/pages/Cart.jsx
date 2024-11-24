@@ -12,6 +12,7 @@ function Cart() {
   const { items: cartItems, loading } = useSelector((state) => state.cart);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
+  const userId = getUserId();
 
   const updateTotal = () => {
     const newTotal = cartItems?.reduce(
@@ -28,7 +29,6 @@ function Cart() {
   };
 
   const handleClearCart = async () => {
-    const userId = getUserId();
     const confirmClear = window.confirm(
       "¿Estás seguro de que deseas vaciar el carrito?",
     );
@@ -39,7 +39,6 @@ function Cart() {
   };
 
   useEffect(() => {
-    const userId = getUserId();
     dispatch(getCart(userId));
   }, [dispatch]);
 

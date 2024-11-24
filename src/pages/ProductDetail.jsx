@@ -68,11 +68,11 @@ const ProductDetail = () => {
 
     const item = {
       userId,
-      bookId: id,
-      quantity: 1,
+      bookId: product.id,
+      quantity: quantity,
     };
 
-    dispatch(addCartItem({ userId, item }));
+    dispatch(addCartItem({ userId, cartItemRequest: item }));
 
     setShowConfirmation(true);
 

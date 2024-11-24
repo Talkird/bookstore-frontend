@@ -61,7 +61,7 @@ function Product({
         bookId: id,
         quantity: 1,
       };
-      await dispatch(addCartItem({ userId, item }));
+      await dispatch(addCartItem({ userId, cartItemRequest: item }));
 
       setShowConfirmation(true);
 

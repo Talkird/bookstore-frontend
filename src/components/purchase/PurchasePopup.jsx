@@ -4,7 +4,7 @@ import Input from "../ui/Input";
 import propTypes from "prop-types";
 import { useState } from "react";
 import { X } from "lucide-react";
-import { checkoutCart } from "../../redux/slice/cartSlice";
+import { checkoutCart, clearCart } from "../../redux/slice/cartSlice";
 import { getUserId } from "../../utils/token";
 import { applyDiscount } from "../../redux/slice/discountSlice";
 import { formatPeso } from "../../utils/format";
@@ -50,10 +50,11 @@ const PurchasePopup = ({ cartItems = [] }) => {
       items: cartItems,
     }
     dispatch(
-      checkoutCart({ userId: getUserId(), orderRequest: order })
+      checkoutCart({ userId: getUserId(), orderRequest: order }),
+      clearCart(getUserId())
     );
   };
-
+  
   return (
     <Popup
       trigger={<Button className="rounded text-white">Comprar</Button>}
