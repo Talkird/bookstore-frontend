@@ -125,7 +125,7 @@ const PurchasePopup = ({ cartItems = [] }) => {
               </p>
               {discountAmount > 0 && (
                 <p className="text-lg font-semibold text-green-800">
-                  Total con descuento: {formatPeso(totalPrice - discountAmount)}
+                  Total con descuento: {formatPeso(discountAmount)}
                 </p>
               )}
               {error && (
