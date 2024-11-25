@@ -1,19 +1,36 @@
 import { useState, useEffect } from "react";
-import { getOrdersByUserId } from "../api/order";
+import { getOrdersByUserId } from "../redux/slice/orderSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../utils/token";
 import Order from "../components/order/Order";
+import { useNavigate } from "react-router-dom";
 
 function Orders() {
-  const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
+  const {orders} = useSelector((state)=>state.orders);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getOrdersByUserId(getUserId())
-      .then((orders) => setOrders(orders))
-      .catch((error) => console.error("Error getting orders:", error));
-  }, []);
+    dispatch(getOrdersByUserId(getUserId()))
+  }, [dispatch]);
+  
+  if (!orders || orders.length === 0) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center bg-gray-100 p-12">
+        <h1 className="mb-4 text-3xl font-bold text-gray-800">Mis Órdenes</h1>
+        <p className="text-lg text-gray-600">Aún no has realizado ninguna orden.</p>
+        <button
+          className="mt-6 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+          onClick={() => navigate("/")} 
+        >
+          Volver a la Tienda
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex h-screen flex-col gap-8 bg-gray-100 p-12">
+    <div className="flex h-auto flex-col gap-8 bg-gray-100 p-12">
       <h1 className="mb-8 rounded-md text-center text-5xl font-bold text-gray-800">
         Mis Órdenes
       </h1>

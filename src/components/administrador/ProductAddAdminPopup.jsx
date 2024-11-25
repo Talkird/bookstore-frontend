@@ -3,9 +3,11 @@ import Popup from "reactjs-popup";
 import { X } from "lucide-react";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import { addBook } from "../../api/book";
+import { useDispatch } from "react-redux";
+import { addBook } from "../../redux/slice/bookSlice";
 
 const ProductAddAdminPopup = () => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("titulo");
   const [author, setAuthor] = useState("author");
   const [isbn, setIsbn] = useState(0);
@@ -31,7 +33,7 @@ const ProductAddAdminPopup = () => {
       imagePath: imageUrl,
     };
 
-    addBook(bookRequest);
+    dispatch(addBook(bookRequest));
   };
 
   return (

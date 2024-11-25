@@ -1,70 +1,50 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import CartItem from "../components/cart/CartItem";
 import { formatPeso } from "../utils/format";
 import BackButton from "../components/ui/BackButton";
 import PurchasePopup from "../components/purchase/PurchasePopup";
-import { getCart, clearCart } from "../api/cart"; 
+import { getCart, clearCart } from "../redux/slice/cartSlice";
 import { getUserId } from "../utils/token";
-import Button from "../components/ui/Button"; 
+import Button from "../components/ui/Button";
+import { useDispatch, useSelector } from "react-redux";
 
 function Cart() {
-  const [cartItems, setCartItems] = useState([]);
+  const { items: cartItems, loading } = useSelector((state) => state.cart);
   const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    const userId = getUserId();
-    getCart(userId)
-      .then((fetchedCartItems) => {
-        setCartItems(fetchedCartItems);
-      })
-      .catch((error) => console.error("Error getting cart:", error));
-  }, []);
-
-  useEffect(() => {
-    updateTotal();
-  }, [cartItems]);
+  const dispatch = useDispatch();
+  const userId = getUserId();
 
   const updateTotal = () => {
-    const newTotal = cartItems.reduce(
-      (acc, item) => acc + item.book.price * item.quantity,
-      0
-    );
+    const newTotal =
+      cartItems?.reduce(
+        (acc, item) => acc + item.book.price * item.quantity,
+        0,
+      ) || 0;
     setTotal(newTotal);
-  };
-
-  const handleRemoveItem = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-  };
-
-  const handleQuantityChange = (itemId, newQuantity) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
-    );
   };
 
   const handleCheckout = () => {
     console.log("Checkout completed");
-    setCartItems([]);
     setTotal(0);
   };
 
   const handleClearCart = async () => {
-    const userId = getUserId();
-    const confirmClear = window.confirm("¿Estás seguro de que deseas vaciar el carrito?");
+    const confirmClear = window.confirm(
+      "¿Estás seguro de que deseas vaciar el carrito?",
+    );
     if (!confirmClear) {
       return;
     }
-
-    try {
-      await clearCart(userId);
-      setCartItems([]);
-      setTotal(0);
-    } catch (error) {
-      console.error("Error clearing cart:", error);
-    }
+    dispatch(clearCart(userId));
   };
+
+  useEffect(() => {
+    dispatch(getCart(userId));
+  }, [dispatch]);
+
+  useEffect(() => {
+    updateTotal();
+  }, [cartItems]);
 
   return (
     <div className="p-4">
@@ -81,18 +61,8 @@ function Cart() {
         </div>
       </div>
       <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {cartItems.map((item) => (
-          <CartItem
-            id={item.id}
-            bookId={item.book.id}
-            key={item.id}
-            image={item.book.imagePath}
-            title={item.book.title}
-            price={item.book.price}
-            initialQuantity={item.quantity}
-            onRemove={handleRemoveItem}
-            onQuantityChange={handleQuantityChange}
-          />
+        {cartItems?.map((item) => (
+          <CartItem id={item.id} key={item.id} />
         ))}
       </div>
     </div>

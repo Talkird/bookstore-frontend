@@ -1,25 +1,33 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
 import NavbarSearch from "./NavbarSearch";
 import { ShoppingCart, User, LogOut } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
 import { isLoggedIn, clearLocalStorage } from "../../utils/token";
+import { logout } from "../../redux/slice/userSlice";
+import { getRole } from "../../utils/token";
 
 function Navbar() {
+  const role = getRole();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCategoryClick = (categoryRoute) => {
     navigate(categoryRoute);
   };
+
+  const { user } = useSelector((state) => state.user);
 
   const handleLogout = () => {
     const isConfirmed = window.confirm(
       "¿Estás seguro de que deseas cerrar sesión?",
     );
     if (isConfirmed) {
+      dispatch(logout());
       clearLocalStorage();
-
       navigate("/");
     }
   };
@@ -38,7 +46,7 @@ function Navbar() {
     { name: "DEPORTE", route: "/books/deporte" },
     { name: "ARTE", route: "/books/arte" },
     { name: "MÚSICA", route: "/books/musica" },
-    { name: "COCINA", route: "/books/cocina" }
+    { name: "COCINA", route: "/books/cocina" },
   ];
 
   return (
@@ -63,9 +71,11 @@ function Navbar() {
           )}
           {isLoggedIn() && (
             <div className="flex items-center gap-12">
-              <NavbarLink to="/cart">
-                <ShoppingCart size={36} strokeWidth={1.5} />
-              </NavbarLink>
+              {role === "USER" && (
+                <NavbarLink to="/cart">
+                  <ShoppingCart size={36} strokeWidth={1.5} />
+                </NavbarLink>
+              )}
               <NavbarLink to="/account">
                 <User size={40} strokeWidth={1.5} />
               </NavbarLink>
@@ -102,7 +112,7 @@ function Navbar() {
           <NavbarLink to="/contact">Contacto</NavbarLink>
           <NavbarLink to="/faq">Preguntas Frecuentes</NavbarLink>
           <NavbarLink to="/quienes-somos">Quiénes Somos</NavbarLink>
-          {isLoggedIn() && <NavbarLink to="/orders">Mis Órdenes</NavbarLink>}
+          {isLoggedIn() && role==="USER" && <NavbarLink to="/orders">Mis Órdenes</NavbarLink>}
         </div>
 
         <div className="flex items-center gap-3">

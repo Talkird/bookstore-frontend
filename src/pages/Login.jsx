@@ -1,13 +1,20 @@
+
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { login } from "../api/user";
+import { login } from "../redux/slice/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token, error: loginError } = useSelector((state) => state.user);
 
   const validateInput = () => {
     if (!email || !password) {
@@ -30,8 +37,12 @@ function Login() {
     if (!validateInput()) {
       return;
     }
-
-    const response = await login(email, password);
+    const resultAction = await dispatch(login({ userEmail: email, password }));
+    if (login.fulfilled.match(resultAction)) {
+      navigate("/");
+    } else if (login.rejected.match(resultAction)) {
+      setError("Error al iniciar sesión. Por favor, inténtelo de nuevo.");
+    }
   };
 
   return (

@@ -2,22 +2,43 @@ import { useParams } from "react-router-dom";
 import Product from "../components/product/Product";
 import { useState, useEffect } from "react";
 import BackButton from "../components/ui/BackButton";
-import { getBooks } from "../api/book";
+import { getBooks } from "../redux/slice/bookSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function CategoryPage() {
+  const dispatch = useDispatch();
   const { category } = useParams();
-
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    getBooks()
-      .then((books) => setBooks(books))
-      .catch((error) => console.error("Error getting books:", error));
-  }, []);
+  const { items: books, loading, error } = useSelector((state) => state.books);
 
   const filteredBooks = books.filter(
     (book) => book.genre.toLowerCase() === decodeURIComponent(category),
   );
+
+  useEffect(() => {
+    dispatch(getBooks());
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-t-4 border-blue-500"></div>
+        <p className="ml-4 text-xl text-blue-700">
+          Cargando, por favor espera...
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-8 text-center">
+        <h2 className="mb-2 text-2xl font-semibold text-red-600">
+          ¡Ups! Algo salió mal.
+        </h2>
+        <p className="text-lg text-gray-700">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">

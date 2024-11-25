@@ -5,7 +5,8 @@ import { ShoppingCart, X } from "lucide-react";
 import { formatPeso } from "../../utils/format";
 import { useNavigate } from "react-router-dom";
 import { getUserId, getToken, getRole } from "../../utils/token";
-import { addCartItem } from "../../api/cart";
+import { useDispatch } from "react-redux";
+import { addCartItem } from "../../redux/slice/cartSlice";
 import ProductEditAdminPopup from "../administrador/ProductEditAdminPopup";
 
 function Product({
@@ -20,7 +21,10 @@ function Product({
   year,
 }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleEdit = (productId, updatedData) => {
     console.log("Producto editado:", productId, updatedData);
@@ -35,13 +39,12 @@ function Product({
   };
 
   const role = getRole();
-  const [showConfirmation, setShowConfirmation] = useState(false); // Estado para mostrar la confirmación
 
   const handleClick = () => {
     navigate(`/catalog/product/${encodeURIComponent(title)}`);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     console.log("User tried adding to cart.");
 
     const token = getToken();
@@ -52,18 +55,22 @@ function Product({
       return;
     }
 
-    addCartItem(userId, {
-      bookId: id,
-      quantity: 1,
-    });
+    try {
+      const item = {
+        userId,
+        bookId: id,
+        quantity: 1,
+      };
+      await dispatch(addCartItem({ userId, cartItemRequest: item }));
 
-    // Mostrar confirmación
-    setShowConfirmation(true);
+      setShowConfirmation(true);
 
-    // Ocultar la confirmación después de 5 segundos
-    setTimeout(() => {
-      setShowConfirmation(false);
-    }, 5000);
+      setTimeout(() => {
+        setShowConfirmation(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
+    }
   };
 
   return (
@@ -123,7 +130,7 @@ function Product({
           )}
         </div>
       </div>
-      {/* Mostrar mensaje de confirmación como popup */}
+      {/* Show confirmation as popup */}
       {showConfirmation && (
         <div className="fixed right-4 top-4 z-50 w-80 rounded-lg border-2 border-gray-200 bg-white p-4 shadow-lg">
           <div className="flex items-center justify-between">

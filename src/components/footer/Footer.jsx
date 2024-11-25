@@ -76,8 +76,8 @@ function Footer() {
           Legal
           <Scale size={16} />
         </FooterTitle>
-        <FooterLink to="/">Términos y Condiciones</FooterLink>
-        <FooterLink to="/">Política de Privacidad</FooterLink>
+        <FooterLink>Términos y Condiciones</FooterLink>
+        <FooterLink>Política de Privacidad</FooterLink>
       </div>
 
       <div className="flex flex-col items-center">

@@ -7,11 +7,13 @@ import Button from "../ui/Button";
 import { ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getUserId, getToken } from "../../utils/token";
-import { addCartItem } from "../../api/cart";
+import { addCartItem } from "../../redux/slice/cartSlice";
 import { formatPeso } from "../../utils/format";
+import { useDispatch } from "react-redux";
 
 function BookSlider({ title, books }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const settings = {
     dots: true,
@@ -23,16 +25,15 @@ function BookSlider({ title, books }) {
     prevArrow: <SliderArrow arrowDirection="left" />,
     adaptiveHeight: true,
     customPaging: (i) => (
-      <div className="w-3 h-3 bg-blue-300 rounded-full hover:bg-blue-700"></div>
+      <div className="mt-9 w-3 h-3 bg-blue-300 rounded-full hover:bg-blue-700"></div>
     ),
+    
   };
 
-  // Manejar clic en la imagen o título del libro para redirigir
   const handleClick = (bookTitle) => {
     navigate(`/catalog/product/${encodeURIComponent(bookTitle)}`);
   };
 
-  // Manejar agregar al carrito
   const handleAddToCart = (bookId) => {
     console.log("User tried adding to cart.");
     const token = getToken();
@@ -43,10 +44,15 @@ function BookSlider({ title, books }) {
       return;
     }
 
-    addCartItem(userId, {
-      bookId: bookId,
-      quantity: 1,
-    });
+    dispatch(
+      addCartItem({
+        userId: userId,
+        cartItemRequest: {
+          bookId: bookId,
+          quantity: 1,
+        },
+      }),
+    );
   };
 
   return (
