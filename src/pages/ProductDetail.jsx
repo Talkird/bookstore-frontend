@@ -3,7 +3,7 @@ import BackButton from "../components/ui/BackButton";
 import ShippingPopup from "../components/shippingPopup/ShippingPopup";
 import PaymentPopup from "../components/payment/PaymentPopup";
 import { useParams, useNavigate } from "react-router-dom";
-import { Plus, Minus, Star, X, ShoppingCart } from "lucide-react";
+import { Plus, Minus, Star, X } from "lucide-react";
 import Input from "../components/ui/Input";
 import { getUserId, getToken, getRole } from "../utils/token";
 import { addCartItem } from "../redux/slice/cartSlice";
@@ -45,7 +45,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     dispatch(getBooks());
-  }, [dispatch]);
+  }, [dispatch, rating]);
 
   const product = books.find(
     (book) => book.title === decodeURIComponent(title),
@@ -145,20 +145,12 @@ const ProductDetail = () => {
           key={i}
           size={40}
           onClick={() => handleRating(i)}
-          className={`cursor-pointer ${i <= rating ? "text-yellow-500" : "text-gray-400"}`}
+          className={`cursor-pointer ${i <= rating.rating ? "text-yellow-500" : "text-gray-400"}`}
         />,
       );
     }
     return stars;
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   if (!product) {
     return <div>Product not found</div>;
