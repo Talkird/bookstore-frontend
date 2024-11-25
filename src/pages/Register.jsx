@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { register } from "../redux/slice/userSlice";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -13,8 +13,6 @@ function Register() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { token, error: registerError } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
 
   const validateInput = () => {
