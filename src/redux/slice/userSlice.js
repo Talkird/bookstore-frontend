@@ -6,22 +6,15 @@ const base_url = "http://localhost:8080/api/v1/auth";
 
 export const login = createAsyncThunk('user/login', async ({ userEmail, password }, { rejectWithValue }) => {
   try {
-    // Send a POST request to the authentication endpoint
     const response = await axios.post(`${base_url}/authenticate`, { email: userEmail, password });
-    
-    // Destructure the response data to extract authentication details
     const { access_token, user_id, email, role } = response.data;
     
-    // Display a success message
     toast.success("Inicio de sesión exitoso");
     
-    // Return the extracted attributes
     return { access_token, user_id, email, role };
   } catch (error) {
-    // Display an error message
     toast.error("Error al iniciar sesión");
     
-    // Return the error response data
     return rejectWithValue(error.response.data);
   }
 });
