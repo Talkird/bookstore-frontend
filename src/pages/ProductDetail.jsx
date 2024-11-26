@@ -197,10 +197,15 @@ const ProductDetail = () => {
           <p className="mb-4 text-4xl font-semibold text-green-600">
             ${finalPrice.toLocaleString()}
           </p>
+
           <p className="mb-6 text-2xl text-primary">Stock: {product.stock}</p>
 
+          {product.stock === 0 && role === "USER" && (
+            <p className="text-xl font-semibold text-red-500">Agotado</p>
+          )}
+
           <div className="mb-6 flex items-center">
-            {role === "USER" && (
+            {role === "USER" && product.stock !== 0 && (
               <>
                 <Button className="quantity-button" onClick={decreaseQuantity}>
                   <Minus size={16} />

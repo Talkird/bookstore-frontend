@@ -94,7 +94,7 @@ function Product({
         </div>
 
         <div className="flex justify-center">
-          {role === "USER" && (
+          {role === "USER" && stock !== 0 && (
             <Button
               onClick={handleAddToCart}
               className="mt-2 flex items-center gap-4 px-4 py-2 text-lg"
@@ -103,6 +103,15 @@ function Product({
               Añadir
             </Button>
           )}
+
+          {role === "USER" && stock === 0 &&  (
+            <p
+              className="mt-2 flex font-semibold items-center gap-4 px-4 py-2 text-xl text-red-500 bg-red-300 rounded-md bg-opacity-25"
+            >
+              Agotado
+            </p>
+          )}
+
 
           {role === "ADMIN" && (
             <Button
