@@ -9,7 +9,7 @@ function Contact() {
         <BackButton />
       </div>
       <div className="mx-auto mb-10 flex flex-col items-center p-8 ">
-        <h1 className="mb-12 text-center text-5xl font-extrabold text-gray-800">
+        <h1 className="mb-4 text-center text-5xl font-extrabold text-gray-800">
           Contacto
         </h1>
 

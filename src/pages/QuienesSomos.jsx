@@ -3,7 +3,7 @@ import BackButton from "../components/ui/BackButton";
 
 function QuienesSomos() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-4xl p-8 rounded-md shadow-lg m-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <BackButton />
@@ -15,8 +15,8 @@ function QuienesSomos() {
           - <span className="text-gray-400">Quienes Somos</span>
         </nav>
       </div>
-      <div className="bg-primary-600 text-primary-100 mb-8 rounded-lg py-8 text-center shadow-lg">
-        <h1 className="text-5xl font-bold">Quiénes Somos</h1>
+      <div className="bg-primary-600 text-primary-100 mb-8 rounded-lg py-8 text-center">
+        <h1 className="text-5xl text-center font-extrabold text-gray-800">Quiénes Somos</h1>
       </div>
       <div className="text-lg leading-relaxed">
         <p className="mb-6 text-justify">

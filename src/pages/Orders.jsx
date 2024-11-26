@@ -5,6 +5,7 @@ import { getUserId } from "../utils/token";
 import Order from "../components/order/Order";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/ui/BackButton";
+import Button from "../components/ui/Button";
 
 function Orders() {
   const navigate = useNavigate();
@@ -20,12 +21,12 @@ function Orders() {
       <div className="flex h-screen flex-col items-center justify-center bg-gray-100 p-12">
         <h1 className="mb-4 text-3xl font-bold text-gray-800">Mis Órdenes</h1>
         <p className="text-lg text-gray-600">Aún no has realizado ninguna orden.</p>
-        <button
-          className="mt-6 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+        <Button
+          className="mt-6"
           onClick={() => navigate("/")} 
         >
           Volver a la Tienda
-        </button>
+        </Button>
       </div>
     );
   }

@@ -62,8 +62,8 @@ function Testimonials() {
   }, []);
 
   return (
-    <div className="mt-8 w-full">
-      <h2 className="mb-6 text-center text-3xl font-bold">
+    <div className="mt-12 w-full">
+      <h2 className="mb-6 text-center text-4xl font-extrabold text-gray-800">
         Testimonios de clientes
       </h2>
       <div className="relative mx-auto flex w-full max-w-3xl items-center">

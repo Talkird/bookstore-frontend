@@ -3,26 +3,26 @@ import BackButton from "../components/ui/BackButton";
 
 function ComoComprar() {
   return (
-    <div className="max-w-4xl mx-auto p-8">
+    <div className="max-w-4xl mx-auto p-8 shadow-lg rounded-xl m-12">
       {/* Encabezado */}
-      
       <div className="flex justify-between items-center mb-6">
       <div>
           <BackButton /> 
         </div>
         <nav className="text-gray-500">
           {/* Enlace a Inicio */}
-          <Link to="/" className="hover:text-primary">Home</Link> - <span className="text-gray-400">Cómo Comprar</span>
+          <Link to="/" className="hover:text-primary">Home</Link> - <span className="text-gray-800">Cómo Comprar</span>
         </nav>
       </div>
+
       <div className="max-w-4xl mx-auto py-3 px-2">
-        <div className="bg-primary-600 text-primary-100 text-center py-8 mb-8 rounded-lg shadow-lg">
-          <h1 className="text-5xl font-bold">Cómo Comprar</h1>
+        <div className="bg-primary-600 text-primary-100 text-center py-8 rounded-lg">
+          <h1 className="text-5xl text-gray-800 font-bold">Cómo Comprar</h1>
         </div>
       </div>
 
       {/* Contenido del cuerpo */}
-      <div className="bg-white p-3 shadow-md rounded-md">
+      <div className="bg-white p-4 rounded-md ">
         <ol className="list-decimal list-inside text-lg leading-relaxed">
           <li className="mb-6">
             Si ya tenés un usuario creado ingresá en "Iniciar Sesión." Si todavía no te registraste, hacé clic en "Crear cuenta" 
@@ -44,7 +44,7 @@ function ComoComprar() {
           </li>
         </ol>
       </div>
-    </div>
+      </div>
   );
 }
 

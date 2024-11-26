@@ -32,7 +32,7 @@ function Faq() {
       <div className="flex justify-start">
         <BackButton />
       </div>
-      <h1 className="mb-8 text-center text-5xl font-bold">
+      <h1 className="mb-12 text-center text-5xl font-extrabold text-gray-800">
         Preguntas Frecuentes
       </h1>
       <div className="mt-6 space-y-4">
