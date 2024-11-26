@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 
 const base_url = "http://localhost:8080/api/v1/auth";
 
-export const loginUser = createAsyncThunk('user/login', async ({ userEmail, password }, { rejectWithValue }) => {
+export const login = createAsyncThunk('user/login', async ({ userEmail, password }, { rejectWithValue }) => {
   try {
     // Send a POST request to the authentication endpoint
     const response = await axios.post(`${base_url}/authenticate`, { email: userEmail, password });
