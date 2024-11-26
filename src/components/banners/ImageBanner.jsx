@@ -27,6 +27,9 @@ function ImageBanner() {
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: true,
+    customPaging: (i) => (
+      <div className="mt-5 w-3 h-3 bg-blue-300 rounded-full hover:bg-blue-700"></div>
+    ),
   };
 
   return (

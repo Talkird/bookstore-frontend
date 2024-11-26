@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserId } from "../utils/token";
 import Order from "../components/order/Order";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/ui/BackButton";
 
 function Orders() {
   const navigate = useNavigate();
@@ -31,6 +32,9 @@ function Orders() {
 
   return (
     <div className="flex h-auto flex-col gap-8 bg-gray-100 p-12">
+      <div className="ml-20 flex justify-start border-gray-200">
+        <BackButton />
+      </div>
       <h1 className="mb-8 rounded-md text-center text-5xl font-bold text-gray-800">
         Mis Órdenes
       </h1>
