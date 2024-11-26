@@ -14,7 +14,6 @@ function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token, error: loginError } = useSelector((state) => state.user);
 
   const validateInput = () => {
     if (!email || !password) {

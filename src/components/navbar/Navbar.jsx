@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../ui/Button";
 import NavbarLink from "./NavbarLink";
@@ -8,18 +7,15 @@ import { ShoppingCart, User, LogOut } from "lucide-react";
 import plumaLogo from "../../assets/images/pluma-dibujando-una-linea.png";
 import { isLoggedIn, clearLocalStorage } from "../../utils/token";
 import { logout } from "../../redux/slice/userSlice";
-import { getRole } from "../../utils/token";
 
 function Navbar() {
-  const role = getRole();
+  const role = useSelector((state) => state.user.role);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleCategoryClick = (categoryRoute) => {
     navigate(categoryRoute);
   };
-
-  const { user } = useSelector((state) => state.user);
 
   const handleLogout = () => {
     const isConfirmed = window.confirm(
