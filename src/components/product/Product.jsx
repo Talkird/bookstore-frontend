@@ -83,9 +83,12 @@ function Product({
       />
       <div className="flex flex-1 flex-col justify-between py-2">
         <div>
-          <h2 className="text-xl font-semibold transition hover:cursor-pointer hover:opacity-60">
-            {title}
-          </h2>
+        <h2
+          onClick={handleClick} 
+          className="text-xl font-semibold transition hover:cursor-pointer hover:opacity-60"
+        >
+          {title}
+        </h2>
           {author && <p className="text-sm text-gray-500">{author}</p>}
           <p className="text-lg font-semibold">{formatPeso(price)}</p>
         </div>

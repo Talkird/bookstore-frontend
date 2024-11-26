@@ -4,14 +4,13 @@ import { getToken } from "../../utils/token";
 
 const base_url = "http://localhost:8080/discounts";
 
-// Async thunk para aplicar un descuento
 export const applyDiscount = createAsyncThunk(
   "discount/applyDiscount",
   async ({ discountCode, totalPrice }) => {
     const token = getToken();
     const response = await axios.post(
       `${base_url}/apply`,
-      null, // No hay cuerpo en esta solicitud
+      null, 
       {
         params: { discountCode, totalPrice },
         headers: {

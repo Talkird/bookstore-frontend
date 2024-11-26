@@ -23,7 +23,7 @@ function Home() {
         "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/6b96984b-05dd-4f30-80bc-15ef99834924/9789877254112.jpg",
     },
     {
-      title: "Neuromancer",
+      title: "Neuromante",
       author: "William Gibson",
       price: "$AR 29.900,00",
       image:
@@ -37,12 +37,23 @@ function Home() {
         "https://images.cdn2.buscalibre.com/fit-in/360x360/80/5d/805db27565d3ca9fffda34190f4046fd.jpg",
     },
     {
-      title: "The Left Hand of Darkness",
-      author: "Ursula K. Le Guin",
-      price: "$AR 30.800,00",
-      image:
-        "https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/b5132fcc-ec40-4fc2-ba6a-b33763c3c1c4/9789505472222.jpg",
+      title:"1984",
+      author:"George Orwell",
+      price:"$AR 19.990,00",
+      image:"https://acdn.mitiendanube.com/stores/001/315/129/products/henci-290449789875669284-3dcb89556a66c96b2117322031722972-480-0.jpg"
     },
+    {
+      title:"Los Juegos del Hambre",
+      author:"Suzanne Collins",
+      price:"$AR 38.799,00",
+      image:"https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/43933708-15ef-4879-9133-3f51ac968232/9789878120201.jpg"
+    },
+    {
+      title:"La naranja mecánica",
+      author:"Anthony Burgess",
+      price:"$AR 30.100,00",
+      image:"https://data.livriz.com/media/MediaSpace/F9AFB48D-741D-4834-B760-F59344EEFF34/45/e602a280-4d50-4162-933b-7ebf2ae4fa26/9789505472734_09abc2ac-efb8-4636-b6cf-d9eebf3a4903.jpg"
+    }
     
   ];
 
